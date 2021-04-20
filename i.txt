@@ -1,6 +1,6 @@
 USE [ezAcquire]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_GetIndexQueryList]    Script Date: 2021/4/19 ä¸‹åˆ 05:40:07 ******/
+/****** Object:  StoredProcedure [dbo].[sp_GetIndexQueryList]    Script Date: 2021/4/19 ¤U¤È 05:40:07 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -44,26 +44,26 @@ BEGIN
 
   --create IndwxQueryList
   SELECT 
-  (case when RQI.IndexFieldName IS NULL then 'N' else 'Y' end) AS CheckFlg, --å‹¾é¸æ¬„
-  I.IndexCategory, --ç´¢å¼•é¡åˆ¥
-  I.IndexFieldName, --ç´¢å¼•ä»£ç¢¼
-  I.IndexDisplayName, --ç´¢å¼•åç¨±
-  I.IndexTextDescription, --ç´¢å¼•èªªæ˜
-  II.InputType, --æŸ¥è©¢æ¢ä»¶è¼¸å…¥é¡å‹ä»£ç¢¼
-  (case when @CultureName='en-US' then CD.Remark02 else CD.Description end ) AS InputTypeName, --æŸ¥è©¢æ¢ä»¶è¼¸å…¥é¡å‹åç¨±
-  CD1.Remark01 AS InputValidator, --å­—å…ƒé™åˆ¶
-  II.MaxLength, --é•·åº¦é™åˆ¶
-  II.MinValue, --æœ€å°å€¼
-  II.MaxValue, --æœ€å¤§å€¼
-  II.IncreaseStep, --æ•¸å€¼å·®
-  II.OptionSource, --é¸é …ä¾†æº
+  (case when RQI.IndexFieldName IS NULL then 'N' else 'Y' end) AS CheckFlg, --¤Ä¿ïÄæ
+  I.IndexCategory, --¯Á¤ŞÃş§O
+  I.IndexFieldName, --¯Á¤Ş¥N½X
+  I.IndexDisplayName, --¯Á¤Ş¦WºÙ
+  I.IndexTextDescription, --¯Á¤Ş»¡©ú
+  II.InputType, --¬d¸ß±ø¥ó¿é¤JÃş«¬¥N½X
+  (case when @CultureName='en-US' then CD.Remark02 else CD.Description end ) AS InputTypeName, --¬d¸ß±ø¥ó¿é¤JÃş«¬¦WºÙ
+  CD1.Remark01 AS InputValidator, --¦r¤¸­­¨î
+  II.MaxLength, --ªø«×­­¨î
+  II.MinValue, --³Ì¤p­È
+  II.MaxValue, --³Ì¤j­È
+  II.IncreaseStep, --¼Æ­È®t
+  II.OptionSource, --¿ï¶µ¨Ó·½
   JSON_QUERY( 
-  --é¸é …ç”±viewå–å¾—
+  --¿ï¶µ¥Ñview¨ú±o
       CASE WHEN SUBSTRING(II.OptionSource,1,4)='View' 
       THEN (
           select OptionList from @optionTable WHERE Type=II.OptionSource			
       ) 
-  --é¸é …ç”±CodeDataå–å¾—
+  --¿ï¶µ¥ÑCodeData¨ú±o
       ELSE 
           CASE
           WHEN @CultureName='en-US'
@@ -83,8 +83,8 @@ BEGIN
           )
           END 
       END
-) AS OptionList, --é¸é …
-RQI.IndexContent --ç´¢å¼•è³‡æ–™ç¯„åœé™å®š
+) AS OptionList, --¿ï¶µ
+RQI.IndexContent --¯Á¤Ş¸ê®Æ½d³ò­­©w
 
 FROM IndexDescription I
 LEFT JOIN RoleQueryIndexMap RQI ON RQI.IndexFieldName=I.IndexFieldName AND RQI.RoleCode=@RoleCode
