@@ -1,4 +1,4 @@
-USE [ezAcquire]
+USE [ezAcquire] 
 GO
 /****** Object:  StoredProcedure [dbo].[sp_GetIndexQueryList]    Script Date: 2021/4/19 ¤U¤È 05:40:07 ******/
 SET ANSI_NULLS ON
