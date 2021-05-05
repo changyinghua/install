@@ -1,525 +1,424 @@
---
--- BarcodeDefinition
---
-
-ALTER TABLE BarcodeDefinition DISABLE TRIGGER TR_BarcodeDefinition_AUDIT
-
-DELETE BarcodeDefinition WHERE BarcodeId IN 
-('LSPFormId','LISPolicyId1','LISPolicyId2','LISNotifyNo','LISPosNumber','LISPaidSerialNo','LISClaimNumber','VlifeClaimNumber','LSPClaimNumber')
-
-INSERT INTO BarcodeDefinition (BarcodeId, BarcodeName, DisplayName, Condition, RemoveZeroChar, Prefix, RemovePrefix)
-VALUES ('LSPFormId', 'FormId', '表單編號', '^[\w]{7}$', 'N', '', '')
-INSERT INTO BarcodeDefinition (BarcodeId, BarcodeName, DisplayName, Condition, RemoveZeroChar, Prefix, RemovePrefix)
-VALUES ('LISPolicyId1', 'PolicyId', '保單號碼', '^90[0-9]{8}$', 'N', '', '')
-INSERT INTO BarcodeDefinition (BarcodeId, BarcodeName, DisplayName, Condition, RemoveZeroChar, Prefix, RemovePrefix)
-VALUES ('LISPolicyId2', 'PolicyId', '保單號碼', '^96[0-9]{8}$', 'N', '', '')
-INSERT INTO BarcodeDefinition (BarcodeId, BarcodeName, DisplayName, Condition, RemoveZeroChar, Prefix, RemovePrefix)
-VALUES ('LISNotifyNo', 'NotifyNo', '照會編號', '^L[0-9]{9}$', 'N', '', '')
-INSERT INTO BarcodeDefinition (BarcodeId, BarcodeName, DisplayName, Condition, RemoveZeroChar, Prefix, RemovePrefix)
-VALUES ('LISPosNumber', 'POSNumber', '契變案號', '^[0-9]{12}$', 'N', '', '')
-INSERT INTO BarcodeDefinition (BarcodeId, BarcodeName, DisplayName, Condition, RemoveZeroChar, Prefix, RemovePrefix)
-VALUES ('LISPaidSerialNo', 'PaidSerialNo', '授權書條碼', '^[MW]{1}[L]{1}[0-9]{10}$', 'N', '', '')
-INSERT INTO BarcodeDefinition (BarcodeId, BarcodeName, DisplayName, Condition, RemoveZeroChar, Prefix, RemovePrefix)
-VALUES ('LISClaimNumber', 'ClaimNumber', '理賠案號', '^[0-9]{11}$', 'N', '', '')
-INSERT INTO BarcodeDefinition (BarcodeId, BarcodeName, DisplayName, Condition, RemoveZeroChar, Prefix, RemovePrefix)
-VALUES ('VlifeClaimNumber', 'ClaimNumber', '理賠案號', '^[XYZ]{1}[0-9]{7}$', 'N', '', '')
-INSERT INTO BarcodeDefinition (BarcodeId, BarcodeName, DisplayName, Condition, RemoveZeroChar, Prefix, RemovePrefix)
-VALUES ('LSPClaimNumber', 'ClaimNumber', '理賠案號', '^[0-9]{9}$', 'N', '', '')
-
-
-ALTER TABLE BarcodeDefinition ENABLE TRIGGER TR_BarcodeDefinition_AUDIT
-
---
--- LIS, FMT, ONL
---
-
-ALTER TABLE ScanTypes DISABLE TRIGGER TR_ScanTypes_AUDIT
-ALTER TABLE ScanTypeIndexMap DISABLE TRIGGER TR_ScanTypeIndexMap_AUDIT
-
-DELETE ScanTypes WHERE ScanTypeId IN ('LIS', 'FMT', 'ONL')
-
-insert into ScanTypes 
-	(ScanTypeId, ScanTypeName, DivideRule, IsList, DocumentClassId, RequireFiling, ExtendSettings)
-values
-	('LIS','LIS 線上入櫃','','B',1,'N',''),
-	('FMT','Formatting 入櫃','','B',1,'N',''),
-	('ONL','OnlineImport 入櫃','','B',1,'N','')
-
-
---
--- LIS
---
-
-DELETE ScanCategory WHERE ScanCategory.Id = 'LIS'
-INSERT INTO ScanCategory (Id, Name, Seq, ExtendedSetting) VALUES ('LIS', '前掃', 1, '')
-UPDATE ScanCategory SET Seq = 2 WHERE Id = 'ALL'
-
---
--- LISNB1
---
-
-DELETE ScanTypes WHERE ScanTypeId = 'LISNB1'
-INSERT INTO ScanTypes (ScanTypeId, ScanTypeName, Sorting, DivideRule, IsList, DocumentClassId, RequireFiling, Seq)
-VALUES ('LISNB1', 'LIS-NB 新件', 40, 'FormGroup(NBSAPP)', 'N',1,'Y',40)
-
-DELETE ScanTypeCategoryRelation WHERE ScanTypeId = 'LISNB1'
-INSERT INTO ScanTypeCategoryRelation VALUES ('LIS', 'LISNB1')
-
-DELETE ScanTypeBarcodeDefinitions WHERE ScanTypeId = 'LISNB1'
-INSERT INTO ScanTypeBarcodeDefinitions VALUES ('LISNB1', 'FormId')
-
-DELETE ScanTypeValidators WHERE ScanTypeId = 'LISNB1'
-INSERT INTO ScanTypeValidators VALUES ('LISNB1', 'CommonValidator', 1)
-
-DELETE ScanTypeReportColumns WHERE ScanTypeId = 'LISNB1'
-INSERT INTO ScanTypeReportColumns VALUES ('LISNB1', '{[ExtScanNumber],[掃描案號]}')
-
-DELETE ScanTypeBindCaseSetting where ScanTypeId = 'LISNB1'
-DELETE ScanTypeFormSetMap where ScanTypeId = 'LISNB1'
-
-DELETE ScanTypeFormGroupMap where ScanTypeId = 'LISNB1'
-INSERT INTO ScanTypeFormGroupMap (ScanTypeId, FormGroupCode, Condition, Seq) VALUES ('LISNB1', 'NBS', 0, 1)
-
-DELETE ScanTypeIndexMap where ScanTypeId = 'LISNB1'
-
---
--- LISNB2
---
-
-DELETE ScanTypes WHERE ScanTypeId = 'LISNB2'
-INSERT INTO ScanTypes (ScanTypeId, ScanTypeName, Sorting, DivideRule, IsList, DocumentClassId, RequireFiling, Seq)
-VALUES ('LISNB2', 'LIS-NB 照會', 41, 'NotInclude(NotifyNo)', 'N',1,'Y',41)
-
-DELETE ScanTypeCategoryRelation WHERE ScanTypeId = 'LISNB2'
-INSERT INTO ScanTypeCategoryRelation VALUES ('LIS', 'LISNB2')
-
-DELETE ScanTypeBarcodeDefinitions WHERE ScanTypeId = 'LISNB2'
-INSERT INTO ScanTypeBarcodeDefinitions VALUES ('LISNB2', 'FormId')
-INSERT INTO ScanTypeBarcodeDefinitions VALUES ('LISNB2', 'LISNotifyNo')
-
-DELETE ScanTypeValidators WHERE ScanTypeId = 'LISNB2'
-INSERT INTO ScanTypeValidators VALUES ('LISNB2', 'CommonValidator', 1)
-
-DELETE ScanTypeReportColumns WHERE ScanTypeId = 'LISNB2'
-INSERT INTO ScanTypeReportColumns VALUES ('LISNB2', '{[NotifyNo],[照會編號]}')
-
-DELETE ScanTypeBindCaseSetting where ScanTypeId = 'LISNB2'
-DELETE ScanTypeFormSetMap where ScanTypeId = 'LISNB2'
-
-DELETE ScanTypeFormGroupMap where ScanTypeId = 'LISNB2'
-INSERT INTO ScanTypeFormGroupMap (ScanTypeId, FormGroupCode, Condition, Seq) VALUES ('LISNB2', 'NBS', 0, 1)
-
-DELETE ScanTypeIndexMap where ScanTypeId = 'LISNB2'
-INSERT INTO ScanTypeIndexMap (ScanTypeId, IndexFieldName, IsBarcode, IsDivide, ReadOnly, IsMulti, Seq, Required)
-VALUES ('LISNB2', 'I_73', 'Y', 'Y', 'N', 'N', 1, 'Y')
-
---
--- LISNB3
---
-
-DELETE ScanTypes WHERE ScanTypeId = 'LISNB3'
-INSERT INTO ScanTypes (ScanTypeId, ScanTypeName, Sorting, DivideRule, IsList, DocumentClassId, RequireFiling, Seq)
-VALUES ('LISNB3', 'LIS-NB 補件', 42, 'NotInclude(PolicyId)', 'N',1,'Y',42)
-
-DELETE ScanTypeCategoryRelation WHERE ScanTypeId = 'LISNB3'
-INSERT INTO ScanTypeCategoryRelation VALUES ('LIS', 'LISNB3')
-
-DELETE ScanTypeBarcodeDefinitions WHERE ScanTypeId = 'LISNB3'
-INSERT INTO ScanTypeBarcodeDefinitions VALUES ('LISNB3', 'FormId')
-INSERT INTO ScanTypeBarcodeDefinitions VALUES ('LISNB3', 'LISPolicyId1')
-INSERT INTO ScanTypeBarcodeDefinitions VALUES ('LISNB3', 'LISPolicyId2')
-
-DELETE ScanTypeValidators WHERE ScanTypeId = 'LISNB3'
-INSERT INTO ScanTypeValidators VALUES ('LISNB3', 'CommonValidator', 1)
-
-DELETE ScanTypeReportColumns WHERE ScanTypeId = 'LISNB3'
-INSERT INTO ScanTypeReportColumns VALUES ('LISNB3', '{[PolicyId],[保單號碼]}')
-
-DELETE ScanTypeBindCaseSetting where ScanTypeId = 'LISNB3'
-DELETE ScanTypeFormSetMap where ScanTypeId = 'LISNB3'
-
-DELETE ScanTypeFormGroupMap where ScanTypeId = 'LISNB3'
-INSERT INTO ScanTypeFormGroupMap (ScanTypeId, FormGroupCode, Condition, Seq) VALUES ('LISNB3', 'NBS', 0, 1)
-
-DELETE ScanTypeIndexMap where ScanTypeId = 'LISNB3'
-INSERT INTO ScanTypeIndexMap (ScanTypeId, IndexFieldName, IsBarcode, IsDivide, ReadOnly, IsMulti, Seq, Required)
-VALUES ('LISNB3', 'I_50', 'Y', 'Y', 'N', 'Y', 1, 'Y')
-
---
--- LISNB5
---
-
-DELETE ScanTypes WHERE ScanTypeId = 'LISNB5'
-INSERT INTO ScanTypes (ScanTypeId, ScanTypeName, Sorting, DivideRule, IsList, DocumentClassId, RequireFiling, Seq)
-VALUES ('LISNB5', 'LIS-NB 契撤', 43, 'NotInclude(PolicyId)', 'N',1,'Y',43)
-
-DELETE ScanTypeCategoryRelation WHERE ScanTypeId = 'LISNB5'
-INSERT INTO ScanTypeCategoryRelation VALUES ('LIS', 'LISNB5')
-
-DELETE ScanTypeBarcodeDefinitions WHERE ScanTypeId = 'LISNB5'
-INSERT INTO ScanTypeBarcodeDefinitions VALUES ('LISNB5', 'FormId')
-INSERT INTO ScanTypeBarcodeDefinitions VALUES ('LISNB5', 'LISPolicyId1')
-INSERT INTO ScanTypeBarcodeDefinitions VALUES ('LISNB5', 'LISPolicyId2')
-
-DELETE ScanTypeValidators WHERE ScanTypeId = 'LISNB5'
-INSERT INTO ScanTypeValidators VALUES ('LISNB5', 'CommonValidator', 1)
-
-DELETE ScanTypeReportColumns WHERE ScanTypeId = 'LISNB5'
-INSERT INTO ScanTypeReportColumns VALUES ('LISNB5', '{[PolicyId],[保單號碼]}')
-
-DELETE ScanTypeBindCaseSetting where ScanTypeId = 'LISNB5'
-DELETE ScanTypeFormSetMap where ScanTypeId = 'LISNB5'
-
-DELETE ScanTypeFormGroupMap where ScanTypeId = 'LISNB5'
-INSERT INTO ScanTypeFormGroupMap (ScanTypeId, FormGroupCode, Condition, Seq) VALUES ('LISNB5', 'NBS', 0, 1)
-
-DELETE ScanTypeIndexMap where ScanTypeId = 'LISNB5'
-INSERT INTO ScanTypeIndexMap (ScanTypeId, IndexFieldName, IsBarcode, IsDivide, ReadOnly, IsMulti, Seq, Required)
-VALUES ('LISNB5', 'I_50', 'Y', 'Y', 'N', 'Y', 1, 'Y')
-
---
--- LISNB4
---
-
-DELETE ScanTypes WHERE ScanTypeId = 'LISNB4'
-INSERT INTO ScanTypes (ScanTypeId, ScanTypeName, Sorting, DivideRule, IsList, DocumentClassId, RequireFiling, Seq)
-VALUES ('LISNB4', 'LIS-NB 結案後掃描', 44, 'NotInclude(PolicyId)', 'N',1,'Y',44)
-
-DELETE ScanTypeCategoryRelation WHERE ScanTypeId = 'LISNB4'
-INSERT INTO ScanTypeCategoryRelation VALUES ('LIS', 'LISNB4')
-
-DELETE ScanTypeBarcodeDefinitions WHERE ScanTypeId = 'LISNB4'
-INSERT INTO ScanTypeBarcodeDefinitions VALUES ('LISNB4', 'FormId')
-INSERT INTO ScanTypeBarcodeDefinitions VALUES ('LISNB4', 'LISPolicyId1')
-INSERT INTO ScanTypeBarcodeDefinitions VALUES ('LISNB4', 'LISPolicyId2')
-
-DELETE ScanTypeValidators WHERE ScanTypeId = 'LISNB4'
-INSERT INTO ScanTypeValidators VALUES ('LISNB4', 'CommonValidator', 1)
-
-DELETE ScanTypeReportColumns WHERE ScanTypeId = 'LISNB4'
-INSERT INTO ScanTypeReportColumns VALUES ('LISNB4', '{[PolicyId],[保單號碼]},{[MainId],[要保人 ID]},{[InsuredId],[被保人 ID]}')
-
-DELETE ScanTypeBindCaseSetting where ScanTypeId = 'LISNB4'
-DELETE ScanTypeFormSetMap where ScanTypeId = 'LISNB4'
-
-DELETE ScanTypeFormGroupMap where ScanTypeId = 'LISNB4'
-INSERT INTO ScanTypeFormGroupMap (ScanTypeId, FormGroupCode, Condition, Seq) VALUES ('LISNB4', 'NBS', 0, 1)
-
-DELETE ScanTypeIndexMap where ScanTypeId = 'LISNB4'
-INSERT INTO ScanTypeIndexMap (ScanTypeId, IndexFieldName, IsBarcode, IsDivide, ReadOnly, IsMulti, Seq, Required)
-VALUES ('LISNB4', 'I_50', 'Y', 'Y', 'N', 'Y', 1, 'Y')
-INSERT INTO ScanTypeIndexMap (ScanTypeId, IndexFieldName, IsBarcode, IsDivide, ReadOnly, IsMulti, Seq, Required)
-VALUES ('LISNB4', 'I_48', 'Y', 'N', 'N', 'N', 2, 'Y')
-INSERT INTO ScanTypeIndexMap (ScanTypeId, IndexFieldName, IsBarcode, IsDivide, ReadOnly, IsMulti, Seq, Required)
-VALUES ('LISNB4', 'I_47', 'Y', 'N', 'N', 'N', 3, 'Y')
-
---
--- LISPOS1
---
-
-DELETE ScanTypes WHERE ScanTypeId = 'LISPOS1'
-INSERT INTO ScanTypes (ScanTypeId, ScanTypeName, Sorting, DivideRule, IsList, DocumentClassId, RequireFiling, Seq)
-VALUES ('LISPOS1', 'POS 新件', 50, 'FormGroup(POSAPL)', 'N',1,'Y',50)
-
-DELETE ScanTypeCategoryRelation WHERE ScanTypeId = 'LISPOS1'
-INSERT INTO ScanTypeCategoryRelation VALUES ('LIS', 'LISPOS1')
-
-DELETE ScanTypeBarcodeDefinitions WHERE ScanTypeId = 'LISPOS1'
-INSERT INTO ScanTypeBarcodeDefinitions VALUES ('LISPOS1', 'FormId')
-
-DELETE ScanTypeValidators WHERE ScanTypeId = 'LISPOS1'
-INSERT INTO ScanTypeValidators VALUES ('LISPOS1', 'CommonValidator', 1)
-
-DELETE ScanTypeReportColumns WHERE ScanTypeId = 'LISPOS1'
-INSERT INTO ScanTypeReportColumns VALUES ('LISPOS1', '{[PolicyId],[保單號碼]}')
-
-DELETE ScanTypeBindCaseSetting where ScanTypeId = 'LISPOS1'
-DELETE ScanTypeFormSetMap where ScanTypeId = 'LISPOS1'
-
-DELETE ScanTypeFormGroupMap where ScanTypeId = 'LISPOS1'
-INSERT INTO ScanTypeFormGroupMap (ScanTypeId, FormGroupCode, Condition, Seq) VALUES ('LISPOS1', 'POS', 0, 1)
-
-DELETE ScanTypeIndexMap where ScanTypeId = 'LISPOS1'
-INSERT INTO ScanTypeIndexMap (ScanTypeId, IndexFieldName, IsBarcode, IsDivide, ReadOnly, IsMulti, Seq, Required)
-VALUES ('LISPOS1', 'I_50', 'Y', 'Y', 'N', 'Y', 1, 'Y')
-
---
--- LISPOS2
---
-
-DELETE ScanTypes WHERE ScanTypeId = 'LISPOS2'
-INSERT INTO ScanTypes (ScanTypeId, ScanTypeName, Sorting, DivideRule, IsList, DocumentClassId, RequireFiling, Seq)
-VALUES ('LISPOS2', 'POS 照會', 51, 'NotInclude(NotifyNo)', 'N',1,'Y',51)
-
-DELETE ScanTypeCategoryRelation WHERE ScanTypeId = 'LISPOS2'
-INSERT INTO ScanTypeCategoryRelation VALUES ('LIS', 'LISPOS2')
-
-DELETE ScanTypeBarcodeDefinitions WHERE ScanTypeId = 'LISPOS2'
-INSERT INTO ScanTypeBarcodeDefinitions VALUES ('LISPOS2', 'FormId')
-INSERT INTO ScanTypeBarcodeDefinitions VALUES ('LISPOS2', 'LISPolicyId1')
-INSERT INTO ScanTypeBarcodeDefinitions VALUES ('LISPOS2', 'LISPolicyId2')
-INSERT INTO ScanTypeBarcodeDefinitions VALUES ('LISPOS2', 'LISPosNumber')
-INSERT INTO ScanTypeBarcodeDefinitions VALUES ('LISPOS2', 'LISNotifyNo')
-
-DELETE ScanTypeValidators WHERE ScanTypeId = 'LISPOS2'
-INSERT INTO ScanTypeValidators VALUES ('LISPOS2', 'CommonValidator', 1)
-
-DELETE ScanTypeReportColumns WHERE ScanTypeId = 'LISPOS2'
-INSERT INTO ScanTypeReportColumns VALUES ('LISPOS2', '{[NotifyNo],[照會編號]},{[POSNumber],[契變案號]},{[PolicyId],[保單號碼]}')
-
-DELETE ScanTypeBindCaseSetting where ScanTypeId = 'LISPOS2'
-DELETE ScanTypeFormSetMap where ScanTypeId = 'LISPOS2'
-
-DELETE ScanTypeFormGroupMap where ScanTypeId = 'LISPOS2'
-INSERT INTO ScanTypeFormGroupMap (ScanTypeId, FormGroupCode, Condition, Seq) VALUES ('LISPOS2', 'POS', 0, 1)
-
-DELETE ScanTypeIndexMap where ScanTypeId = 'LISPOS2'
-INSERT INTO ScanTypeIndexMap (ScanTypeId, IndexFieldName, IsBarcode, IsDivide, ReadOnly, IsMulti, Seq, Required)
-VALUES ('LISPOS2', 'I_73', 'Y', 'Y', 'N', 'N', 1, 'Y')
-INSERT INTO ScanTypeIndexMap (ScanTypeId, IndexFieldName, IsBarcode, IsDivide, ReadOnly, IsMulti, Seq, Required)
-VALUES ('LISPOS2', 'I_52', 'Y', 'N', 'N', 'Y', 2, 'Y')
-INSERT INTO ScanTypeIndexMap (ScanTypeId, IndexFieldName, IsBarcode, IsDivide, ReadOnly, IsMulti, Seq, Required)
-VALUES ('LISPOS2', 'I_50', 'Y', 'N', 'N', 'Y', 3, 'Y')
-
---
--- LISPOS3
---
-
-DELETE ScanTypes WHERE ScanTypeId = 'LISPOS3'
-INSERT INTO ScanTypes (ScanTypeId, ScanTypeName, Sorting, DivideRule, IsList, DocumentClassId, RequireFiling, Seq)
-VALUES ('LISPOS3', 'POS 補件', 52, 'NotInclude(POSNumber)', 'N',1,'Y',52)
-
-DELETE ScanTypeCategoryRelation WHERE ScanTypeId = 'LISPOS3'
-INSERT INTO ScanTypeCategoryRelation VALUES ('LIS', 'LISPOS3')
-
-DELETE ScanTypeBarcodeDefinitions WHERE ScanTypeId = 'LISPOS3'
-INSERT INTO ScanTypeBarcodeDefinitions VALUES ('LISPOS3', 'FormId')
-INSERT INTO ScanTypeBarcodeDefinitions VALUES ('LISPOS3', 'LISPosNumber')
-INSERT INTO ScanTypeBarcodeDefinitions VALUES ('LISPOS3', 'LISPolicyId1')
-INSERT INTO ScanTypeBarcodeDefinitions VALUES ('LISPOS3', 'LISPolicyId2')
-
-DELETE ScanTypeValidators WHERE ScanTypeId = 'LISPOS3'
-INSERT INTO ScanTypeValidators VALUES ('LISPOS3', 'CommonValidator', 1)
-
-DELETE ScanTypeReportColumns WHERE ScanTypeId = 'LISPOS3'
-INSERT INTO ScanTypeReportColumns VALUES ('LISPOS3', '{[POSNumber],[契變案號]},{[PolicyId],[保單號碼]}')
-
-DELETE ScanTypeBindCaseSetting where ScanTypeId = 'LISPOS3'
-DELETE ScanTypeFormSetMap where ScanTypeId = 'LISPOS3'
-
-DELETE ScanTypeFormGroupMap where ScanTypeId = 'LISPOS3'
-INSERT INTO ScanTypeFormGroupMap (ScanTypeId, FormGroupCode, Condition, Seq) VALUES ('LISPOS3', 'POS', 0, 1)
-
-DELETE ScanTypeIndexMap where ScanTypeId = 'LISPOS3'
-INSERT INTO ScanTypeIndexMap (ScanTypeId, IndexFieldName, IsBarcode, IsDivide, ReadOnly, IsMulti, Seq, Required)
-VALUES ('LISPOS3', 'I_52', 'Y', 'N', 'N', 'N', 1, 'Y')
-INSERT INTO ScanTypeIndexMap (ScanTypeId, IndexFieldName, IsBarcode, IsDivide, ReadOnly, IsMulti, Seq, Required)
-VALUES ('LISPOS3', 'I_50', 'Y', 'N', 'N', 'Y', 2, 'Y')
-
---
--- LISPOS4
---
-
-DELETE ScanTypes WHERE ScanTypeId = 'LISPOS4'
-INSERT INTO ScanTypes (ScanTypeId, ScanTypeName, Sorting, DivideRule, IsList, DocumentClassId, RequireFiling, Seq)
-VALUES ('LISPOS4', 'POS 後掃', 53, 'NotInclude(POSNumber)', 'N',1,'Y',53)
-
-DELETE ScanTypeCategoryRelation WHERE ScanTypeId = 'LISPOS4'
-INSERT INTO ScanTypeCategoryRelation VALUES ('LIS', 'LISPOS4')
-
-DELETE ScanTypeBarcodeDefinitions WHERE ScanTypeId = 'LISPOS4'
-INSERT INTO ScanTypeBarcodeDefinitions VALUES ('LISPOS4', 'FormId')
-INSERT INTO ScanTypeBarcodeDefinitions VALUES ('LISPOS4', 'LISPosNumber')
-INSERT INTO ScanTypeBarcodeDefinitions VALUES ('LISPOS4', 'LISPolicyId1')
-INSERT INTO ScanTypeBarcodeDefinitions VALUES ('LISPOS4', 'LISPolicyId2')
-
-DELETE ScanTypeValidators WHERE ScanTypeId = 'LISPOS4'
-INSERT INTO ScanTypeValidators VALUES ('LISPOS4', 'CommonValidator', 1)
-
-DELETE ScanTypeReportColumns WHERE ScanTypeId = 'LISPOS4'
-INSERT INTO ScanTypeReportColumns VALUES ('LISPOS4', '{[POSNumber],[契變案號]},{[PolicyId],[保單號碼]},{[VaryDate],[收件日期]},{[CloseDate],[結案日期]}')
-
-DELETE ScanTypeBindCaseSetting where ScanTypeId = 'LISPOS4'
-DELETE ScanTypeFormSetMap where ScanTypeId = 'LISPOS4'
-
-DELETE ScanTypeFormGroupMap where ScanTypeId = 'LISPOS4'
-INSERT INTO ScanTypeFormGroupMap (ScanTypeId, FormGroupCode, Condition, Seq) VALUES ('LISPOS4', 'POS', 0, 1)
-
-DELETE ScanTypeIndexMap where ScanTypeId = 'LISPOS4'
-INSERT INTO ScanTypeIndexMap (ScanTypeId, IndexFieldName, IsBarcode, IsDivide, ReadOnly, IsMulti, Seq, Required)
-VALUES ('LISPOS4', 'I_52', 'Y', 'Y', 'N', 'N', 1, 'Y')
-INSERT INTO ScanTypeIndexMap (ScanTypeId, IndexFieldName, IsBarcode, IsDivide, ReadOnly, IsMulti, Seq, Required)
-VALUES ('LISPOS4', 'I_50', 'Y', 'N', 'N', 'Y', 2, 'Y')
-INSERT INTO ScanTypeIndexMap (ScanTypeId, IndexFieldName, IsBarcode, IsDivide, ReadOnly, IsMulti, Seq, Required)
-VALUES ('LISPOS4', 'I_57', 'Y', 'N', 'N', 'N', 3, 'Y')
-INSERT INTO ScanTypeIndexMap (ScanTypeId, IndexFieldName, IsBarcode, IsDivide, ReadOnly, IsMulti, Seq, Required)
-VALUES ('LISPOS4', 'I_44', 'Y', 'N', 'N', 'N', 4, 'Y')
-
---
--- LISCLM1
---
-
-DELETE ScanTypes WHERE ScanTypeId = 'LISCLM1'
-INSERT INTO ScanTypes (ScanTypeId, ScanTypeName, Sorting, DivideRule, IsList, DocumentClassId, RequireFiling, Seq)
-VALUES ('LISCLM1', '理賠 個險', 60, 'EqualTo(FormId=CA03)', 'N',1,'Y',60)
-
-DELETE ScanTypeCategoryRelation WHERE ScanTypeId = 'LISCLM1'
-INSERT INTO ScanTypeCategoryRelation VALUES ('LIS', 'LISCLM1')
-
-DELETE ScanTypeBarcodeDefinitions WHERE ScanTypeId = 'LISCLM1'
-INSERT INTO ScanTypeBarcodeDefinitions VALUES ('LISCLM1', 'FormId')
-
-DELETE ScanTypeValidators WHERE ScanTypeId = 'LISCLM1'
-INSERT INTO ScanTypeValidators VALUES ('LISCLM1', 'CommonValidator', 1)
-
-DELETE ScanTypeReportColumns WHERE ScanTypeId = 'LISCLM1'
-INSERT INTO ScanTypeReportColumns VALUES ('LISCLM1', '{[ClaimNumber],[理賠案號]}')
-
-DELETE ScanTypeBindCaseSetting where ScanTypeId = 'LISCLM1'
-DELETE ScanTypeFormSetMap where ScanTypeId = 'LISCLM1'
-
-DELETE ScanTypeFormGroupMap where ScanTypeId = 'LISCLM1'
-INSERT INTO ScanTypeFormGroupMap (ScanTypeId, FormGroupCode, Condition, Seq) VALUES ('LISCLM1', 'CLM', 0, 1)
-
-DELETE ScanTypeIndexMap where ScanTypeId = 'LISCLM1'
-INSERT INTO ScanTypeIndexMap (ScanTypeId, IndexFieldName, IsBarcode, IsDivide, ReadOnly, IsMulti, Seq, Required)
-VALUES ('LISCLM1', 'I_60', 'Y', 'Y', 'N', 'N', 1, 'Y')
-
---
--- LISCLM2
---
-
-DELETE ScanTypes WHERE ScanTypeId = 'LISCLM2'
-INSERT INTO ScanTypes (ScanTypeId, ScanTypeName, Sorting, DivideRule, IsList, DocumentClassId, RequireFiling, Seq)
-VALUES ('LISCLM2', '理賠 照會', 61, 'EqualTo(FormId=CA08)', 'N',1,'Y',61)
-
-DELETE ScanTypeCategoryRelation WHERE ScanTypeId = 'LISCLM2'
-INSERT INTO ScanTypeCategoryRelation VALUES ('LIS', 'LISCLM2')
-
-DELETE ScanTypeBarcodeDefinitions WHERE ScanTypeId = 'LISCLM2'
-INSERT INTO ScanTypeBarcodeDefinitions VALUES ('LISCLM2', 'FormId')
-INSERT INTO ScanTypeBarcodeDefinitions VALUES ('LISCLM2', 'LISNotifyNo')
-
-DELETE ScanTypeValidators WHERE ScanTypeId = 'LISCLM2'
-INSERT INTO ScanTypeValidators VALUES ('LISCLM2', 'CommonValidator', 1)
-
-DELETE ScanTypeReportColumns WHERE ScanTypeId = 'LISCLM2'
-INSERT INTO ScanTypeReportColumns VALUES ('LISCLM2', '{[NotifyNo],[照會編號]},{[ClaimNumber],[理賠案號]}')
-
-DELETE ScanTypeBindCaseSetting where ScanTypeId = 'LISCLM2'
-DELETE ScanTypeFormSetMap where ScanTypeId = 'LISCLM2'
-
-DELETE ScanTypeFormGroupMap where ScanTypeId = 'LISCLM2'
-INSERT INTO ScanTypeFormGroupMap (ScanTypeId, FormGroupCode, Condition, Seq) VALUES ('LISCLM2', 'CLM', 0, 1)
-
-DELETE ScanTypeIndexMap where ScanTypeId = 'LISCLM2'
-INSERT INTO ScanTypeIndexMap (ScanTypeId, IndexFieldName, IsBarcode, IsDivide, ReadOnly, IsMulti, Seq, Required)
-VALUES ('LISCLM2', 'I_73', 'Y', 'Y', 'N', 'N', 1, 'Y')
-INSERT INTO ScanTypeIndexMap (ScanTypeId, IndexFieldName, IsBarcode, IsDivide, ReadOnly, IsMulti, Seq, Required)
-VALUES ('LISCLM2', 'I_60', 'Y', 'Y', 'N', 'N', 2, 'Y')
-
---
--- LISCLM3
---
-
-DELETE ScanTypes WHERE ScanTypeId = 'LISCLM3'
-INSERT INTO ScanTypes (ScanTypeId, ScanTypeName, Sorting, DivideRule, IsList, DocumentClassId, RequireFiling, Seq)
-VALUES ('LISCLM3', '理賠 補件', 62, 'EqualTo(FormId=CA08)', 'N',1,'Y',62)
-
-DELETE ScanTypeCategoryRelation WHERE ScanTypeId = 'LISCLM3'
-INSERT INTO ScanTypeCategoryRelation VALUES ('LIS', 'LISCLM3')
-
-DELETE ScanTypeBarcodeDefinitions WHERE ScanTypeId = 'LISCLM3'
-INSERT INTO ScanTypeBarcodeDefinitions VALUES ('LISCLM3', 'FormId')
-
-DELETE ScanTypeValidators WHERE ScanTypeId = 'LISCLM3'
-INSERT INTO ScanTypeValidators VALUES ('LISCLM3', 'CommonValidator', 1)
-
-DELETE ScanTypeReportColumns WHERE ScanTypeId = 'LISCLM3'
-INSERT INTO ScanTypeReportColumns VALUES ('LISCLM3', '{[ClaimNumber],[理賠案號]}')
-
-DELETE ScanTypeBindCaseSetting where ScanTypeId = 'LISCLM3'
-DELETE ScanTypeFormSetMap where ScanTypeId = 'LISCLM3'
-
-DELETE ScanTypeFormGroupMap where ScanTypeId = 'LISCLM3'
-INSERT INTO ScanTypeFormGroupMap (ScanTypeId, FormGroupCode, Condition, Seq) VALUES ('LISCLM3', 'CLM', 0, 1)
-
-DELETE ScanTypeIndexMap where ScanTypeId = 'LISCLM3'
-INSERT INTO ScanTypeIndexMap (ScanTypeId, IndexFieldName, IsBarcode, IsDivide, ReadOnly, IsMulti, Seq, Required)
-VALUES ('LISCLM3', 'I_60', 'Y', 'Y', 'N', 'N', 1, 'Y')
-
-
---
--- LISCLM4
---
-
-DELETE ScanTypes WHERE ScanTypeId = 'LISCLM4'
-INSERT INTO ScanTypes (ScanTypeId, ScanTypeName, Sorting, DivideRule, IsList, DocumentClassId, RequireFiling, Seq)
-VALUES ('LISCLM4', '理賠 結案補掃', 63, 'EqualTo(FormId=CA01)', 'N',1,'Y',63)
-
-DELETE ScanTypeCategoryRelation WHERE ScanTypeId = 'LISCLM4'
-INSERT INTO ScanTypeCategoryRelation VALUES ('LIS', 'LISCLM4')
-
-DELETE ScanTypeBarcodeDefinitions WHERE ScanTypeId = 'LISCLM4'
-INSERT INTO ScanTypeBarcodeDefinitions VALUES ('LISCLM4', 'FormId')
-INSERT INTO ScanTypeBarcodeDefinitions VALUES ('LISCLM4', 'LISClaimNumber')
-INSERT INTO ScanTypeBarcodeDefinitions VALUES ('LISCLM4', 'VlifeClaimNumber')
-INSERT INTO ScanTypeBarcodeDefinitions VALUES ('LISCLM4', 'LSPClaimNumber')
-INSERT INTO ScanTypeBarcodeDefinitions VALUES ('LISCLM4', 'LISPolicyId1')
-INSERT INTO ScanTypeBarcodeDefinitions VALUES ('LISCLM4', 'LISPolicyId2')
-
-DELETE ScanTypeValidators WHERE ScanTypeId = 'LISCLM4'
-INSERT INTO ScanTypeValidators VALUES ('LISCLM4', 'CommonValidator', 1)
-
-DELETE ScanTypeReportColumns WHERE ScanTypeId = 'LISCLM4'
-INSERT INTO ScanTypeReportColumns VALUES ('LISCLM4', '{[ClaimNumber],[理賠案號]},{[PolicyId],[保單號碼]}')
-
-DELETE ScanTypeBindCaseSetting where ScanTypeId = 'LISCLM4'
-DELETE ScanTypeFormSetMap where ScanTypeId = 'LISCLM4'
-
-DELETE ScanTypeFormGroupMap where ScanTypeId = 'LISCLM4'
-INSERT INTO ScanTypeFormGroupMap (ScanTypeId, FormGroupCode, Condition, Seq) VALUES ('LISCLM4', 'CLM', 0, 1)
-
-DELETE ScanTypeIndexMap where ScanTypeId = 'LISCLM4'
-INSERT INTO ScanTypeIndexMap (ScanTypeId, IndexFieldName, IsBarcode, IsDivide, ReadOnly, IsMulti, Seq, Required)
-VALUES ('LISCLM4', 'I_60', 'Y', 'Y', 'N', 'N', 1, 'Y')
-INSERT INTO ScanTypeIndexMap (ScanTypeId, IndexFieldName, IsBarcode, IsDivide, ReadOnly, IsMulti, Seq, Required)
-VALUES ('LISCLM4', 'I_50', 'Y', 'Y', 'N', 'N', 2, 'Y')
-
-
---
--- LISRPA
---
-
-DELETE ScanTypes WHERE ScanTypeId = 'LISRPA'
-INSERT INTO ScanTypes (ScanTypeId, ScanTypeName, Sorting, DivideRule, IsList, DocumentClassId, RequireFiling, Seq)
-VALUES ('LISRPA', '保費 轉帳授權書', 70, 'Exist(PaidSerialNo)', 'N',1,'Y',70)
-
-DELETE ScanTypeCategoryRelation WHERE ScanTypeId = 'LISRPA'
-INSERT INTO ScanTypeCategoryRelation VALUES ('LIS', 'LISRPA')
-
-DELETE ScanTypeBarcodeDefinitions WHERE ScanTypeId = 'LISRPA'
-INSERT INTO ScanTypeBarcodeDefinitions VALUES ('LISRPA', 'FormId')
-INSERT INTO ScanTypeBarcodeDefinitions VALUES ('LISRPA', 'LISPaidSerialNo')
-
-DELETE ScanTypeValidators WHERE ScanTypeId = 'LISRPA'
-INSERT INTO ScanTypeValidators VALUES ('LISRPA', 'CommonValidator', 1)
-
-DELETE ScanTypeReportColumns WHERE ScanTypeId = 'LISRPA'
-INSERT INTO ScanTypeReportColumns VALUES ('LISRPA', '{[PaidSerialNo],[授權書條碼]}')
-
-DELETE ScanTypeBindCaseSetting where ScanTypeId = 'LISRPA'
-DELETE ScanTypeFormSetMap where ScanTypeId = 'LISRPA'
-
-DELETE ScanTypeFormGroupMap where ScanTypeId = 'LISRPA'
-INSERT INTO ScanTypeFormGroupMap (ScanTypeId, FormGroupCode, Condition, Seq) VALUES ('LISRPA', 'RPA', 0, 1)
-
-DELETE ScanTypeIndexMap where ScanTypeId = 'LISRPA'
-INSERT INTO ScanTypeIndexMap (ScanTypeId, IndexFieldName, IsBarcode, IsDivide, ReadOnly, IsMulti, Seq, Required, DisplayName)
-VALUES ('LISRPA', 'I_49', 'Y', 'Y', 'N', 'N', 1, 'Y', '授權書條碼')
-
-
-ALTER TABLE ScanTypes ENABLE TRIGGER TR_ScanTypes_AUDIT
-ALTER TABLE ScanTypeIndexMap ENABLE TRIGGER TR_ScanTypeIndexMap_AUDIT
-
-
+USE TWLife
+GO
+
+if not exists(select * from CodeType where [Type] = 'bussNoType')
+begin
+    insert into CodeType values ('bussNoType', 'LIS 業務關連號碼類型與影像索引對應', 'N', 'C', GETDATE(), '')
+end
+
+delete CodeData where [Type] = 'bussNoType'
+
+insert into CodeData ([Type], Code, Description, Seq, SuspendFlg, Remark01, ModifiedTime, ModifiedUser) values 
+('bussNoType', '0001', '文件名稱'           , 1, 'N', 'FileName'        , GETDATE(), ''),
+('bussNoType', '0002', '結案日期'           , 1, 'N', 'CloseDate'       , GETDATE(), ''),
+('bussNoType', '0003', '被保人ID'           , 1, 'N', 'InsuredId'       , GETDATE(), ''),
+('bussNoType', '0004', '保戶ID'             , 1, 'N', 'MainId'			, GETDATE(), ''),
+('bussNoType', '0005', '保單號碼'           , 1, 'N', 'PolicyId'        , GETDATE(), ''),
+('bussNoType', '0006', '掃描案號'           , 1, 'N', 'ExtScanNumber'   , GETDATE(), ''),
+('bussNoType', '0007', '製表日期'           , 1, 'N', 'FormDate'        , GETDATE(), ''),
+('bussNoType', '0008', '處理批次號'         , 1, 'N', 'ProcBatchNumber' , GETDATE(), ''),
+('bussNoType', '0101', '照會序號'           , 1, 'N', 'NotifyNo'        , GETDATE(), ''),
+('bussNoType', '0201', '保全通知書號'       , 1, 'N', 'PosInfoDocNumber', GETDATE(), ''),
+('bussNoType', '0202', '保全受理號'         , 1, 'N', 'POSNumber'       , GETDATE(), ''),
+('bussNoType', '0203', '實付號'             , 1, 'N', 'PosPaidNumber'   , GETDATE(), ''),
+('bussNoType', '0204', '收件日期'           , 1, 'N', 'VaryDate'        , GETDATE(), ''),
+('bussNoType', '0301', '事故人ID'           , 1, 'N', 'AccidentId'      , GETDATE(), ''),
+('bussNoType', '0302', '理賠賠案號'         , 1, 'N', 'ClaimNumber'     , GETDATE(), ''),
+('bussNoType', '0303', '智能編號'           , 1, 'N', 'IntelleiNumber'  , GETDATE(), ''),
+('bussNoType', '0401', '業務員ID'           , 1, 'N', 'SalesId'         , GETDATE(), ''),
+('bussNoType', '0501', '再保原始合約碼'     , 1, 'N', 'RiContractNumber', GETDATE(), ''),
+('bussNoType', '0502', '再保公司編碼'       , 1, 'N', 'RiCompanyId'     , GETDATE(), ''),
+('bussNoType', '0503', '再保請款單號'       , 1, 'N', 'RiInvoiceNumber' , GETDATE(), ''),
+('bussNoType', '0504', '臨分方案編碼'       , 1, 'N', 'RiProjNumber'    , GETDATE(), ''),
+('bussNoType', '0601', '所得年度'           , 1, 'N', 'IncomeYear'      , GETDATE(), ''),
+('bussNoType', '0602', '業務員身分證字號'   , 1, 'N', 'AgentID'         , GETDATE(), ''),
+('bussNoType', '0009', '授權書條碼      '   , 1, 'N', 'PaidSerialNo'    , GETDATE(), '')
+
+GO
+
+if not exists(select * from CodeType where [Type] = 'ncsParameter')
+begin
+    insert into CodeType Values ('ncsParameter', 'LIS 核心創建工作流參數', 'N', 'C', GETDATE(), '')
+end
+
+delete CodeData where [Type] = 'ncsParameter'
+
+insert into CodeData (Type, Code, Description, Seq, SuspendFlg, Remark01, ModifiedTime, ModifiedUser) values 
+(
+    'ncsParameter', 'LNQ', '視訊生存調查系統', 1, 'N', 
+    '{
+        "inputType": "04",
+        "workflowType": "",
+        "projectType": "",
+        "urgent": "",
+        "sourceCase": "P",
+        "bussNoList": [
+            "0101"
+        ],
+        "taskType": "01",
+        "scanType": "ONL"
+    }'
+    , GETDATE(), 'SysAdmin'
+)
+,
+(
+    'ncsParameter', 'MNB', '行動保2.0', 2, 'N', 
+    '{
+        "inputType": "02",
+        "workflowType": "",
+        "projectType": "",
+        "urgent": "",
+        "sourceCase": "E",
+        "bussNoList": [
+            "0005"
+        ],
+        "taskType": "01",
+        "scanType": "ONL"
+    }'
+    , GETDATE(), 'SysAdmin'
+)
+,
+(
+    'ncsParameter', 'CTCBNB', '中信銀行動保', 3, 'N', 
+    '{
+        "inputType": "02",
+        "workflowType": "",
+        "projectType": "",
+        "urgent": "",
+        "sourceCase": "E",
+        "bussNoList": [
+            "0005"
+        ],
+        "taskType": "01",
+        "scanType": "ONL"
+    }'
+    , GETDATE(), 'SysAdmin'
+)
+,
+(
+    'ncsParameter', 'ENNB', '電子照會回覆平台（NB）', 4, 'N', 
+    '{
+        "inputType": "04",
+        "workflowType": "",
+        "projectType": "",
+        "urgent": "",
+        "sourceCase": "E",
+        "bussNoList": [
+            "0101"
+        ],
+        "taskType": "01",
+        "scanType": "ONL"
+    }'
+    , GETDATE(), 'SysAdmin'
+)
+,
+(
+    'ncsParameter', 'ENPOS', '電子照會回覆平台（POS）', 5, 'N', 
+    '{
+        "inputType": "04",
+        "workflowType": "",
+        "projectType": "",
+        "urgent": "",
+        "sourceCase": "E",
+        "bussNoList": [
+            "0101"
+        ],
+        "taskType": "02",
+        "scanType": "ONL"
+    }'
+    , GETDATE(), 'SysAdmin'
+)
+,
+(
+    'ncsParameter', 'ENCLM', '電子照會回覆平台（CLM）', 6, 'N', 
+    '{
+        "inputType": "04",
+        "workflowType": "",
+        "projectType": "",
+        "urgent": "",
+        "sourceCase": "E",
+        "bussNoList": [
+            "0101"
+        ],
+        "taskType": "03",
+        "scanType": "ONL"
+    }'
+    , GETDATE(), 'SysAdmin'
+)
+,
+(
+    'ncsParameter', 'WNB', '網路投保', 7, 'N', 
+    '{
+        "inputType": "02",
+        "workflowType": "",
+        "projectType": "",
+        "urgent": "",
+        "sourceCase": "E",
+        "bussNoList": [
+            "0005"
+        ],
+        "taskType": "01",
+        "scanType": "ONL"
+    }'
+    , GETDATE(), 'SysAdmin'
+)
+,
+(
+    'ncsParameter', 'BKNB', '銀保保經代網路投保 Adapter', 8, 'N', 
+    '{
+        "inputType": "02",
+        "workflowType": "",
+        "projectType": "",
+        "urgent": "",
+        "sourceCase": "E",
+        "bussNoList": [
+            "0005"
+        ],
+        "taskType": "01",
+        "scanType": "ONL"
+    }'
+    , GETDATE(), 'SysAdmin'
+)
+,
+(
+    'ncsParameter', 'CTCBNN', '中信銀行動保照會回覆', 9, 'N', 
+    '{
+        "inputType": "04",
+        "workflowType": "",
+        "projectType": "",
+        "urgent": "",
+        "sourceCase": "E",
+        "bussNoList": [
+            "0101"
+        ],
+        "taskType": "01",
+        "scanType": "ONL"
+    }'
+    , GETDATE(), 'SysAdmin'
+)
+
+insert into CodeData (Type, Code, Description, Seq, SuspendFlg, Remark01, ModifiedTime, ModifiedUser) values 
+(
+    'ncsParameter', 'LISNB1', 'LIS-NB 新件', 1, 'N', 
+    '{
+        "inputType": "01",
+        "workflowType": "",
+        "projectType": "",
+        "urgent": "",
+        "sourceCase": "P",
+        "bussNoList": [
+            "0006"
+        ],
+        "taskType": "01",
+        "scanType": "LISNB1"
+    }'
+    , GETDATE(), 'SysAdmin'
+)
+,
+(
+    'ncsParameter', 'LISNB2', 'LIS-NB 照會', 1, 'N', 
+    '{
+        "inputType": "04",
+        "workflowType": "",
+        "projectType": "",
+        "urgent": "",
+        "sourceCase": "P",
+        "bussNoList": [
+            "0101"
+        ],
+        "taskType": "01",
+        "scanType": "LISNB2"
+    }'
+    , GETDATE(), 'SysAdmin'
+)
+,
+(
+    'ncsParameter', 'LISNB3', 'LIS-NB 補件', 1, 'N', 
+    '{
+        "inputType": "03",
+        "workflowType": "",
+        "projectType": "",
+        "urgent": "",
+        "sourceCase": "P",
+        "bussNoList": [
+            "0005"
+        ],
+        "taskType": "01",
+        "scanType": "LISNB3"
+    }'
+    , GETDATE(), 'SysAdmin'
+)
+,
+(
+    'ncsParameter', 'LISNB4', 'LIS-NB 結案後掃描', 1, 'N', 
+    '{
+        "inputType": "02",
+        "workflowType": "",
+        "projectType": "",
+        "urgent": "",
+        "sourceCase": "P",
+        "bussNoList": [
+            "0005"
+        ],
+        "taskType": "01",
+        "scanType": "LISNB4"
+    }'
+    , GETDATE(), 'SysAdmin'
+)
+,
+(
+    'ncsParameter', 'LISPOS1', 'POS-新件', 1, 'N', 
+    '{
+        "inputType": "01",
+        "workflowType": "",
+        "projectType": "",
+        "urgent": "",
+        "sourceCase": "P",
+        "bussNoList": [
+            "0005"
+        ],
+        "taskType": "02",
+        "scanType": "LISPOS1"
+    }'
+    , GETDATE(), 'SysAdmin'
+)
+,
+(
+    'ncsParameter', 'LISPOS2', 'POS-照會', 1, 'N', 
+    '{
+        "inputType": "04",
+        "workflowType": "",
+        "projectType": "",
+        "urgent": "",
+        "sourceCase": "P",
+        "bussNoList": [
+            "0005",
+            "0101",
+            "0202"
+        ],
+        "taskType": "02",
+        "scanType": "LISPOS2"
+    }'
+    , GETDATE(), 'SysAdmin'
+)
+,
+(
+    'ncsParameter', 'LISPOS3', 'POS-補件', 1, 'N', 
+    '{
+        "inputType": "03",
+        "workflowType": "",
+        "projectType": "",
+        "urgent": "",
+        "sourceCase": "P",
+        "bussNoList": [
+            "0005",
+            "0202"
+        ],
+        "taskType": "02",
+        "scanType": "LISPOS3"
+    }'
+    , GETDATE(), 'SysAdmin'
+)
+,
+(
+    'ncsParameter', 'LISPOS4', 'POS-後掃', 1, 'N', 
+    '{
+        "inputType": "02",
+        "workflowType": "",
+        "projectType": "",
+        "urgent": "",
+        "sourceCase": "P",
+        "bussNoList": [
+            "0005",
+            "0202"
+        ],
+        "taskType": "02",
+        "scanType": "LISPOS4"
+    }'
+    , GETDATE(), 'SysAdmin'
+)
+,
+(
+    'ncsParameter', 'LISCLM2', '理賠-照會', 1, 'N', 
+    '{
+        "inputType": "04",
+        "workflowType": "",
+        "projectType": "",
+        "urgent": "",
+        "sourceCase": "P",
+        "bussNoList": [
+            "0101"
+        ],
+        "taskType": "03",
+        "scanType": "LISCLM2"
+    }'
+    , GETDATE(), 'SysAdmin'
+)
+,
+(
+    'ncsParameter', 'LISCLM3', '理賠-補件', 1, 'N', 
+    '{
+        "inputType": "03",
+        "workflowType": "",
+        "projectType": "",
+        "urgent": "",
+        "sourceCase": "P",
+        "bussNoList": [
+            "0302"
+        ],
+        "taskType": "03",
+        "scanType": "LISCLM3"
+    }'
+    , GETDATE(), 'SysAdmin'
+)
+,
+(
+    'ncsParameter', 'LISCLM4', '理賠-結案後掃', 1, 'N', 
+    '{
+        "inputType": "02",
+        "workflowType": "",
+        "projectType": "",
+        "urgent": "",
+        "sourceCase": "P",
+        "bussNoList": [
+            "0302"
+        ],
+        "taskType": "03",
+        "scanType": "LISCLM4"
+    }'
+    , GETDATE(), 'SysAdmin'
+)
+,
+(
+    'ncsParameter', 'LISNB5', 'NB-契撤', 1, 'N', 
+    '{
+        "inputType": "01",
+        "workflowType": "",
+        "projectType": "",
+        "urgent": "",
+        "sourceCase": "P",
+        "bussNoList": [
+            "0005"
+        ],
+        "taskType": "01",
+        "scanType": "LISNB5"
+    }'
+    , GETDATE(), 'SysAdmin'
+)
+,
+(
+    'ncsParameter', 'LISRPA', '保費-轉帳授權書', 1, 'N', 
+    '{
+        "inputType": "02",
+        "workflowType": "",
+        "projectType": "",
+        "urgent": "",
+        "sourceCase": "P",
+        "bussNoList": [
+            "0009"
+        ],
+        "taskType": "05",
+        "scanType": "LISRPA"
+    }'
+    , GETDATE(), 'SysAdmin'
+)
