@@ -1,232 +1,52 @@
 USE [ezAcquire]
 GO
-DELETE FROM [dbo].[CodeData]
+DELETE FROM [dbo].[CodeType]
 GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'AvailableStatus', N'N', N'停用', 2, N'N', NULL, NULL, CAST(N'2020-11-16T09:38:39.3933333' AS DateTime2), N'201456', NULL)
+INSERT [dbo].[CodeType] ([Type], [Description], [SuspendFlg], [Category], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'AvailableStatus', N'啟用狀態', N'N', N'S', CAST(N'2020-11-16T09:36:13.9400000' AS DateTime2), N'201456', NULL)
 GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'AvailableStatus', N'S', N'待機', 3, N'N', NULL, NULL, CAST(N'2020-11-16T09:38:56.3433333' AS DateTime2), N'201456', NULL)
+INSERT [dbo].[CodeType] ([Type], [Description], [SuspendFlg], [Category], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'BusinessType', N'業務別', N'N', N'S', NULL, NULL, NULL)
 GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'AvailableStatus', N'Y', N'啟用', 1, N'N', NULL, NULL, CAST(N'2021-01-12T11:06:20.6000000' AS DateTime2), N'201456', NULL)
+INSERT [dbo].[CodeType] ([Type], [Description], [SuspendFlg], [Category], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'ChaogunType', N'string1', N'Y', N'C', CAST(N'2021-01-07T10:01:03.2633333' AS DateTime2), N'201456', NULL)
 GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'BusinessType', N'CLM', N'理賠', 3, N'N', NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[CodeType] ([Type], [Description], [SuspendFlg], [Category], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'CommitStatus', N'掃描處理狀態', N'N', N'S', CAST(N'2020-11-09T11:05:51.8600000' AS DateTime2), N'201456', NULL)
 GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'BusinessType', N'NBS', N'新契約', 1, N'N', NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[CodeType] ([Type], [Description], [SuspendFlg], [Category], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'DeviceStatus', N'設備狀態', N'N', N'S', CAST(N'2020-11-09T10:49:50.5300000' AS DateTime2), N'201456', NULL)
 GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'BusinessType', N'PAY', N'保費', 4, N'N', NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[CodeType] ([Type], [Description], [SuspendFlg], [Category], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'DocumentStatus', N'文件狀態', N'N', N'S', CAST(N'2020-11-16T09:49:52.9233333' AS DateTime2), N'201456', NULL)
 GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'BusinessType', N'POS', N'保服', 2, N'N', NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[CodeType] ([Type], [Description], [SuspendFlg], [Category], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'DocumentType', N'文件類別', N'N', N'S', CAST(N'2020-11-16T09:52:02.7500000' AS DateTime2), N'201456', NULL)
 GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'CommitStatus', N'E1', N'取檔失敗', 2, N'N', N'（掃描工作站）', NULL, NULL, NULL, NULL)
+INSERT [dbo].[CodeType] ([Type], [Description], [SuspendFlg], [Category], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'G_G', N'TestGG', N'Y', N'S', CAST(N'2020-11-16T09:49:09.9600000' AS DateTime2), N'201456', NULL)
 GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'CommitStatus', N'E2', N'上傳失敗', 3, N'N', N'（ScanStation to CommitServer）', NULL, NULL, NULL, NULL)
+INSERT [dbo].[CodeType] ([Type], [Description], [SuspendFlg], [Category], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'IndexDataType', N'索引資料類型', N'N', N'S', NULL, NULL, NULL)
 GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'CommitStatus', N'E3', N'入櫃失敗', 5, N'N', N'（Commit to ImageServer）', NULL, NULL, NULL, NULL)
+INSERT [dbo].[CodeType] ([Type], [Description], [SuspendFlg], [Category], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'InputType', N'輸入類型', N'N', N'S', NULL, NULL, NULL)
 GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'CommitStatus', N'S1', N'品管完成', 1, N'N', NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[CodeType] ([Type], [Description], [SuspendFlg], [Category], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'InputValidator', N'輸入限制', N'N', N'S', NULL, NULL, NULL)
 GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'CommitStatus', N'S2', N'上傳完成', 4, N'N', N'（ScanStation to CommitServer）', NULL, NULL, NULL, NULL)
+INSERT [dbo].[CodeType] ([Type], [Description], [SuspendFlg], [Category], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'LisCompanyCodeMapping', N'LIS 核心分公司代碼對應', N'N', N'C', CAST(N'2021-05-12T10:35:24.7166667' AS DateTime2), N'SysAdmin', N'9DD90521-3F06-424D-AEA4-B6BF23B552BB')
 GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'CommitStatus', N'S3', N'入櫃完成', 6, N'N', N'（Commit to ImageServer）', NULL, NULL, NULL, NULL)
+INSERT [dbo].[CodeType] ([Type], [Description], [SuspendFlg], [Category], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'PreScanTypeMap', N'前掃平台掃描種類對應', N'N', N'C', CAST(N'2021-05-12T10:40:53.2166667' AS DateTime2), N'SysAdmin', N'80A3B85C-7E84-4382-8C99-F5C157BF5790')
 GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'CommitStatus', N'S4', N'資料確認', 7, N'N', N'（更新掃描明細報表）', NULL, NULL, NULL, NULL)
+INSERT [dbo].[CodeType] ([Type], [Description], [SuspendFlg], [Category], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'PreScanWorkstationMap', N'前掃工作站公司別對應', N'N', N'C', CAST(N'2021-05-12T10:38:28.7400000' AS DateTime2), N'SysAdmin', N'1D72A6EF-D683-4DBF-BA90-B89CAC270612')
 GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'DeviceStatus', N'E', N'異常', 2, N'N', NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[CodeType] ([Type], [Description], [SuspendFlg], [Category], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryAction', N'查詢調閱動作', N'N', N'S', CAST(N'2020-12-30T14:46:37.0933333' AS DateTime2), N'201456', NULL)
 GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'DeviceStatus', N'N', N'正常', 1, N'N', NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[CodeType] ([Type], [Description], [SuspendFlg], [Category], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'RegisterStatus', N'註冊狀態', N'N', N'S', NULL, NULL, NULL)
 GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'DeviceStatus', N'O', N'離線', 3, N'N', NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[CodeType] ([Type], [Description], [SuspendFlg], [Category], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'ScanLocation', N'掃描地點', N'N', N'C', CAST(N'2021-01-12T10:58:59.2166667' AS DateTime2), N'201456', NULL)
 GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'DocumentStatus', N'A', N'可存取', 1, N'N', NULL, NULL, CAST(N'2020-11-16T09:50:10.5166667' AS DateTime2), N'201456', NULL)
+INSERT [dbo].[CodeType] ([Type], [Description], [SuspendFlg], [Category], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'SignatureType', N'簽名類別', N'Y', N'C', CAST(N'2020-07-13T14:08:06.5000000' AS DateTime2), N'ElenaLin', NULL)
 GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'DocumentStatus', N'C', N'關閉', 2, N'N', NULL, NULL, CAST(N'2020-11-16T09:50:21.4366667' AS DateTime2), N'201456', NULL)
+INSERT [dbo].[CodeType] ([Type], [Description], [SuspendFlg], [Category], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'SubscribeStatus', N'訂閱狀態', N'N', N'S', CAST(N'2021-01-25T09:49:32.0700000' AS DateTime2), N'201456', NULL)
 GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'DocumentStatus', N'H', N'隱藏', 3, N'N', NULL, NULL, CAST(N'2020-11-16T09:50:43.0333333' AS DateTime2), N'201456', NULL)
+INSERT [dbo].[CodeType] ([Type], [Description], [SuspendFlg], [Category], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'SysOwner', N'系統負責人', N'N', N'C', CAST(N'2021-03-23T11:50:31.3533333' AS DateTime2), N'SysAdmin', NULL)
 GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'DocumentType', N'D', N'有影像有實體', 1, N'N', NULL, NULL, CAST(N'2020-11-16T09:53:04.7466667' AS DateTime2), N'201456', NULL)
+INSERT [dbo].[CodeType] ([Type], [Description], [SuspendFlg], [Category], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'View_Form', N'表單', N'N', N'S', NULL, NULL, NULL)
 GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'DocumentType', N'E', N'有影像沒實體', 2, N'N', NULL, NULL, CAST(N'2020-11-16T09:53:16.5500000' AS DateTime2), N'201456', NULL)
+INSERT [dbo].[CodeType] ([Type], [Description], [SuspendFlg], [Category], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'View_ScanType', N'掃描管道', N'N', N'S', CAST(N'2020-11-24T17:25:05.8866667' AS DateTime2), N'201456', NULL)
 GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'DocumentType', N'P', N'有實體沒影像', 3, N'N', NULL, NULL, CAST(N'2020-11-16T09:54:02.7333333' AS DateTime2), N'201456', NULL)
+INSERT [dbo].[CodeType] ([Type], [Description], [SuspendFlg], [Category], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'View_Unit', N'單位', N'N', N'S', CAST(N'2020-11-24T17:27:40.3400000' AS DateTime2), N'201456', NULL)
 GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'IndexDataType', N'1', N'數字', 1, N'N', NULL, NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'IndexDataType', N'2', N'字串', 2, N'N', NULL, NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'IndexDataType', N'3', N'日期', 3, N'N', NULL, NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'IndexDataType', N'4', N'布林', 4, N'N', NULL, NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'InputType', N'Checkbox', N'多選選單', 4, N'N', NULL, NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'InputType', N'ComboBox', N'下拉選單', 3, N'N', NULL, NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'InputType', N'Date', N'日期', 6, N'N', NULL, NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'InputType', N'Number', N'數字框', 2, N'N', NULL, NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'InputType', N'RadioButton', N'單選選單', 5, N'N', NULL, NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'InputType', N'Textbox', N'文字框', 1, N'N', NULL, NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'InputValidator', N'01', N'數字0、數字1', 2, N'N', N'this.value=this.value.replace(/[^0-1]/g,'''');', NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'InputValidator', N'9', N'數字', 3, N'N', N'this.value=this.value.replace(/\D/g,'''');', NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'InputValidator', N'9Dash', N'數字、橫線', 4, N'N', N'this.value=this.value.replace(/[^\d-]/g,'''');', NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'InputValidator', N'9Dot', N'數字、點', 5, N'N', N'this.value=this.value.replace(/[^\d.]/g,'''');', NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'InputValidator', N'a9_', N'小寫字母、數字、底線', 6, N'N', N'this.value=this.value.replace(/[^a-z0-9_]/g,'''');', NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'InputValidator', N'Aa', N'大小寫字母', 7, N'N', N'this.value=this.value.replace(/[^a-zA-Z]/g,'''');', NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'InputValidator', N'Aa9', N'大小寫字母、數字', 8, N'N', N'this.value=this.value.replace(/[\W]/g,'''');', NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'InputValidator', N'Aa9,', N'大小寫字母、數字、逗號', 11, N'N', N'this.value=this.value.replace(/[\W][,]/g,'''');', NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'InputValidator', N'Aa9_', N'大小寫字母、數字、底線', 9, N'N', N'this.value=this.value.replace(/[^\w_]/g,'''');', NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'InputValidator', N'Aa9_Dot', N'大小寫字母、數字、底線、點', 10, N'N', N'this.value=this.value.replace(/[^\w_]/g,'''');', NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'InputValidator', N'CH', N'中文', 12, N'N', N'this.value=this.value.replace(/[^\u4e00-\u9fa5]/g,'''');', NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'InputValidator', N'CHAa9', N'中文、大小寫字母、數字', 13, N'N', N'this.value=this.value.replace(/[^\w\u4E00-\u9FA5]/g, '''');', NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'InputValidator', N'CHAa9P', N'中文、大小寫字母、數字、中文標點、(英文標點)', 14, N'N', N'this.value=this.value.replace(/^[^!@#$%^&*()-= ]/g,'''');', NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'InputValidator', N'None', N'無', 1, N'N', N'', NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'LisCompanyCodeMapping', N'1', N'9300', 4, N'Y', N'台中', N'', CAST(N'2021-05-12T10:37:38.3200000' AS DateTime2), N'SysAdmin', N'E8D54899-022F-4649-889E-FD6435C994CA')
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'LisCompanyCodeMapping', N'51', N'9100', 2, N'N', N'台北', N'', CAST(N'2021-05-12T10:37:12.3333333' AS DateTime2), N'SysAdmin', N'E795EC13-30B1-442F-B649-FE9EA6F40166')
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'LisCompanyCodeMapping', N'56', N'9200', 3, N'N', N'新竹', N'', CAST(N'2021-05-12T10:37:12.3566667' AS DateTime2), N'SysAdmin', N'E795EC13-30B1-442F-B649-FE9EA6F40166')
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'LisCompanyCodeMapping', N'61', N'9300', 4, N'N', N'台中', N'', CAST(N'2021-05-12T10:37:38.3366667' AS DateTime2), N'SysAdmin', N'E8D54899-022F-4649-889E-FD6435C994CA')
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'LisCompanyCodeMapping', N'66', N'9400', 5, N'N', N'嘉義', N'', CAST(N'2021-05-12T10:37:12.3766667' AS DateTime2), N'SysAdmin', N'E795EC13-30B1-442F-B649-FE9EA6F40166')
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'LisCompanyCodeMapping', N'71', N'9500', 6, N'N', N'台南', N'', CAST(N'2021-05-12T10:37:12.3900000' AS DateTime2), N'SysAdmin', N'E795EC13-30B1-442F-B649-FE9EA6F40166')
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'LisCompanyCodeMapping', N'76', N'9600', 7, N'N', N'高雄', N'', CAST(N'2021-05-12T10:37:12.4000000' AS DateTime2), N'SysAdmin', N'E795EC13-30B1-442F-B649-FE9EA6F40166')
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'LisCompanyCodeMapping', N'81', N'9700', 8, N'N', N'東部', N'', CAST(N'2021-05-12T10:37:12.4100000' AS DateTime2), N'SysAdmin', N'E795EC13-30B1-442F-B649-FE9EA6F40166')
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'LisCompanyCodeMapping', N'88', N'9000', 1, N'N', N'總公司', N'', CAST(N'2021-05-12T10:35:41.4833333' AS DateTime2), N'SysAdmin', N'006B88D1-C460-42EA-9095-647E4E56B999')
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'PreScanTypeMap', N'LISCLM1', N'SCT31', 5, N'N', N'理賠個險', N'', CAST(N'2021-05-12T10:41:58.9366667' AS DateTime2), N'SysAdmin', N'020F9202-7A17-4CAF-ADF5-A3F51310D633')
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'PreScanTypeMap', N'LISCLM2', N'SCT35', 6, N'N', N'理賠照會', N'', CAST(N'2021-05-12T10:42:13.5700000' AS DateTime2), N'SysAdmin', N'83821FB9-B96E-4638-A202-AA2CD6CD2021')
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'PreScanTypeMap', N'LISCLM3', N'SCT35', 7, N'N', N'理賠補件', N'', CAST(N'2021-05-12T10:42:26.9766667' AS DateTime2), N'SysAdmin', N'EFE404DD-EAF3-44D6-82CA-F2A463F11A1D')
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'PreScanTypeMap', N'LISCLM4', N'SCT36', 8, N'N', N'理賠結案補掃', N'', CAST(N'2021-05-12T10:42:41.3366667' AS DateTime2), N'SysAdmin', N'F6E05886-B5DC-4B73-AD9A-06EDC6AAECE8')
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'PreScanTypeMap', N'LISPOS1', N'SCT21', 1, N'N', N'保服新件', N'', CAST(N'2021-05-12T10:41:11.9100000' AS DateTime2), N'SysAdmin', N'D75C19BF-6A80-46AC-8C75-38296B59763F')
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'PreScanTypeMap', N'LISPOS2', N'SCT23', 2, N'N', N'保服照會', N'', CAST(N'2021-05-12T10:41:21.4666667' AS DateTime2), N'SysAdmin', N'E37D71BC-3D65-4268-9DCF-F1B7BAA26149')
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'PreScanTypeMap', N'LISPOS3', N'SCT23', 3, N'N', N'保服補件', N'', CAST(N'2021-05-12T10:41:34.4000000' AS DateTime2), N'SysAdmin', N'C9D11D1B-6D59-4B2D-9C5A-C442398687B1')
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'PreScanTypeMap', N'LISPOS4', N'SCT24', 4, N'N', N'保服結案後掃', N'', CAST(N'2021-05-12T10:41:48.9766667' AS DateTime2), N'SysAdmin', N'6E9DBF53-E6E4-49BC-A934-DD0DD20A2660')
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'PreScanWorkstationMap', N'51', N'B1', 2, N'N', N'台北', N'', CAST(N'2021-05-12T10:40:28.6900000' AS DateTime2), N'SysAdmin', N'F552CAA1-3DBC-435A-B319-DE8E33008FE6')
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'PreScanWorkstationMap', N'56', N'C1', 3, N'N', N'新竹', N'', CAST(N'2021-05-12T10:40:28.7000000' AS DateTime2), N'SysAdmin', N'F552CAA1-3DBC-435A-B319-DE8E33008FE6')
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'PreScanWorkstationMap', N'61', N'D1', 4, N'N', N'台中', N'', CAST(N'2021-05-12T10:40:28.7100000' AS DateTime2), N'SysAdmin', N'F552CAA1-3DBC-435A-B319-DE8E33008FE6')
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'PreScanWorkstationMap', N'66', N'F1', 5, N'N', N'嘉義', N'', CAST(N'2021-05-12T10:40:28.7166667' AS DateTime2), N'SysAdmin', N'F552CAA1-3DBC-435A-B319-DE8E33008FE6')
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'PreScanWorkstationMap', N'71', N'E1', 6, N'N', N'台南', N'', CAST(N'2021-05-12T10:40:28.7233333' AS DateTime2), N'SysAdmin', N'F552CAA1-3DBC-435A-B319-DE8E33008FE6')
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'PreScanWorkstationMap', N'76', N'G1', 7, N'N', N'高雄', N'', CAST(N'2021-05-12T10:40:28.7400000' AS DateTime2), N'SysAdmin', N'F552CAA1-3DBC-435A-B319-DE8E33008FE6')
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'PreScanWorkstationMap', N'81', N'H1', 8, N'N', N'東部', N'', CAST(N'2021-05-12T10:40:28.7500000' AS DateTime2), N'SysAdmin', N'F552CAA1-3DBC-435A-B319-DE8E33008FE6')
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'PreScanWorkstationMap', N'88', N'A1', 1, N'N', N'總公司', N'', CAST(N'2021-05-12T10:40:28.6800000' AS DateTime2), N'SysAdmin', N'F552CAA1-3DBC-435A-B319-DE8E33008FE6')
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryAction', N'001', N'查詢', 1, N'N', N'QueryDoc', NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryAction', N'002', N'檢視', 2, N'N', N'ViewDoc', NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryAction', N'003', N'列印', 3, N'N', N'PrintDoc', NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryAction', N'004', N'修改索引', 4, N'N', N'ModifyIndex', NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryAction', N'005', N'隱藏影像', 5, N'N', N'HideDoc', NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryAction', N'006', N'關閉影像', 6, N'N', N'CloseDoc', NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryAction', N'007', N'刪除影像', 7, N'N', N'DeleteDoc', NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryAction', N'008', N'申請重掃', 8, N'N', N'Rescan', NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryAction', N'009', N'申請補掃', 9, N'N', N'AppendScan', NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryAction', N'010', N'影像註記', 10, N'N', N'Annotation', NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryType', N'Checkbox', N'多選選單', 4, N'N', NULL, NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryType', N'ComboBox', N'下拉選單', 3, N'N', NULL, NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryType', N'Date', N'日期', 8, N'N', NULL, NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryType', N'DateRange', N'日期區間', 9, N'N', NULL, NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryType', N'DateTime', N'日期時間', 12, N'N', NULL, NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryType', N'DateTimeRange', N'日期時間區間', 13, N'N', NULL, NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryType', N'Number', N'數字框', 2, N'N', NULL, NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryType', N'NumberRange', N'數字區間', 7, N'N', NULL, NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryType', N'RadioButton', N'單選選單', 5, N'N', NULL, NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryType', N'Textbox', N'文字框', 1, N'N', NULL, NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryType', N'TextboxRange', N'字串區間', 6, N'N', NULL, NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryType', N'Time', N'時間', 10, N'N', NULL, NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryType', N'TimeRange', N'時間區間', 11, N'N', NULL, NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'RegisterStatus', N'C', N'完成註冊', 1, N'N', NULL, NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'RegisterStatus', N'D', N'註銷', 4, N'N', NULL, NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'RegisterStatus', N'M', N'更換機器', 3, N'N', NULL, NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'RegisterStatus', N'U', N'變更單位', 2, N'N', NULL, NULL, NULL, NULL, NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'ScanLocation', N'01', N'總公司', 1, N'N', NULL, NULL, CAST(N'2021-01-07T10:04:40.5466667' AS DateTime2), N'201456', NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'ScanLocation', N'02', N'台北分公司', 2, N'N', NULL, NULL, CAST(N'2021-01-07T10:04:40.5500000' AS DateTime2), N'201456', NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'ScanLocation', N'03', N'高雄分公司', 3, N'N', NULL, NULL, CAST(N'2021-01-07T10:04:40.5500000' AS DateTime2), N'201456', NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'ScanLocation', N'04', N'台中分公司', 4, N'N', NULL, NULL, CAST(N'2021-01-07T10:04:40.5500000' AS DateTime2), N'201456', NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'ScanLocation', N'05', N'花蓮分公司', 5, N'N', NULL, NULL, CAST(N'2021-01-07T10:04:40.5533333' AS DateTime2), N'201456', NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'ScanLocation', N'06', N'桃園分公司', 6, N'N', NULL, NULL, CAST(N'2021-01-07T10:04:40.5533333' AS DateTime2), N'201456', NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'ScanLocation', N'07', N'台南分公司', 7, N'N', NULL, NULL, CAST(N'2021-01-07T10:04:40.5566667' AS DateTime2), N'201456', NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'ScanLocation', N'08', N'新竹分公司', 8, N'N', NULL, NULL, CAST(N'2021-01-07T10:04:40.5566667' AS DateTime2), N'201456', NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'SubscribeStatus', N'A', N'使用中', 1, N'N', NULL, NULL, CAST(N'2021-01-25T09:50:52.2866667' AS DateTime2), N'201456', NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'SubscribeStatus', N'E', N'過期', 2, N'N', NULL, NULL, CAST(N'2021-01-25T09:50:58.8366667' AS DateTime2), N'201456', NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'SubscribeStatus', N'S', N'暫停', 3, N'N', NULL, NULL, CAST(N'2021-01-25T09:51:07.1400000' AS DateTime2), N'201456', NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'SysOwner', N'701383', N'701383@taiwanlife.com', 1, N'N', NULL, NULL, CAST(N'2021-03-23T11:51:10.4533333' AS DateTime2), N'SysAdmin', NULL)
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'SysOwner', N'ericyang', N'eric.yang@taiwanlife.com', 4, N'N', N'', N'', CAST(N'2021-05-07T16:15:12.4700000' AS DateTime2), N'SysAdmin', N'108D7BD1-4709-4CD8-A33E-EBC4560D4B6C')
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'SysOwner', N'iveslin', N'ives.lin@taiwanlife.com', 3, N'N', N'', N'', CAST(N'2021-05-07T16:15:12.4566667' AS DateTime2), N'SysAdmin', N'108D7BD1-4709-4CD8-A33E-EBC4560D4B6C')
-GO
-INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'SysOwner', N'yichenlin', N'yichen.lin@taiwanlife.com', 2, N'N', N'', N'', CAST(N'2021-05-07T16:15:12.4466667' AS DateTime2), N'SysAdmin', N'108D7BD1-4709-4CD8-A33E-EBC4560D4B6C')
+INSERT [dbo].[CodeType] ([Type], [Description], [SuspendFlg], [Category], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'View_User', N'使用者帳號', N'N', N'S', CAST(N'2020-11-24T17:24:36.4033333' AS DateTime2), N'201456', NULL)
 GO
