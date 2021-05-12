@@ -1,487 +1,232 @@
-2021/05/11 18:37:07.638 [Debug]  <<OnlineImport>d__25> MoveNext                   -> Doing... FormId:N08P20 , Pages:8
-2021/05/11 18:37:11.259 [Debug]  <<OnlineImport>d__25> MoveNext                   -> 寫入成功 DocumentId:72057594037950965,FormId:N08P20,Pages:8
-2021/05/11 18:37:11.274 [Debug]  <<OnlineImport>d__25> MoveNext                   -> Doing... FormId:NE3600 , Pages:1
-2021/05/11 18:37:14.512 [Debug]  <<OnlineImport>d__25> MoveNext                   -> 寫入成功 DocumentId:72057594037950966,FormId:NE3600,Pages:1
-2021/05/11 18:37:14.529 [Debug]  <<OnlineImport>d__25> MoveNext                   -> Doing... FormId:NE2520 , Pages:1
-2021/05/11 18:37:17.624 [Debug]  <<OnlineImport>d__25> MoveNext                   -> 寫入成功 DocumentId:72057594037950967,FormId:NE2520,Pages:1
-2021/05/11 18:37:17.641 [Debug]  <<OnlineImport>d__25> MoveNext                   -> Doing... FormId:ND2420 , Pages:2
-2021/05/11 18:37:20.978 [Debug]  <<OnlineImport>d__25> MoveNext                   -> 寫入成功 DocumentId:72057594037950968,FormId:ND2420,Pages:2
-2021/05/11 18:37:20.998 [Debug]  <<OnlineImport>d__25> MoveNext                   -> Doing... FormId:ND0320 , Pages:1
-2021/05/11 18:37:23.915 [Debug]  <<OnlineImport>d__25> MoveNext                   -> 寫入成功 DocumentId:72057594037950969,FormId:ND0320,Pages:1
-2021/05/11 18:37:23.928 [Debug]  <<OnlineImport>d__25> MoveNext                   -> Doing... FormId:ND1420 , Pages:1
-2021/05/11 18:37:26.540 [Debug]  <<OnlineImport>d__25> MoveNext                   -> 寫入成功 DocumentId:72057594037950970,FormId:ND1420,Pages:1
-2021/05/11 18:37:26.553 [Debug]  <<OnlineImport>d__25> MoveNext                   -> Doing... FormId:ND0820 , Pages:1
-2021/05/11 18:37:29.296 [Debug]  <<OnlineImport>d__25> MoveNext                   -> 寫入成功 DocumentId:72057594037950971,FormId:ND0820,Pages:1
-2021/05/11 18:37:29.343 [Debug]  <<AddNcsTask>d__37> MoveNext                     -> Add NcsTask UID:73039605-a11f-4395-8131-f4b8db437ff8 Success
-
-
-
-2021/05/11 18:37:07.688 [Debug]  <<AddDocument>d__9> MoveNext                     -> [START] AddDocument
-2021/05/11 18:37:07.932 [Debug]  <IRClient> CreateDocFile                         -> 完成  DocFile 。(00:00:00.171)
-2021/05/11 18:37:08.338 [Debug]  <<AddDocument>d__9> MoveNext                     -> 寫IR成功DocId:72057594037950965... 花費00:00:00.349
-2021/05/11 18:37:08.407 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_31' DispName:'                        BRANCH' Value:''
-2021/05/11 18:37:08.475 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_32' DispName:'                      ISRESCAN' Value:''
-2021/05/11 18:37:08.523 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_33' DispName:'                      DOCORDER' Value:''
-2021/05/11 18:37:08.566 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_34' DispName:'                      ISBADDOC' Value:''
-2021/05/11 18:37:08.614 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_35' DispName:'                      ISREJECT' Value:'N'
-2021/05/11 18:37:08.659 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_36' DispName:'                        REMARK' Value:''
-2021/05/11 18:37:08.701 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_37' DispName:'                    REPLACEKEY' Value:''
-2021/05/11 18:37:08.751 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_38' DispName:'                       DOCNAME' Value:''
-2021/05/11 18:37:08.813 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_39' DispName:'                  ACCIDENTDATE' Value:''
-2021/05/11 18:37:08.857 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_40' DispName:'                    ACCIDENTID' Value:''
-2021/05/11 18:37:08.899 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_41' DispName:'                      CLAUSEID' Value:''
-2021/05/11 18:37:08.950 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_42' DispName:'                    CLAUSENAME' Value:''
-2021/05/11 18:37:08.998 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_43' DispName:'                CLMRECEIVEDATE' Value:''
-2021/05/11 18:37:09.038 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_44' DispName:'                     CLOSEDATE' Value:''
-2021/05/11 18:37:09.087 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_45' DispName:'                   COMPLAINNUM' Value:''
-2021/05/11 18:37:09.128 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_46' DispName:'                COMPLAINNUMBER' Value:''
-2021/05/11 18:37:09.166 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_47' DispName:'                     INSUREDID' Value:''
-2021/05/11 18:37:09.208 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_48' DispName:'                        MAINID' Value:'R153445832'
-2021/05/11 18:37:09.255 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_49' DispName:'                  PAIDSERIALNO' Value:''
-2021/05/11 18:37:09.294 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_50' DispName:'                      POLICYID' Value:'9000020768'
-2021/05/11 18:37:09.328 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_51' DispName:'                POLICYSERIALNO' Value:''
-2021/05/11 18:37:09.367 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_52' DispName:'                     POSNUMBER' Value:''
-2021/05/11 18:37:09.426 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_53' DispName:'                REGRECEIVEDATE' Value:''
-2021/05/11 18:37:09.485 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_54' DispName:'                   REGSENDDATE' Value:''
-2021/05/11 18:37:09.521 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_55' DispName:'                       SALESID' Value:''
-2021/05/11 18:37:09.557 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_56' DispName:'                         SNAME' Value:''
-2021/05/11 18:37:09.598 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_57' DispName:'                      VARYDATE' Value:''
-2021/05/11 18:37:09.641 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_58' DispName:'                   BLACKLISTNO' Value:''
-2021/05/11 18:37:09.686 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_59' DispName:'                         BOXNO' Value:''
-2021/05/11 18:37:09.738 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_60' DispName:'                   CLAIMNUMBER' Value:''
-2021/05/11 18:37:09.787 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_61' DispName:'                     COMPANYID' Value:''
-2021/05/11 18:37:09.842 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_62' DispName:'                   COMPANYNAME' Value:''
-2021/05/11 18:37:09.894 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_63' DispName:'              CLAUSEUPLOADUSER' Value:''
-2021/05/11 18:37:09.962 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_64' DispName:'                     SALESNOTE' Value:''
-2021/05/11 18:37:10.018 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_65' DispName:'                 SALESNOTEUSER' Value:''
-2021/05/11 18:37:10.065 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_66' DispName:'                 BLACKLISTNAME' Value:''
-2021/05/11 18:37:10.116 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_67' DispName:'                   VERSIONCODE' Value:''
-2021/05/11 18:37:10.156 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_68' DispName:'                   VERSIONNAME' Value:''
-2021/05/11 18:37:10.196 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_69' DispName:'                  REPLACEDOCID' Value:''
-2021/05/11 18:37:10.237 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_70' DispName:'                 SALESNOTEDATE' Value:''
-2021/05/11 18:37:10.289 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_71' DispName:'                   PROCESSUSER' Value:''
-2021/05/11 18:37:10.341 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_72' DispName:'                 EXTSCANNUMBER' Value:'20210511183707629d001'
-2021/05/11 18:37:10.383 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_73' DispName:'                      NOTIFYNO' Value:''
-2021/05/11 18:37:10.425 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_74' DispName:'                      EXTBOXNO' Value:''
-2021/05/11 18:37:10.480 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_75' DispName:'                      EXTDOCNO' Value:''
-2021/05/11 18:37:10.542 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_76' DispName:'                      FORMDATE' Value:''
-2021/05/11 18:37:10.590 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_77' DispName:'               PROCBATCHNUMBER' Value:''
-2021/05/11 18:37:10.627 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_78' DispName:'                 POSPAIDNUMBER' Value:''
-2021/05/11 18:37:10.663 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_79' DispName:'              RICONTRACTNUMBER' Value:''
-2021/05/11 18:37:10.696 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_80' DispName:'                   RICOMPANYID' Value:''
-2021/05/11 18:37:10.730 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_81' DispName:'               RIINVOICENUMBER' Value:''
-2021/05/11 18:37:10.766 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_82' DispName:'                  RIPROJNUMBER' Value:''
-2021/05/11 18:37:10.800 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_83' DispName:'                      FILENAME' Value:''
-2021/05/11 18:37:10.838 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_84' DispName:'              POSINFODOCNUMBER' Value:''
-2021/05/11 18:37:10.879 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_85' DispName:'                INTELLEINUMBER' Value:''
-2021/05/11 18:37:10.913 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_86' DispName:'                    INCOMEYEAR' Value:''
-2021/05/11 18:37:10.945 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_87' DispName:'                       AGENTID' Value:''
-2021/05/11 18:37:10.979 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> insertsql :  Insert into DocumentIndex(DocumentID, DocumentClassID, CreateDateTime, DocumentType, MimeType, Pages, Deleted, Status, FormID, ScanType, ScanUserId, ScanDateTime, VerifyUserId, VerifyDateTime, BatchNumber, I_31,I_32,I_33,I_34,I_35,I_36,I_37,I_38,I_39,I_40,I_41,I_42,I_43,I_44,I_45,I_46,I_47,I_48,I_49,I_50,I_51,I_52,I_53,I_54,I_55,I_56,I_57,I_58,I_59,I_60,I_61,I_62,I_63,I_64,I_65,I_66,I_67,I_68,I_69,I_70,I_71,I_72,I_73,I_74,I_75,I_76,I_77,I_78,I_79,I_80,I_81,I_82,I_83,I_84,I_85,I_86,I_87) values(@DocumentID, @DocumentClassID, @CreateDateTime, @DocumentType, @MimeType, @Pages, @Deleted, @Status, @FormID, @ScanType, @ScanUserId, @ScanDateTime, @VerifyUserId, @VerifyDateTime, @BatchNumber, @I_31,@I_32,@I_33,@I_34,@I_35,@I_36,@I_37,@I_38,@I_39,@I_40,@I_41,@I_42,@I_43,@I_44,@I_45,@I_46,@I_47,@I_48,@I_49,@I_50,@I_51,@I_52,@I_53,@I_54,@I_55,@I_56,@I_57,@I_58,@I_59,@I_60,@I_61,@I_62,@I_63,@I_64,@I_65,@I_66,@I_67,@I_68,@I_69,@I_70,@I_71,@I_72,@I_73,@I_74,@I_75,@I_76,@I_77,@I_78,@I_79,@I_80,@I_81,@I_82,@I_83,@I_84,@I_85,@I_86,@I_87)
-2021/05/11 18:37:11.013 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> Insert DocumentIndex row effect=1
-2021/05/11 18:37:11.048 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> Insert DocumentIndexExtension row effect=1
-2021/05/11 18:37:11.092 [Debug]  <<AddDocument>d__9> MoveNext                     -> InsertDocumentIndex&DocumentIndexExtension... 花費00:00:02.688
-2021/05/11 18:37:11.133 [Debug]  <<AddDocument>d__9> MoveNext                     -> Insert Success->DocumentID:72057594037950965
-2021/05/11 18:37:11.176 [Debug]  <<AddDocument>d__9> MoveNext                     -> Done... 花費00:00:03.427
-2021/05/11 18:37:11.216 [Debug]  <<AddDocument>d__9> MoveNext                     -> [END] AddDocument
-2021/05/11 18:37:11.304 [Debug]  <<AddDocument>d__9> MoveNext                     -> [START] AddDocument
-2021/05/11 18:37:11.360 [Debug]  <IRClient> CreateDocFile                         -> 完成  DocFile 。(00:00:00.017)
-2021/05/11 18:37:11.588 [Debug]  <<AddDocument>d__9> MoveNext                     -> 寫IR成功DocId:72057594037950966... 花費00:00:00.184
-2021/05/11 18:37:11.643 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_31' DispName:'                        BRANCH' Value:''
-2021/05/11 18:37:11.684 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_32' DispName:'                      ISRESCAN' Value:''
-2021/05/11 18:37:11.717 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_33' DispName:'                      DOCORDER' Value:''
-2021/05/11 18:37:11.754 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_34' DispName:'                      ISBADDOC' Value:''
-2021/05/11 18:37:11.808 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_35' DispName:'                      ISREJECT' Value:'N'
-2021/05/11 18:37:11.852 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_36' DispName:'                        REMARK' Value:''
-2021/05/11 18:37:11.896 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_37' DispName:'                    REPLACEKEY' Value:''
-2021/05/11 18:37:11.939 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_38' DispName:'                       DOCNAME' Value:''
-2021/05/11 18:37:11.987 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_39' DispName:'                  ACCIDENTDATE' Value:''
-2021/05/11 18:37:12.047 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_40' DispName:'                    ACCIDENTID' Value:''
-2021/05/11 18:37:12.125 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_41' DispName:'                      CLAUSEID' Value:''
-2021/05/11 18:37:12.176 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_42' DispName:'                    CLAUSENAME' Value:''
-2021/05/11 18:37:12.217 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_43' DispName:'                CLMRECEIVEDATE' Value:''
-2021/05/11 18:37:12.271 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_44' DispName:'                     CLOSEDATE' Value:''
-2021/05/11 18:37:12.322 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_45' DispName:'                   COMPLAINNUM' Value:''
-2021/05/11 18:37:12.364 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_46' DispName:'                COMPLAINNUMBER' Value:''
-2021/05/11 18:37:12.401 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_47' DispName:'                     INSUREDID' Value:''
-2021/05/11 18:37:12.437 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_48' DispName:'                        MAINID' Value:'R153445832'
-2021/05/11 18:37:12.498 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_49' DispName:'                  PAIDSERIALNO' Value:''
-2021/05/11 18:37:12.542 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_50' DispName:'                      POLICYID' Value:'9000020768'
-2021/05/11 18:37:12.580 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_51' DispName:'                POLICYSERIALNO' Value:''
-2021/05/11 18:37:12.620 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_52' DispName:'                     POSNUMBER' Value:''
-2021/05/11 18:37:12.667 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_53' DispName:'                REGRECEIVEDATE' Value:''
-2021/05/11 18:37:12.722 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_54' DispName:'                   REGSENDDATE' Value:''
-2021/05/11 18:37:12.779 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_55' DispName:'                       SALESID' Value:''
-2021/05/11 18:37:12.821 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_56' DispName:'                         SNAME' Value:''
-2021/05/11 18:37:12.856 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_57' DispName:'                      VARYDATE' Value:''
-2021/05/11 18:37:12.896 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_58' DispName:'                   BLACKLISTNO' Value:''
-2021/05/11 18:37:12.931 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_59' DispName:'                         BOXNO' Value:''
-2021/05/11 18:37:12.959 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_60' DispName:'                   CLAIMNUMBER' Value:''
-2021/05/11 18:37:12.990 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_61' DispName:'                     COMPANYID' Value:''
-2021/05/11 18:37:13.019 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_62' DispName:'                   COMPANYNAME' Value:''
-2021/05/11 18:37:13.054 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_63' DispName:'              CLAUSEUPLOADUSER' Value:''
-2021/05/11 18:37:13.095 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_64' DispName:'                     SALESNOTE' Value:''
-2021/05/11 18:37:13.145 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_65' DispName:'                 SALESNOTEUSER' Value:''
-2021/05/11 18:37:13.186 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_66' DispName:'                 BLACKLISTNAME' Value:''
-2021/05/11 18:37:13.229 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_67' DispName:'                   VERSIONCODE' Value:''
-2021/05/11 18:37:13.273 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_68' DispName:'                   VERSIONNAME' Value:''
-2021/05/11 18:37:13.320 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_69' DispName:'                  REPLACEDOCID' Value:''
-2021/05/11 18:37:13.361 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_70' DispName:'                 SALESNOTEDATE' Value:''
-2021/05/11 18:37:13.406 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_71' DispName:'                   PROCESSUSER' Value:''
-2021/05/11 18:37:13.453 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_72' DispName:'                 EXTSCANNUMBER' Value:'20210511183707629d001'
-2021/05/11 18:37:13.504 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_73' DispName:'                      NOTIFYNO' Value:''
-2021/05/11 18:37:13.547 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_74' DispName:'                      EXTBOXNO' Value:''
-2021/05/11 18:37:13.589 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_75' DispName:'                      EXTDOCNO' Value:''
-2021/05/11 18:37:13.657 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_76' DispName:'                      FORMDATE' Value:''
-2021/05/11 18:37:13.710 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_77' DispName:'               PROCBATCHNUMBER' Value:''
-2021/05/11 18:37:13.759 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_78' DispName:'                 POSPAIDNUMBER' Value:''
-2021/05/11 18:37:13.820 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_79' DispName:'              RICONTRACTNUMBER' Value:''
-2021/05/11 18:37:13.876 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_80' DispName:'                   RICOMPANYID' Value:''
-2021/05/11 18:37:13.937 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_81' DispName:'               RIINVOICENUMBER' Value:''
-2021/05/11 18:37:13.980 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_82' DispName:'                  RIPROJNUMBER' Value:''
-2021/05/11 18:37:14.021 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_83' DispName:'                      FILENAME' Value:''
-2021/05/11 18:37:14.065 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_84' DispName:'              POSINFODOCNUMBER' Value:''
-2021/05/11 18:37:14.105 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_85' DispName:'                INTELLEINUMBER' Value:''
-2021/05/11 18:37:14.151 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_86' DispName:'                    INCOMEYEAR' Value:''
-2021/05/11 18:37:14.189 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_87' DispName:'                       AGENTID' Value:''
-2021/05/11 18:37:14.222 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> insertsql :  Insert into DocumentIndex(DocumentID, DocumentClassID, CreateDateTime, DocumentType, MimeType, Pages, Deleted, Status, FormID, ScanType, ScanUserId, ScanDateTime, VerifyUserId, VerifyDateTime, BatchNumber, I_31,I_32,I_33,I_34,I_35,I_36,I_37,I_38,I_39,I_40,I_41,I_42,I_43,I_44,I_45,I_46,I_47,I_48,I_49,I_50,I_51,I_52,I_53,I_54,I_55,I_56,I_57,I_58,I_59,I_60,I_61,I_62,I_63,I_64,I_65,I_66,I_67,I_68,I_69,I_70,I_71,I_72,I_73,I_74,I_75,I_76,I_77,I_78,I_79,I_80,I_81,I_82,I_83,I_84,I_85,I_86,I_87) values(@DocumentID, @DocumentClassID, @CreateDateTime, @DocumentType, @MimeType, @Pages, @Deleted, @Status, @FormID, @ScanType, @ScanUserId, @ScanDateTime, @VerifyUserId, @VerifyDateTime, @BatchNumber, @I_31,@I_32,@I_33,@I_34,@I_35,@I_36,@I_37,@I_38,@I_39,@I_40,@I_41,@I_42,@I_43,@I_44,@I_45,@I_46,@I_47,@I_48,@I_49,@I_50,@I_51,@I_52,@I_53,@I_54,@I_55,@I_56,@I_57,@I_58,@I_59,@I_60,@I_61,@I_62,@I_63,@I_64,@I_65,@I_66,@I_67,@I_68,@I_69,@I_70,@I_71,@I_72,@I_73,@I_74,@I_75,@I_76,@I_77,@I_78,@I_79,@I_80,@I_81,@I_82,@I_83,@I_84,@I_85,@I_86,@I_87)
-2021/05/11 18:37:14.261 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> Insert DocumentIndex row effect=1
-2021/05/11 18:37:14.296 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> Insert DocumentIndexExtension row effect=1
-2021/05/11 18:37:14.342 [Debug]  <<AddDocument>d__9> MoveNext                     -> InsertDocumentIndex&DocumentIndexExtension... 花費00:00:02.701
-2021/05/11 18:37:14.378 [Debug]  <<AddDocument>d__9> MoveNext                     -> Insert Success->DocumentID:72057594037950966
-2021/05/11 18:37:14.426 [Debug]  <<AddDocument>d__9> MoveNext                     -> Done... 花費00:00:03.086
-2021/05/11 18:37:14.466 [Debug]  <<AddDocument>d__9> MoveNext                     -> [END] AddDocument
-2021/05/11 18:37:14.562 [Debug]  <<AddDocument>d__9> MoveNext                     -> [START] AddDocument
-2021/05/11 18:37:14.628 [Debug]  <IRClient> CreateDocFile                         -> 完成  DocFile 。(00:00:00.013)
-2021/05/11 18:37:14.853 [Debug]  <<AddDocument>d__9> MoveNext                     -> 寫IR成功DocId:72057594037950967... 花費00:00:00.183
-2021/05/11 18:37:14.923 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_31' DispName:'                        BRANCH' Value:''
-2021/05/11 18:37:14.968 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_32' DispName:'                      ISRESCAN' Value:''
-2021/05/11 18:37:15.009 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_33' DispName:'                      DOCORDER' Value:''
-2021/05/11 18:37:15.048 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_34' DispName:'                      ISBADDOC' Value:''
-2021/05/11 18:37:15.080 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_35' DispName:'                      ISREJECT' Value:'N'
-2021/05/11 18:37:15.113 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_36' DispName:'                        REMARK' Value:''
-2021/05/11 18:37:15.142 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_37' DispName:'                    REPLACEKEY' Value:''
-2021/05/11 18:37:15.177 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_38' DispName:'                       DOCNAME' Value:''
-2021/05/11 18:37:15.211 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_39' DispName:'                  ACCIDENTDATE' Value:''
-2021/05/11 18:37:15.245 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_40' DispName:'                    ACCIDENTID' Value:''
-2021/05/11 18:37:15.277 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_41' DispName:'                      CLAUSEID' Value:''
-2021/05/11 18:37:15.307 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_42' DispName:'                    CLAUSENAME' Value:''
-2021/05/11 18:37:15.339 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_43' DispName:'                CLMRECEIVEDATE' Value:''
-2021/05/11 18:37:15.372 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_44' DispName:'                     CLOSEDATE' Value:''
-2021/05/11 18:37:15.405 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_45' DispName:'                   COMPLAINNUM' Value:''
-2021/05/11 18:37:15.441 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_46' DispName:'                COMPLAINNUMBER' Value:''
-2021/05/11 18:37:15.480 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_47' DispName:'                     INSUREDID' Value:''
-2021/05/11 18:37:15.516 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_48' DispName:'                        MAINID' Value:'R153445832'
-2021/05/11 18:37:15.547 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_49' DispName:'                  PAIDSERIALNO' Value:''
-2021/05/11 18:37:15.578 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_50' DispName:'                      POLICYID' Value:'9000020768'
-2021/05/11 18:37:15.616 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_51' DispName:'                POLICYSERIALNO' Value:''
-2021/05/11 18:37:15.651 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_52' DispName:'                     POSNUMBER' Value:''
-2021/05/11 18:37:15.684 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_53' DispName:'                REGRECEIVEDATE' Value:''
-2021/05/11 18:37:15.718 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_54' DispName:'                   REGSENDDATE' Value:''
-2021/05/11 18:37:15.750 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_55' DispName:'                       SALESID' Value:''
-2021/05/11 18:37:15.779 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_56' DispName:'                         SNAME' Value:''
-2021/05/11 18:37:15.809 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_57' DispName:'                      VARYDATE' Value:''
-2021/05/11 18:37:15.847 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_58' DispName:'                   BLACKLISTNO' Value:''
-2021/05/11 18:37:15.878 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_59' DispName:'                         BOXNO' Value:''
-2021/05/11 18:37:15.909 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_60' DispName:'                   CLAIMNUMBER' Value:''
-2021/05/11 18:37:15.948 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_61' DispName:'                     COMPANYID' Value:''
-2021/05/11 18:37:15.993 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_62' DispName:'                   COMPANYNAME' Value:''
-2021/05/11 18:37:16.055 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_63' DispName:'              CLAUSEUPLOADUSER' Value:''
-2021/05/11 18:37:16.101 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_64' DispName:'                     SALESNOTE' Value:''
-2021/05/11 18:37:16.138 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_65' DispName:'                 SALESNOTEUSER' Value:''
-2021/05/11 18:37:16.185 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_66' DispName:'                 BLACKLISTNAME' Value:''
-2021/05/11 18:37:16.226 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_67' DispName:'                   VERSIONCODE' Value:''
-2021/05/11 18:37:16.264 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_68' DispName:'                   VERSIONNAME' Value:''
-2021/05/11 18:37:16.307 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_69' DispName:'                  REPLACEDOCID' Value:''
-2021/05/11 18:37:16.361 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_70' DispName:'                 SALESNOTEDATE' Value:''
-2021/05/11 18:37:16.429 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_71' DispName:'                   PROCESSUSER' Value:''
-2021/05/11 18:37:16.499 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_72' DispName:'                 EXTSCANNUMBER' Value:'20210511183707629d001'
-2021/05/11 18:37:16.545 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_73' DispName:'                      NOTIFYNO' Value:''
-2021/05/11 18:37:16.594 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_74' DispName:'                      EXTBOXNO' Value:''
-2021/05/11 18:37:16.642 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_75' DispName:'                      EXTDOCNO' Value:''
-2021/05/11 18:37:16.685 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_76' DispName:'                      FORMDATE' Value:''
-2021/05/11 18:37:16.720 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_77' DispName:'               PROCBATCHNUMBER' Value:''
-2021/05/11 18:37:16.760 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_78' DispName:'                 POSPAIDNUMBER' Value:''
-2021/05/11 18:37:16.792 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_79' DispName:'              RICONTRACTNUMBER' Value:''
-2021/05/11 18:37:16.833 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_80' DispName:'                   RICOMPANYID' Value:''
-2021/05/11 18:37:16.867 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_81' DispName:'               RIINVOICENUMBER' Value:''
-2021/05/11 18:37:16.908 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_82' DispName:'                  RIPROJNUMBER' Value:''
-2021/05/11 18:37:16.949 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_83' DispName:'                      FILENAME' Value:''
-2021/05/11 18:37:16.984 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_84' DispName:'              POSINFODOCNUMBER' Value:''
-2021/05/11 18:37:17.021 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_85' DispName:'                INTELLEINUMBER' Value:''
-2021/05/11 18:37:17.069 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_86' DispName:'                    INCOMEYEAR' Value:''
-2021/05/11 18:37:17.132 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_87' DispName:'                       AGENTID' Value:''
-2021/05/11 18:37:17.186 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> insertsql :  Insert into DocumentIndex(DocumentID, DocumentClassID, CreateDateTime, DocumentType, MimeType, Pages, Deleted, Status, FormID, ScanType, ScanUserId, ScanDateTime, VerifyUserId, VerifyDateTime, BatchNumber, I_31,I_32,I_33,I_34,I_35,I_36,I_37,I_38,I_39,I_40,I_41,I_42,I_43,I_44,I_45,I_46,I_47,I_48,I_49,I_50,I_51,I_52,I_53,I_54,I_55,I_56,I_57,I_58,I_59,I_60,I_61,I_62,I_63,I_64,I_65,I_66,I_67,I_68,I_69,I_70,I_71,I_72,I_73,I_74,I_75,I_76,I_77,I_78,I_79,I_80,I_81,I_82,I_83,I_84,I_85,I_86,I_87) values(@DocumentID, @DocumentClassID, @CreateDateTime, @DocumentType, @MimeType, @Pages, @Deleted, @Status, @FormID, @ScanType, @ScanUserId, @ScanDateTime, @VerifyUserId, @VerifyDateTime, @BatchNumber, @I_31,@I_32,@I_33,@I_34,@I_35,@I_36,@I_37,@I_38,@I_39,@I_40,@I_41,@I_42,@I_43,@I_44,@I_45,@I_46,@I_47,@I_48,@I_49,@I_50,@I_51,@I_52,@I_53,@I_54,@I_55,@I_56,@I_57,@I_58,@I_59,@I_60,@I_61,@I_62,@I_63,@I_64,@I_65,@I_66,@I_67,@I_68,@I_69,@I_70,@I_71,@I_72,@I_73,@I_74,@I_75,@I_76,@I_77,@I_78,@I_79,@I_80,@I_81,@I_82,@I_83,@I_84,@I_85,@I_86,@I_87)
-2021/05/11 18:37:17.242 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> Insert DocumentIndex row effect=1
-2021/05/11 18:37:17.315 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> Insert DocumentIndexExtension row effect=1
-2021/05/11 18:37:17.377 [Debug]  <<AddDocument>d__9> MoveNext                     -> InsertDocumentIndex&DocumentIndexExtension... 花費00:00:02.455
-2021/05/11 18:37:17.447 [Debug]  <<AddDocument>d__9> MoveNext                     -> Insert Success->DocumentID:72057594037950967
-2021/05/11 18:37:17.503 [Debug]  <<AddDocument>d__9> MoveNext                     -> Done... 花費00:00:02.892
-2021/05/11 18:37:17.551 [Debug]  <<AddDocument>d__9> MoveNext                     -> [END] AddDocument
-2021/05/11 18:37:17.678 [Debug]  <<AddDocument>d__9> MoveNext                     -> [START] AddDocument
-2021/05/11 18:37:17.794 [Debug]  <IRClient> CreateDocFile                         -> 完成  DocFile 。(00:00:00.065)
-2021/05/11 18:37:18.134 [Debug]  <<AddDocument>d__9> MoveNext                     -> 寫IR成功DocId:72057594037950968... 花費00:00:00.267
-2021/05/11 18:37:18.176 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_31' DispName:'                        BRANCH' Value:''
-2021/05/11 18:37:18.223 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_32' DispName:'                      ISRESCAN' Value:''
-2021/05/11 18:37:18.273 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_33' DispName:'                      DOCORDER' Value:''
-2021/05/11 18:37:18.315 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_34' DispName:'                      ISBADDOC' Value:''
-2021/05/11 18:37:18.353 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_35' DispName:'                      ISREJECT' Value:'N'
-2021/05/11 18:37:18.393 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_36' DispName:'                        REMARK' Value:''
-2021/05/11 18:37:18.430 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_37' DispName:'                    REPLACEKEY' Value:''
-2021/05/11 18:37:18.467 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_38' DispName:'                       DOCNAME' Value:''
-2021/05/11 18:37:18.503 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_39' DispName:'                  ACCIDENTDATE' Value:''
-2021/05/11 18:37:18.553 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_40' DispName:'                    ACCIDENTID' Value:''
-2021/05/11 18:37:18.612 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_41' DispName:'                      CLAUSEID' Value:''
-2021/05/11 18:37:18.650 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_42' DispName:'                    CLAUSENAME' Value:''
-2021/05/11 18:37:18.686 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_43' DispName:'                CLMRECEIVEDATE' Value:''
-2021/05/11 18:37:18.721 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_44' DispName:'                     CLOSEDATE' Value:''
-2021/05/11 18:37:18.757 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_45' DispName:'                   COMPLAINNUM' Value:''
-2021/05/11 18:37:18.797 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_46' DispName:'                COMPLAINNUMBER' Value:''
-2021/05/11 18:37:18.843 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_47' DispName:'                     INSUREDID' Value:''
-2021/05/11 18:37:18.888 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_48' DispName:'                        MAINID' Value:'R153445832'
-2021/05/11 18:37:18.917 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_49' DispName:'                  PAIDSERIALNO' Value:''
-2021/05/11 18:37:18.952 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_50' DispName:'                      POLICYID' Value:'9000020768'
-2021/05/11 18:37:18.986 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_51' DispName:'                POLICYSERIALNO' Value:''
-2021/05/11 18:37:19.016 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_52' DispName:'                     POSNUMBER' Value:''
-2021/05/11 18:37:19.045 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_53' DispName:'                REGRECEIVEDATE' Value:''
-2021/05/11 18:37:19.079 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_54' DispName:'                   REGSENDDATE' Value:''
-2021/05/11 18:37:19.123 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_55' DispName:'                       SALESID' Value:''
-2021/05/11 18:37:19.175 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_56' DispName:'                         SNAME' Value:''
-2021/05/11 18:37:19.223 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_57' DispName:'                      VARYDATE' Value:''
-2021/05/11 18:37:19.277 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_58' DispName:'                   BLACKLISTNO' Value:''
-2021/05/11 18:37:19.336 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_59' DispName:'                         BOXNO' Value:''
-2021/05/11 18:37:19.409 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_60' DispName:'                   CLAIMNUMBER' Value:''
-2021/05/11 18:37:19.463 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_61' DispName:'                     COMPANYID' Value:''
-2021/05/11 18:37:19.509 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_62' DispName:'                   COMPANYNAME' Value:''
-2021/05/11 18:37:19.552 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_63' DispName:'              CLAUSEUPLOADUSER' Value:''
-2021/05/11 18:37:19.597 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_64' DispName:'                     SALESNOTE' Value:''
-2021/05/11 18:37:19.643 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_65' DispName:'                 SALESNOTEUSER' Value:''
-2021/05/11 18:37:19.690 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_66' DispName:'                 BLACKLISTNAME' Value:''
-2021/05/11 18:37:19.745 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_67' DispName:'                   VERSIONCODE' Value:''
-2021/05/11 18:37:19.790 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_68' DispName:'                   VERSIONNAME' Value:''
-2021/05/11 18:37:19.826 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_69' DispName:'                  REPLACEDOCID' Value:''
-2021/05/11 18:37:19.870 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_70' DispName:'                 SALESNOTEDATE' Value:''
-2021/05/11 18:37:19.926 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_71' DispName:'                   PROCESSUSER' Value:''
-2021/05/11 18:37:19.980 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_72' DispName:'                 EXTSCANNUMBER' Value:'20210511183707629d001'
-2021/05/11 18:37:20.032 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_73' DispName:'                      NOTIFYNO' Value:''
-2021/05/11 18:37:20.095 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_74' DispName:'                      EXTBOXNO' Value:''
-2021/05/11 18:37:20.132 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_75' DispName:'                      EXTDOCNO' Value:''
-2021/05/11 18:37:20.169 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_76' DispName:'                      FORMDATE' Value:''
-2021/05/11 18:37:20.209 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_77' DispName:'               PROCBATCHNUMBER' Value:''
-2021/05/11 18:37:20.252 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_78' DispName:'                 POSPAIDNUMBER' Value:''
-2021/05/11 18:37:20.289 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_79' DispName:'              RICONTRACTNUMBER' Value:''
-2021/05/11 18:37:20.336 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_80' DispName:'                   RICOMPANYID' Value:''
-2021/05/11 18:37:20.377 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_81' DispName:'               RIINVOICENUMBER' Value:''
-2021/05/11 18:37:20.418 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_82' DispName:'                  RIPROJNUMBER' Value:''
-2021/05/11 18:37:20.455 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_83' DispName:'                      FILENAME' Value:''
-2021/05/11 18:37:20.500 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_84' DispName:'              POSINFODOCNUMBER' Value:''
-2021/05/11 18:37:20.541 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_85' DispName:'                INTELLEINUMBER' Value:''
-2021/05/11 18:37:20.583 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_86' DispName:'                    INCOMEYEAR' Value:''
-2021/05/11 18:37:20.623 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_87' DispName:'                       AGENTID' Value:''
-2021/05/11 18:37:20.659 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> insertsql :  Insert into DocumentIndex(DocumentID, DocumentClassID, CreateDateTime, DocumentType, MimeType, Pages, Deleted, Status, FormID, ScanType, ScanUserId, ScanDateTime, VerifyUserId, VerifyDateTime, BatchNumber, I_31,I_32,I_33,I_34,I_35,I_36,I_37,I_38,I_39,I_40,I_41,I_42,I_43,I_44,I_45,I_46,I_47,I_48,I_49,I_50,I_51,I_52,I_53,I_54,I_55,I_56,I_57,I_58,I_59,I_60,I_61,I_62,I_63,I_64,I_65,I_66,I_67,I_68,I_69,I_70,I_71,I_72,I_73,I_74,I_75,I_76,I_77,I_78,I_79,I_80,I_81,I_82,I_83,I_84,I_85,I_86,I_87) values(@DocumentID, @DocumentClassID, @CreateDateTime, @DocumentType, @MimeType, @Pages, @Deleted, @Status, @FormID, @ScanType, @ScanUserId, @ScanDateTime, @VerifyUserId, @VerifyDateTime, @BatchNumber, @I_31,@I_32,@I_33,@I_34,@I_35,@I_36,@I_37,@I_38,@I_39,@I_40,@I_41,@I_42,@I_43,@I_44,@I_45,@I_46,@I_47,@I_48,@I_49,@I_50,@I_51,@I_52,@I_53,@I_54,@I_55,@I_56,@I_57,@I_58,@I_59,@I_60,@I_61,@I_62,@I_63,@I_64,@I_65,@I_66,@I_67,@I_68,@I_69,@I_70,@I_71,@I_72,@I_73,@I_74,@I_75,@I_76,@I_77,@I_78,@I_79,@I_80,@I_81,@I_82,@I_83,@I_84,@I_85,@I_86,@I_87)
-2021/05/11 18:37:20.695 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> Insert DocumentIndex row effect=1
-2021/05/11 18:37:20.729 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> Insert DocumentIndexExtension row effect=1
-2021/05/11 18:37:20.789 [Debug]  <<AddDocument>d__9> MoveNext                     -> InsertDocumentIndex&DocumentIndexExtension... 花費00:00:02.617
-2021/05/11 18:37:20.834 [Debug]  <<AddDocument>d__9> MoveNext                     -> Insert Success->DocumentID:72057594037950968
-2021/05/11 18:37:20.876 [Debug]  <<AddDocument>d__9> MoveNext                     -> Done... 花費00:00:03.151
-2021/05/11 18:37:20.916 [Debug]  <<AddDocument>d__9> MoveNext                     -> [END] AddDocument
-2021/05/11 18:37:21.033 [Debug]  <<AddDocument>d__9> MoveNext                     -> [START] AddDocument
-2021/05/11 18:37:21.104 [Debug]  <IRClient> CreateDocFile                         -> 完成  DocFile 。(00:00:00.022)
-2021/05/11 18:37:21.369 [Debug]  <<AddDocument>d__9> MoveNext                     -> 寫IR成功DocId:72057594037950969... 花費00:00:00.220
-2021/05/11 18:37:21.411 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_31' DispName:'                        BRANCH' Value:''
-2021/05/11 18:37:21.458 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_32' DispName:'                      ISRESCAN' Value:''
-2021/05/11 18:37:21.506 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_33' DispName:'                      DOCORDER' Value:''
-2021/05/11 18:37:21.546 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_34' DispName:'                      ISBADDOC' Value:''
-2021/05/11 18:37:21.599 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_35' DispName:'                      ISREJECT' Value:'N'
-2021/05/11 18:37:21.646 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_36' DispName:'                        REMARK' Value:''
-2021/05/11 18:37:21.691 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_37' DispName:'                    REPLACEKEY' Value:''
-2021/05/11 18:37:21.732 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_38' DispName:'                       DOCNAME' Value:''
-2021/05/11 18:37:21.771 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_39' DispName:'                  ACCIDENTDATE' Value:''
-2021/05/11 18:37:21.807 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_40' DispName:'                    ACCIDENTID' Value:''
-2021/05/11 18:37:21.852 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_41' DispName:'                      CLAUSEID' Value:''
-2021/05/11 18:37:21.895 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_42' DispName:'                    CLAUSENAME' Value:''
-2021/05/11 18:37:21.935 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_43' DispName:'                CLMRECEIVEDATE' Value:''
-2021/05/11 18:37:21.997 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_44' DispName:'                     CLOSEDATE' Value:''
-2021/05/11 18:37:22.048 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_45' DispName:'                   COMPLAINNUM' Value:''
-2021/05/11 18:37:22.079 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_46' DispName:'                COMPLAINNUMBER' Value:''
-2021/05/11 18:37:22.122 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_47' DispName:'                     INSUREDID' Value:''
-2021/05/11 18:37:22.176 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_48' DispName:'                        MAINID' Value:'R153445832'
-2021/05/11 18:37:22.218 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_49' DispName:'                  PAIDSERIALNO' Value:''
-2021/05/11 18:37:22.261 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_50' DispName:'                      POLICYID' Value:'9000020768'
-2021/05/11 18:37:22.310 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_51' DispName:'                POLICYSERIALNO' Value:''
-2021/05/11 18:37:22.363 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_52' DispName:'                     POSNUMBER' Value:''
-2021/05/11 18:37:22.448 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_53' DispName:'                REGRECEIVEDATE' Value:''
-2021/05/11 18:37:22.503 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_54' DispName:'                   REGSENDDATE' Value:''
-2021/05/11 18:37:22.550 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_55' DispName:'                       SALESID' Value:''
-2021/05/11 18:37:22.613 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_56' DispName:'                         SNAME' Value:''
-2021/05/11 18:37:22.663 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_57' DispName:'                      VARYDATE' Value:''
-2021/05/11 18:37:22.701 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_58' DispName:'                   BLACKLISTNO' Value:''
-2021/05/11 18:37:22.740 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_59' DispName:'                         BOXNO' Value:''
-2021/05/11 18:37:22.777 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_60' DispName:'                   CLAIMNUMBER' Value:''
-2021/05/11 18:37:22.811 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_61' DispName:'                     COMPANYID' Value:''
-2021/05/11 18:37:22.849 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_62' DispName:'                   COMPANYNAME' Value:''
-2021/05/11 18:37:22.879 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_63' DispName:'              CLAUSEUPLOADUSER' Value:''
-2021/05/11 18:37:22.917 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_64' DispName:'                     SALESNOTE' Value:''
-2021/05/11 18:37:22.945 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_65' DispName:'                 SALESNOTEUSER' Value:''
-2021/05/11 18:37:22.973 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_66' DispName:'                 BLACKLISTNAME' Value:''
-2021/05/11 18:37:23.000 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_67' DispName:'                   VERSIONCODE' Value:''
-2021/05/11 18:37:23.031 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_68' DispName:'                   VERSIONNAME' Value:''
-2021/05/11 18:37:23.063 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_69' DispName:'                  REPLACEDOCID' Value:''
-2021/05/11 18:37:23.092 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_70' DispName:'                 SALESNOTEDATE' Value:''
-2021/05/11 18:37:23.122 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_71' DispName:'                   PROCESSUSER' Value:''
-2021/05/11 18:37:23.153 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_72' DispName:'                 EXTSCANNUMBER' Value:'20210511183707629d001'
-2021/05/11 18:37:23.181 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_73' DispName:'                      NOTIFYNO' Value:''
-2021/05/11 18:37:23.212 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_74' DispName:'                      EXTBOXNO' Value:''
-2021/05/11 18:37:23.237 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_75' DispName:'                      EXTDOCNO' Value:''
-2021/05/11 18:37:23.261 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_76' DispName:'                      FORMDATE' Value:''
-2021/05/11 18:37:23.287 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_77' DispName:'               PROCBATCHNUMBER' Value:''
-2021/05/11 18:37:23.311 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_78' DispName:'                 POSPAIDNUMBER' Value:''
-2021/05/11 18:37:23.338 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_79' DispName:'              RICONTRACTNUMBER' Value:''
-2021/05/11 18:37:23.360 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_80' DispName:'                   RICOMPANYID' Value:''
-2021/05/11 18:37:23.383 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_81' DispName:'               RIINVOICENUMBER' Value:''
-2021/05/11 18:37:23.411 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_82' DispName:'                  RIPROJNUMBER' Value:''
-2021/05/11 18:37:23.441 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_83' DispName:'                      FILENAME' Value:''
-2021/05/11 18:37:23.469 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_84' DispName:'              POSINFODOCNUMBER' Value:''
-2021/05/11 18:37:23.501 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_85' DispName:'                INTELLEINUMBER' Value:''
-2021/05/11 18:37:23.532 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_86' DispName:'                    INCOMEYEAR' Value:''
-2021/05/11 18:37:23.559 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_87' DispName:'                       AGENTID' Value:''
-2021/05/11 18:37:23.592 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> insertsql :  Insert into DocumentIndex(DocumentID, DocumentClassID, CreateDateTime, DocumentType, MimeType, Pages, Deleted, Status, FormID, ScanType, ScanUserId, ScanDateTime, VerifyUserId, VerifyDateTime, BatchNumber, I_31,I_32,I_33,I_34,I_35,I_36,I_37,I_38,I_39,I_40,I_41,I_42,I_43,I_44,I_45,I_46,I_47,I_48,I_49,I_50,I_51,I_52,I_53,I_54,I_55,I_56,I_57,I_58,I_59,I_60,I_61,I_62,I_63,I_64,I_65,I_66,I_67,I_68,I_69,I_70,I_71,I_72,I_73,I_74,I_75,I_76,I_77,I_78,I_79,I_80,I_81,I_82,I_83,I_84,I_85,I_86,I_87) values(@DocumentID, @DocumentClassID, @CreateDateTime, @DocumentType, @MimeType, @Pages, @Deleted, @Status, @FormID, @ScanType, @ScanUserId, @ScanDateTime, @VerifyUserId, @VerifyDateTime, @BatchNumber, @I_31,@I_32,@I_33,@I_34,@I_35,@I_36,@I_37,@I_38,@I_39,@I_40,@I_41,@I_42,@I_43,@I_44,@I_45,@I_46,@I_47,@I_48,@I_49,@I_50,@I_51,@I_52,@I_53,@I_54,@I_55,@I_56,@I_57,@I_58,@I_59,@I_60,@I_61,@I_62,@I_63,@I_64,@I_65,@I_66,@I_67,@I_68,@I_69,@I_70,@I_71,@I_72,@I_73,@I_74,@I_75,@I_76,@I_77,@I_78,@I_79,@I_80,@I_81,@I_82,@I_83,@I_84,@I_85,@I_86,@I_87)
-2021/05/11 18:37:23.686 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> Insert DocumentIndex row effect=1
-2021/05/11 18:37:23.720 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> Insert DocumentIndexExtension row effect=1
-2021/05/11 18:37:23.767 [Debug]  <<AddDocument>d__9> MoveNext                     -> InsertDocumentIndex&DocumentIndexExtension... 花費00:00:02.358
-2021/05/11 18:37:23.803 [Debug]  <<AddDocument>d__9> MoveNext                     -> Insert Success->DocumentID:72057594037950969
-2021/05/11 18:37:23.840 [Debug]  <<AddDocument>d__9> MoveNext                     -> Done... 花費00:00:02.763
-2021/05/11 18:37:23.872 [Debug]  <<AddDocument>d__9> MoveNext                     -> [END] AddDocument
-2021/05/11 18:37:23.961 [Debug]  <<AddDocument>d__9> MoveNext                     -> [START] AddDocument
-2021/05/11 18:37:24.030 [Debug]  <IRClient> CreateDocFile                         -> 完成  DocFile 。(00:00:00.032)
-2021/05/11 18:37:24.290 [Debug]  <<AddDocument>d__9> MoveNext                     -> 寫IR成功DocId:72057594037950970... 花費00:00:00.213
-2021/05/11 18:37:24.329 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_31' DispName:'                        BRANCH' Value:''
-2021/05/11 18:37:24.356 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_32' DispName:'                      ISRESCAN' Value:''
-2021/05/11 18:37:24.382 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_33' DispName:'                      DOCORDER' Value:''
-2021/05/11 18:37:24.410 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_34' DispName:'                      ISBADDOC' Value:''
-2021/05/11 18:37:24.441 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_35' DispName:'                      ISREJECT' Value:'N'
-2021/05/11 18:37:24.476 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_36' DispName:'                        REMARK' Value:''
-2021/05/11 18:37:24.504 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_37' DispName:'                    REPLACEKEY' Value:''
-2021/05/11 18:37:24.532 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_38' DispName:'                       DOCNAME' Value:''
-2021/05/11 18:37:24.560 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_39' DispName:'                  ACCIDENTDATE' Value:''
-2021/05/11 18:37:24.596 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_40' DispName:'                    ACCIDENTID' Value:''
-2021/05/11 18:37:24.635 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_41' DispName:'                      CLAUSEID' Value:''
-2021/05/11 18:37:24.666 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_42' DispName:'                    CLAUSENAME' Value:''
-2021/05/11 18:37:24.695 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_43' DispName:'                CLMRECEIVEDATE' Value:''
-2021/05/11 18:37:24.734 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_44' DispName:'                     CLOSEDATE' Value:''
-2021/05/11 18:37:24.772 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_45' DispName:'                   COMPLAINNUM' Value:''
-2021/05/11 18:37:24.803 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_46' DispName:'                COMPLAINNUMBER' Value:''
-2021/05/11 18:37:24.831 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_47' DispName:'                     INSUREDID' Value:''
-2021/05/11 18:37:24.859 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_48' DispName:'                        MAINID' Value:'R153445832'
-2021/05/11 18:37:24.887 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_49' DispName:'                  PAIDSERIALNO' Value:''
-2021/05/11 18:37:24.921 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_50' DispName:'                      POLICYID' Value:'9000020768'
-2021/05/11 18:37:24.952 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_51' DispName:'                POLICYSERIALNO' Value:''
-2021/05/11 18:37:24.983 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_52' DispName:'                     POSNUMBER' Value:''
-2021/05/11 18:37:25.015 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_53' DispName:'                REGRECEIVEDATE' Value:''
-2021/05/11 18:37:25.051 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_54' DispName:'                   REGSENDDATE' Value:''
-2021/05/11 18:37:25.086 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_55' DispName:'                       SALESID' Value:''
-2021/05/11 18:37:25.116 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_56' DispName:'                         SNAME' Value:''
-2021/05/11 18:37:25.145 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_57' DispName:'                      VARYDATE' Value:''
-2021/05/11 18:37:25.177 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_58' DispName:'                   BLACKLISTNO' Value:''
-2021/05/11 18:37:25.215 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_59' DispName:'                         BOXNO' Value:''
-2021/05/11 18:37:25.246 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_60' DispName:'                   CLAIMNUMBER' Value:''
-2021/05/11 18:37:25.276 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_61' DispName:'                     COMPANYID' Value:''
-2021/05/11 18:37:25.306 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_62' DispName:'                   COMPANYNAME' Value:''
-2021/05/11 18:37:25.337 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_63' DispName:'              CLAUSEUPLOADUSER' Value:''
-2021/05/11 18:37:25.371 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_64' DispName:'                     SALESNOTE' Value:''
-2021/05/11 18:37:25.403 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_65' DispName:'                 SALESNOTEUSER' Value:''
-2021/05/11 18:37:25.435 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_66' DispName:'                 BLACKLISTNAME' Value:''
-2021/05/11 18:37:25.465 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_67' DispName:'                   VERSIONCODE' Value:''
-2021/05/11 18:37:25.497 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_68' DispName:'                   VERSIONNAME' Value:''
-2021/05/11 18:37:25.537 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_69' DispName:'                  REPLACEDOCID' Value:''
-2021/05/11 18:37:25.575 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_70' DispName:'                 SALESNOTEDATE' Value:''
-2021/05/11 18:37:25.612 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_71' DispName:'                   PROCESSUSER' Value:''
-2021/05/11 18:37:25.644 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_72' DispName:'                 EXTSCANNUMBER' Value:'20210511183707629d001'
-2021/05/11 18:37:25.683 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_73' DispName:'                      NOTIFYNO' Value:''
-2021/05/11 18:37:25.718 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_74' DispName:'                      EXTBOXNO' Value:''
-2021/05/11 18:37:25.752 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_75' DispName:'                      EXTDOCNO' Value:''
-2021/05/11 18:37:25.783 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_76' DispName:'                      FORMDATE' Value:''
-2021/05/11 18:37:25.819 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_77' DispName:'               PROCBATCHNUMBER' Value:''
-2021/05/11 18:37:25.862 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_78' DispName:'                 POSPAIDNUMBER' Value:''
-2021/05/11 18:37:25.894 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_79' DispName:'              RICONTRACTNUMBER' Value:''
-2021/05/11 18:37:25.925 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_80' DispName:'                   RICOMPANYID' Value:''
-2021/05/11 18:37:25.967 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_81' DispName:'               RIINVOICENUMBER' Value:''
-2021/05/11 18:37:25.999 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_82' DispName:'                  RIPROJNUMBER' Value:''
-2021/05/11 18:37:26.040 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_83' DispName:'                      FILENAME' Value:''
-2021/05/11 18:37:26.089 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_84' DispName:'              POSINFODOCNUMBER' Value:''
-2021/05/11 18:37:26.138 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_85' DispName:'                INTELLEINUMBER' Value:''
-2021/05/11 18:37:26.175 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_86' DispName:'                    INCOMEYEAR' Value:''
-2021/05/11 18:37:26.216 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_87' DispName:'                       AGENTID' Value:''
-2021/05/11 18:37:26.258 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> insertsql :  Insert into DocumentIndex(DocumentID, DocumentClassID, CreateDateTime, DocumentType, MimeType, Pages, Deleted, Status, FormID, ScanType, ScanUserId, ScanDateTime, VerifyUserId, VerifyDateTime, BatchNumber, I_31,I_32,I_33,I_34,I_35,I_36,I_37,I_38,I_39,I_40,I_41,I_42,I_43,I_44,I_45,I_46,I_47,I_48,I_49,I_50,I_51,I_52,I_53,I_54,I_55,I_56,I_57,I_58,I_59,I_60,I_61,I_62,I_63,I_64,I_65,I_66,I_67,I_68,I_69,I_70,I_71,I_72,I_73,I_74,I_75,I_76,I_77,I_78,I_79,I_80,I_81,I_82,I_83,I_84,I_85,I_86,I_87) values(@DocumentID, @DocumentClassID, @CreateDateTime, @DocumentType, @MimeType, @Pages, @Deleted, @Status, @FormID, @ScanType, @ScanUserId, @ScanDateTime, @VerifyUserId, @VerifyDateTime, @BatchNumber, @I_31,@I_32,@I_33,@I_34,@I_35,@I_36,@I_37,@I_38,@I_39,@I_40,@I_41,@I_42,@I_43,@I_44,@I_45,@I_46,@I_47,@I_48,@I_49,@I_50,@I_51,@I_52,@I_53,@I_54,@I_55,@I_56,@I_57,@I_58,@I_59,@I_60,@I_61,@I_62,@I_63,@I_64,@I_65,@I_66,@I_67,@I_68,@I_69,@I_70,@I_71,@I_72,@I_73,@I_74,@I_75,@I_76,@I_77,@I_78,@I_79,@I_80,@I_81,@I_82,@I_83,@I_84,@I_85,@I_86,@I_87)
-2021/05/11 18:37:26.300 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> Insert DocumentIndex row effect=1
-2021/05/11 18:37:26.352 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> Insert DocumentIndexExtension row effect=1
-2021/05/11 18:37:26.401 [Debug]  <<AddDocument>d__9> MoveNext                     -> InsertDocumentIndex&DocumentIndexExtension... 花費00:00:02.074
-2021/05/11 18:37:26.432 [Debug]  <<AddDocument>d__9> MoveNext                     -> Insert Success->DocumentID:72057594037950970
-2021/05/11 18:37:26.470 [Debug]  <<AddDocument>d__9> MoveNext                     -> Done... 花費00:00:02.478
-2021/05/11 18:37:26.506 [Debug]  <<AddDocument>d__9> MoveNext                     -> [END] AddDocument
-2021/05/11 18:37:26.585 [Debug]  <<AddDocument>d__9> MoveNext                     -> [START] AddDocument
-2021/05/11 18:37:26.658 [Debug]  <IRClient> CreateDocFile                         -> 完成  DocFile 。(00:00:00.036)
-2021/05/11 18:37:26.978 [Debug]  <<AddDocument>d__9> MoveNext                     -> 寫IR成功DocId:72057594037950971... 花費00:00:00.266
-2021/05/11 18:37:27.015 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_31' DispName:'                        BRANCH' Value:''
-2021/05/11 18:37:27.047 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_32' DispName:'                      ISRESCAN' Value:''
-2021/05/11 18:37:27.086 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_33' DispName:'                      DOCORDER' Value:''
-2021/05/11 18:37:27.121 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_34' DispName:'                      ISBADDOC' Value:''
-2021/05/11 18:37:27.151 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_35' DispName:'                      ISREJECT' Value:'N'
-2021/05/11 18:37:27.182 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_36' DispName:'                        REMARK' Value:''
-2021/05/11 18:37:27.213 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_37' DispName:'                    REPLACEKEY' Value:''
-2021/05/11 18:37:27.245 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_38' DispName:'                       DOCNAME' Value:''
-2021/05/11 18:37:27.276 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_39' DispName:'                  ACCIDENTDATE' Value:''
-2021/05/11 18:37:27.315 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_40' DispName:'                    ACCIDENTID' Value:''
-2021/05/11 18:37:27.349 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_41' DispName:'                      CLAUSEID' Value:''
-2021/05/11 18:37:27.377 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_42' DispName:'                    CLAUSENAME' Value:''
-2021/05/11 18:37:27.404 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_43' DispName:'                CLMRECEIVEDATE' Value:''
-2021/05/11 18:37:27.433 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_44' DispName:'                     CLOSEDATE' Value:''
-2021/05/11 18:37:27.463 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_45' DispName:'                   COMPLAINNUM' Value:''
-2021/05/11 18:37:27.493 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_46' DispName:'                COMPLAINNUMBER' Value:''
-2021/05/11 18:37:27.524 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_47' DispName:'                     INSUREDID' Value:''
-2021/05/11 18:37:27.561 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_48' DispName:'                        MAINID' Value:'R153445832'
-2021/05/11 18:37:27.596 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_49' DispName:'                  PAIDSERIALNO' Value:''
-2021/05/11 18:37:27.624 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_50' DispName:'                      POLICYID' Value:'9000020768'
-2021/05/11 18:37:27.657 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_51' DispName:'                POLICYSERIALNO' Value:''
-2021/05/11 18:37:27.698 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_52' DispName:'                     POSNUMBER' Value:''
-2021/05/11 18:37:27.729 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_53' DispName:'                REGRECEIVEDATE' Value:''
-2021/05/11 18:37:27.760 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_54' DispName:'                   REGSENDDATE' Value:''
-2021/05/11 18:37:27.787 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_55' DispName:'                       SALESID' Value:''
-2021/05/11 18:37:27.817 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_56' DispName:'                         SNAME' Value:''
-2021/05/11 18:37:27.846 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_57' DispName:'                      VARYDATE' Value:''
-2021/05/11 18:37:27.877 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_58' DispName:'                   BLACKLISTNO' Value:''
-2021/05/11 18:37:27.909 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_59' DispName:'                         BOXNO' Value:''
-2021/05/11 18:37:27.935 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_60' DispName:'                   CLAIMNUMBER' Value:''
-2021/05/11 18:37:27.964 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_61' DispName:'                     COMPANYID' Value:''
-2021/05/11 18:37:27.998 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_62' DispName:'                   COMPANYNAME' Value:''
-2021/05/11 18:37:28.044 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_63' DispName:'              CLAUSEUPLOADUSER' Value:''
-2021/05/11 18:37:28.082 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_64' DispName:'                     SALESNOTE' Value:''
-2021/05/11 18:37:28.114 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_65' DispName:'                 SALESNOTEUSER' Value:''
-2021/05/11 18:37:28.153 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_66' DispName:'                 BLACKLISTNAME' Value:''
-2021/05/11 18:37:28.193 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_67' DispName:'                   VERSIONCODE' Value:''
-2021/05/11 18:37:28.239 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_68' DispName:'                   VERSIONNAME' Value:''
-2021/05/11 18:37:28.274 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_69' DispName:'                  REPLACEDOCID' Value:''
-2021/05/11 18:37:28.309 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_70' DispName:'                 SALESNOTEDATE' Value:''
-2021/05/11 18:37:28.343 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_71' DispName:'                   PROCESSUSER' Value:''
-2021/05/11 18:37:28.378 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_72' DispName:'                 EXTSCANNUMBER' Value:'20210511183707629d001'
-2021/05/11 18:37:28.407 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_73' DispName:'                      NOTIFYNO' Value:''
-2021/05/11 18:37:28.443 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_74' DispName:'                      EXTBOXNO' Value:''
-2021/05/11 18:37:28.482 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_75' DispName:'                      EXTDOCNO' Value:''
-2021/05/11 18:37:28.514 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_76' DispName:'                      FORMDATE' Value:''
-2021/05/11 18:37:28.550 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_77' DispName:'               PROCBATCHNUMBER' Value:''
-2021/05/11 18:37:28.591 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_78' DispName:'                 POSPAIDNUMBER' Value:''
-2021/05/11 18:37:28.622 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_79' DispName:'              RICONTRACTNUMBER' Value:''
-2021/05/11 18:37:28.664 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_80' DispName:'                   RICOMPANYID' Value:''
-2021/05/11 18:37:28.698 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_81' DispName:'               RIINVOICENUMBER' Value:''
-2021/05/11 18:37:28.731 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_82' DispName:'                  RIPROJNUMBER' Value:''
-2021/05/11 18:37:28.778 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_83' DispName:'                      FILENAME' Value:''
-2021/05/11 18:37:28.824 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_84' DispName:'              POSINFODOCNUMBER' Value:''
-2021/05/11 18:37:28.864 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_85' DispName:'                INTELLEINUMBER' Value:''
-2021/05/11 18:37:28.900 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_86' DispName:'                    INCOMEYEAR' Value:''
-2021/05/11 18:37:28.935 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> IndexFieldName:'I_87' DispName:'                       AGENTID' Value:''
-2021/05/11 18:37:28.974 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> insertsql :  Insert into DocumentIndex(DocumentID, DocumentClassID, CreateDateTime, DocumentType, MimeType, Pages, Deleted, Status, FormID, ScanType, ScanUserId, ScanDateTime, VerifyUserId, VerifyDateTime, BatchNumber, I_31,I_32,I_33,I_34,I_35,I_36,I_37,I_38,I_39,I_40,I_41,I_42,I_43,I_44,I_45,I_46,I_47,I_48,I_49,I_50,I_51,I_52,I_53,I_54,I_55,I_56,I_57,I_58,I_59,I_60,I_61,I_62,I_63,I_64,I_65,I_66,I_67,I_68,I_69,I_70,I_71,I_72,I_73,I_74,I_75,I_76,I_77,I_78,I_79,I_80,I_81,I_82,I_83,I_84,I_85,I_86,I_87) values(@DocumentID, @DocumentClassID, @CreateDateTime, @DocumentType, @MimeType, @Pages, @Deleted, @Status, @FormID, @ScanType, @ScanUserId, @ScanDateTime, @VerifyUserId, @VerifyDateTime, @BatchNumber, @I_31,@I_32,@I_33,@I_34,@I_35,@I_36,@I_37,@I_38,@I_39,@I_40,@I_41,@I_42,@I_43,@I_44,@I_45,@I_46,@I_47,@I_48,@I_49,@I_50,@I_51,@I_52,@I_53,@I_54,@I_55,@I_56,@I_57,@I_58,@I_59,@I_60,@I_61,@I_62,@I_63,@I_64,@I_65,@I_66,@I_67,@I_68,@I_69,@I_70,@I_71,@I_72,@I_73,@I_74,@I_75,@I_76,@I_77,@I_78,@I_79,@I_80,@I_81,@I_82,@I_83,@I_84,@I_85,@I_86,@I_87)
-2021/05/11 18:37:29.013 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> Insert DocumentIndex row effect=1
-2021/05/11 18:37:29.048 [Debug]  <<InsertDocumentIndex>d__20> MoveNext            -> Insert DocumentIndexExtension row effect=1
-2021/05/11 18:37:29.110 [Debug]  <<AddDocument>d__9> MoveNext                     -> InsertDocumentIndex&DocumentIndexExtension... 花費00:00:02.097
-2021/05/11 18:37:29.154 [Debug]  <<AddDocument>d__9> MoveNext                     -> Insert Success->DocumentID:72057594037950971
-2021/05/11 18:37:29.194 [Debug]  <<AddDocument>d__9> MoveNext                     -> Done... 花費00:00:02.575
-2021/05/11 18:37:29.241 [Debug]  <<AddDocument>d__9> MoveNext                     -> [END] AddDocument
+USE [ezAcquire]
+GO
+DELETE FROM [dbo].[CodeData]
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'AvailableStatus', N'N', N'停用', 2, N'N', NULL, NULL, CAST(N'2020-11-16T09:38:39.3933333' AS DateTime2), N'201456', NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'AvailableStatus', N'S', N'待機', 3, N'N', NULL, NULL, CAST(N'2020-11-16T09:38:56.3433333' AS DateTime2), N'201456', NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'AvailableStatus', N'Y', N'啟用', 1, N'N', NULL, NULL, CAST(N'2021-01-12T11:06:20.6000000' AS DateTime2), N'201456', NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'BusinessType', N'CLM', N'理賠', 3, N'N', NULL, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'BusinessType', N'NBS', N'新契約', 1, N'N', NULL, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'BusinessType', N'PAY', N'保費', 4, N'N', NULL, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'BusinessType', N'POS', N'保服', 2, N'N', NULL, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'CommitStatus', N'E1', N'取檔失敗', 2, N'N', N'（掃描工作站）', NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'CommitStatus', N'E2', N'上傳失敗', 3, N'N', N'（ScanStation to CommitServer）', NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'CommitStatus', N'E3', N'入櫃失敗', 5, N'N', N'（Commit to ImageServer）', NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'CommitStatus', N'S1', N'品管完成', 1, N'N', NULL, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'CommitStatus', N'S2', N'上傳完成', 4, N'N', N'（ScanStation to CommitServer）', NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'CommitStatus', N'S3', N'入櫃完成', 6, N'N', N'（Commit to ImageServer）', NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'CommitStatus', N'S4', N'資料確認', 7, N'N', N'（更新掃描明細報表）', NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'DeviceStatus', N'E', N'異常', 2, N'N', NULL, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'DeviceStatus', N'N', N'正常', 1, N'N', NULL, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'DeviceStatus', N'O', N'離線', 3, N'N', NULL, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'DocumentStatus', N'A', N'可存取', 1, N'N', NULL, NULL, CAST(N'2020-11-16T09:50:10.5166667' AS DateTime2), N'201456', NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'DocumentStatus', N'C', N'關閉', 2, N'N', NULL, NULL, CAST(N'2020-11-16T09:50:21.4366667' AS DateTime2), N'201456', NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'DocumentStatus', N'H', N'隱藏', 3, N'N', NULL, NULL, CAST(N'2020-11-16T09:50:43.0333333' AS DateTime2), N'201456', NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'DocumentType', N'D', N'有影像有實體', 1, N'N', NULL, NULL, CAST(N'2020-11-16T09:53:04.7466667' AS DateTime2), N'201456', NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'DocumentType', N'E', N'有影像沒實體', 2, N'N', NULL, NULL, CAST(N'2020-11-16T09:53:16.5500000' AS DateTime2), N'201456', NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'DocumentType', N'P', N'有實體沒影像', 3, N'N', NULL, NULL, CAST(N'2020-11-16T09:54:02.7333333' AS DateTime2), N'201456', NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'IndexDataType', N'1', N'數字', 1, N'N', NULL, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'IndexDataType', N'2', N'字串', 2, N'N', NULL, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'IndexDataType', N'3', N'日期', 3, N'N', NULL, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'IndexDataType', N'4', N'布林', 4, N'N', NULL, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'InputType', N'Checkbox', N'多選選單', 4, N'N', NULL, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'InputType', N'ComboBox', N'下拉選單', 3, N'N', NULL, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'InputType', N'Date', N'日期', 6, N'N', NULL, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'InputType', N'Number', N'數字框', 2, N'N', NULL, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'InputType', N'RadioButton', N'單選選單', 5, N'N', NULL, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'InputType', N'Textbox', N'文字框', 1, N'N', NULL, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'InputValidator', N'01', N'數字0、數字1', 2, N'N', N'this.value=this.value.replace(/[^0-1]/g,'''');', NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'InputValidator', N'9', N'數字', 3, N'N', N'this.value=this.value.replace(/\D/g,'''');', NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'InputValidator', N'9Dash', N'數字、橫線', 4, N'N', N'this.value=this.value.replace(/[^\d-]/g,'''');', NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'InputValidator', N'9Dot', N'數字、點', 5, N'N', N'this.value=this.value.replace(/[^\d.]/g,'''');', NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'InputValidator', N'a9_', N'小寫字母、數字、底線', 6, N'N', N'this.value=this.value.replace(/[^a-z0-9_]/g,'''');', NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'InputValidator', N'Aa', N'大小寫字母', 7, N'N', N'this.value=this.value.replace(/[^a-zA-Z]/g,'''');', NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'InputValidator', N'Aa9', N'大小寫字母、數字', 8, N'N', N'this.value=this.value.replace(/[\W]/g,'''');', NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'InputValidator', N'Aa9,', N'大小寫字母、數字、逗號', 11, N'N', N'this.value=this.value.replace(/[\W][,]/g,'''');', NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'InputValidator', N'Aa9_', N'大小寫字母、數字、底線', 9, N'N', N'this.value=this.value.replace(/[^\w_]/g,'''');', NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'InputValidator', N'Aa9_Dot', N'大小寫字母、數字、底線、點', 10, N'N', N'this.value=this.value.replace(/[^\w_]/g,'''');', NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'InputValidator', N'CH', N'中文', 12, N'N', N'this.value=this.value.replace(/[^\u4e00-\u9fa5]/g,'''');', NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'InputValidator', N'CHAa9', N'中文、大小寫字母、數字', 13, N'N', N'this.value=this.value.replace(/[^\w\u4E00-\u9FA5]/g, '''');', NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'InputValidator', N'CHAa9P', N'中文、大小寫字母、數字、中文標點、(英文標點)', 14, N'N', N'this.value=this.value.replace(/^[^!@#$%^&*()-= ]/g,'''');', NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'InputValidator', N'None', N'無', 1, N'N', N'', NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'LisCompanyCodeMapping', N'1', N'9300', 4, N'Y', N'台中', N'', CAST(N'2021-05-12T10:37:38.3200000' AS DateTime2), N'SysAdmin', N'E8D54899-022F-4649-889E-FD6435C994CA')
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'LisCompanyCodeMapping', N'51', N'9100', 2, N'N', N'台北', N'', CAST(N'2021-05-12T10:37:12.3333333' AS DateTime2), N'SysAdmin', N'E795EC13-30B1-442F-B649-FE9EA6F40166')
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'LisCompanyCodeMapping', N'56', N'9200', 3, N'N', N'新竹', N'', CAST(N'2021-05-12T10:37:12.3566667' AS DateTime2), N'SysAdmin', N'E795EC13-30B1-442F-B649-FE9EA6F40166')
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'LisCompanyCodeMapping', N'61', N'9300', 4, N'N', N'台中', N'', CAST(N'2021-05-12T10:37:38.3366667' AS DateTime2), N'SysAdmin', N'E8D54899-022F-4649-889E-FD6435C994CA')
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'LisCompanyCodeMapping', N'66', N'9400', 5, N'N', N'嘉義', N'', CAST(N'2021-05-12T10:37:12.3766667' AS DateTime2), N'SysAdmin', N'E795EC13-30B1-442F-B649-FE9EA6F40166')
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'LisCompanyCodeMapping', N'71', N'9500', 6, N'N', N'台南', N'', CAST(N'2021-05-12T10:37:12.3900000' AS DateTime2), N'SysAdmin', N'E795EC13-30B1-442F-B649-FE9EA6F40166')
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'LisCompanyCodeMapping', N'76', N'9600', 7, N'N', N'高雄', N'', CAST(N'2021-05-12T10:37:12.4000000' AS DateTime2), N'SysAdmin', N'E795EC13-30B1-442F-B649-FE9EA6F40166')
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'LisCompanyCodeMapping', N'81', N'9700', 8, N'N', N'東部', N'', CAST(N'2021-05-12T10:37:12.4100000' AS DateTime2), N'SysAdmin', N'E795EC13-30B1-442F-B649-FE9EA6F40166')
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'LisCompanyCodeMapping', N'88', N'9000', 1, N'N', N'總公司', N'', CAST(N'2021-05-12T10:35:41.4833333' AS DateTime2), N'SysAdmin', N'006B88D1-C460-42EA-9095-647E4E56B999')
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'PreScanTypeMap', N'LISCLM1', N'SCT31', 5, N'N', N'理賠個險', N'', CAST(N'2021-05-12T10:41:58.9366667' AS DateTime2), N'SysAdmin', N'020F9202-7A17-4CAF-ADF5-A3F51310D633')
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'PreScanTypeMap', N'LISCLM2', N'SCT35', 6, N'N', N'理賠照會', N'', CAST(N'2021-05-12T10:42:13.5700000' AS DateTime2), N'SysAdmin', N'83821FB9-B96E-4638-A202-AA2CD6CD2021')
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'PreScanTypeMap', N'LISCLM3', N'SCT35', 7, N'N', N'理賠補件', N'', CAST(N'2021-05-12T10:42:26.9766667' AS DateTime2), N'SysAdmin', N'EFE404DD-EAF3-44D6-82CA-F2A463F11A1D')
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'PreScanTypeMap', N'LISCLM4', N'SCT36', 8, N'N', N'理賠結案補掃', N'', CAST(N'2021-05-12T10:42:41.3366667' AS DateTime2), N'SysAdmin', N'F6E05886-B5DC-4B73-AD9A-06EDC6AAECE8')
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'PreScanTypeMap', N'LISPOS1', N'SCT21', 1, N'N', N'保服新件', N'', CAST(N'2021-05-12T10:41:11.9100000' AS DateTime2), N'SysAdmin', N'D75C19BF-6A80-46AC-8C75-38296B59763F')
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'PreScanTypeMap', N'LISPOS2', N'SCT23', 2, N'N', N'保服照會', N'', CAST(N'2021-05-12T10:41:21.4666667' AS DateTime2), N'SysAdmin', N'E37D71BC-3D65-4268-9DCF-F1B7BAA26149')
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'PreScanTypeMap', N'LISPOS3', N'SCT23', 3, N'N', N'保服補件', N'', CAST(N'2021-05-12T10:41:34.4000000' AS DateTime2), N'SysAdmin', N'C9D11D1B-6D59-4B2D-9C5A-C442398687B1')
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'PreScanTypeMap', N'LISPOS4', N'SCT24', 4, N'N', N'保服結案後掃', N'', CAST(N'2021-05-12T10:41:48.9766667' AS DateTime2), N'SysAdmin', N'6E9DBF53-E6E4-49BC-A934-DD0DD20A2660')
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'PreScanWorkstationMap', N'51', N'B1', 2, N'N', N'台北', N'', CAST(N'2021-05-12T10:40:28.6900000' AS DateTime2), N'SysAdmin', N'F552CAA1-3DBC-435A-B319-DE8E33008FE6')
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'PreScanWorkstationMap', N'56', N'C1', 3, N'N', N'新竹', N'', CAST(N'2021-05-12T10:40:28.7000000' AS DateTime2), N'SysAdmin', N'F552CAA1-3DBC-435A-B319-DE8E33008FE6')
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'PreScanWorkstationMap', N'61', N'D1', 4, N'N', N'台中', N'', CAST(N'2021-05-12T10:40:28.7100000' AS DateTime2), N'SysAdmin', N'F552CAA1-3DBC-435A-B319-DE8E33008FE6')
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'PreScanWorkstationMap', N'66', N'F1', 5, N'N', N'嘉義', N'', CAST(N'2021-05-12T10:40:28.7166667' AS DateTime2), N'SysAdmin', N'F552CAA1-3DBC-435A-B319-DE8E33008FE6')
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'PreScanWorkstationMap', N'71', N'E1', 6, N'N', N'台南', N'', CAST(N'2021-05-12T10:40:28.7233333' AS DateTime2), N'SysAdmin', N'F552CAA1-3DBC-435A-B319-DE8E33008FE6')
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'PreScanWorkstationMap', N'76', N'G1', 7, N'N', N'高雄', N'', CAST(N'2021-05-12T10:40:28.7400000' AS DateTime2), N'SysAdmin', N'F552CAA1-3DBC-435A-B319-DE8E33008FE6')
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'PreScanWorkstationMap', N'81', N'H1', 8, N'N', N'東部', N'', CAST(N'2021-05-12T10:40:28.7500000' AS DateTime2), N'SysAdmin', N'F552CAA1-3DBC-435A-B319-DE8E33008FE6')
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'PreScanWorkstationMap', N'88', N'A1', 1, N'N', N'總公司', N'', CAST(N'2021-05-12T10:40:28.6800000' AS DateTime2), N'SysAdmin', N'F552CAA1-3DBC-435A-B319-DE8E33008FE6')
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryAction', N'001', N'查詢', 1, N'N', N'QueryDoc', NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryAction', N'002', N'檢視', 2, N'N', N'ViewDoc', NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryAction', N'003', N'列印', 3, N'N', N'PrintDoc', NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryAction', N'004', N'修改索引', 4, N'N', N'ModifyIndex', NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryAction', N'005', N'隱藏影像', 5, N'N', N'HideDoc', NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryAction', N'006', N'關閉影像', 6, N'N', N'CloseDoc', NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryAction', N'007', N'刪除影像', 7, N'N', N'DeleteDoc', NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryAction', N'008', N'申請重掃', 8, N'N', N'Rescan', NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryAction', N'009', N'申請補掃', 9, N'N', N'AppendScan', NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryAction', N'010', N'影像註記', 10, N'N', N'Annotation', NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryType', N'Checkbox', N'多選選單', 4, N'N', NULL, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryType', N'ComboBox', N'下拉選單', 3, N'N', NULL, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryType', N'Date', N'日期', 8, N'N', NULL, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryType', N'DateRange', N'日期區間', 9, N'N', NULL, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryType', N'DateTime', N'日期時間', 12, N'N', NULL, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryType', N'DateTimeRange', N'日期時間區間', 13, N'N', NULL, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryType', N'Number', N'數字框', 2, N'N', NULL, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryType', N'NumberRange', N'數字區間', 7, N'N', NULL, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryType', N'RadioButton', N'單選選單', 5, N'N', NULL, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryType', N'Textbox', N'文字框', 1, N'N', NULL, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryType', N'TextboxRange', N'字串區間', 6, N'N', NULL, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryType', N'Time', N'時間', 10, N'N', NULL, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'QueryType', N'TimeRange', N'時間區間', 11, N'N', NULL, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'RegisterStatus', N'C', N'完成註冊', 1, N'N', NULL, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'RegisterStatus', N'D', N'註銷', 4, N'N', NULL, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'RegisterStatus', N'M', N'更換機器', 3, N'N', NULL, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'RegisterStatus', N'U', N'變更單位', 2, N'N', NULL, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'ScanLocation', N'01', N'總公司', 1, N'N', NULL, NULL, CAST(N'2021-01-07T10:04:40.5466667' AS DateTime2), N'201456', NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'ScanLocation', N'02', N'台北分公司', 2, N'N', NULL, NULL, CAST(N'2021-01-07T10:04:40.5500000' AS DateTime2), N'201456', NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'ScanLocation', N'03', N'高雄分公司', 3, N'N', NULL, NULL, CAST(N'2021-01-07T10:04:40.5500000' AS DateTime2), N'201456', NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'ScanLocation', N'04', N'台中分公司', 4, N'N', NULL, NULL, CAST(N'2021-01-07T10:04:40.5500000' AS DateTime2), N'201456', NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'ScanLocation', N'05', N'花蓮分公司', 5, N'N', NULL, NULL, CAST(N'2021-01-07T10:04:40.5533333' AS DateTime2), N'201456', NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'ScanLocation', N'06', N'桃園分公司', 6, N'N', NULL, NULL, CAST(N'2021-01-07T10:04:40.5533333' AS DateTime2), N'201456', NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'ScanLocation', N'07', N'台南分公司', 7, N'N', NULL, NULL, CAST(N'2021-01-07T10:04:40.5566667' AS DateTime2), N'201456', NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'ScanLocation', N'08', N'新竹分公司', 8, N'N', NULL, NULL, CAST(N'2021-01-07T10:04:40.5566667' AS DateTime2), N'201456', NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'SubscribeStatus', N'A', N'使用中', 1, N'N', NULL, NULL, CAST(N'2021-01-25T09:50:52.2866667' AS DateTime2), N'201456', NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'SubscribeStatus', N'E', N'過期', 2, N'N', NULL, NULL, CAST(N'2021-01-25T09:50:58.8366667' AS DateTime2), N'201456', NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'SubscribeStatus', N'S', N'暫停', 3, N'N', NULL, NULL, CAST(N'2021-01-25T09:51:07.1400000' AS DateTime2), N'201456', NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'SysOwner', N'701383', N'701383@taiwanlife.com', 1, N'N', NULL, NULL, CAST(N'2021-03-23T11:51:10.4533333' AS DateTime2), N'SysAdmin', NULL)
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'SysOwner', N'ericyang', N'eric.yang@taiwanlife.com', 4, N'N', N'', N'', CAST(N'2021-05-07T16:15:12.4700000' AS DateTime2), N'SysAdmin', N'108D7BD1-4709-4CD8-A33E-EBC4560D4B6C')
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'SysOwner', N'iveslin', N'ives.lin@taiwanlife.com', 3, N'N', N'', N'', CAST(N'2021-05-07T16:15:12.4566667' AS DateTime2), N'SysAdmin', N'108D7BD1-4709-4CD8-A33E-EBC4560D4B6C')
+GO
+INSERT [dbo].[CodeData] ([Type], [Code], [Description], [Seq], [SuspendFlg], [Remark01], [Remark02], [ModifiedTime], [ModifiedUser], [ModifiedUID]) VALUES (N'SysOwner', N'yichenlin', N'yichen.lin@taiwanlife.com', 2, N'N', N'', N'', CAST(N'2021-05-07T16:15:12.4466667' AS DateTime2), N'SysAdmin', N'108D7BD1-4709-4CD8-A33E-EBC4560D4B6C')
+GO
