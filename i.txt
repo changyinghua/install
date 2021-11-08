@@ -2,6 +2,7 @@ use ezAcquire
 GO
 
 DECLARE @clauseId varchar(50)
+DECLARE @clauseCount int
 
 DECLARE cur CURSOR FOR
 SELECT DISTINCT I_41 FROM DocumentIndex WHERE ScanType = 'CLU'
@@ -12,9 +13,15 @@ FETCH NEXT FROM cur INTO @clauseId
 WHILE @@FETCH_STATUS = 0
 BEGIN
 
-    UPDATE DocumentIndex SET Status = 'C' WHERE I_41 = @clauseId
-    UPDATE DocumentIndex SET Status = 'A' WHERE DocumentId = 
-        (SELECT TOP 1 DocumentId FROM DocumentIndex WHERE I_41 = @clauseId ORDER BY CreateDateTime DESC)
+    SELECT @clauseCount = COUNT(*) FROM DocumentIndex WHERE I_41 = @clauseId
+	IF @clauseCount > 1
+	BEGIN
+
+		UPDATE DocumentIndex SET Status = 'C' WHERE I_41 = @clauseId
+		UPDATE DocumentIndex SET Status = 'A' WHERE DocumentId = 
+			(SELECT TOP 1 DocumentId FROM DocumentIndex WHERE I_41 = @clauseId ORDER BY CreateDateTime DESC)
+
+    END
 
     FETCH NEXT FROM cur INTO @clauseId 
 END
