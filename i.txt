@@ -13,14 +13,19 @@ FETCH NEXT FROM cur INTO @clauseId
 WHILE @@FETCH_STATUS = 0
 BEGIN
 
-    SELECT @clauseCount = COUNT(*) FROM DocumentIndex WHERE I_41 = @clauseId
+    SELECT @clauseCount = COUNT(*) FROM DocumentIndex WHERE I_41 = @clauseId -- 同條款代碼有多筆
 	IF @clauseCount > 1
 	BEGIN
 
-		UPDATE DocumentIndex SET Status = 'C' WHERE I_41 = @clauseId
-		UPDATE DocumentIndex SET Status = 'A' WHERE DocumentId = 
-			(SELECT TOP 1 DocumentId FROM DocumentIndex WHERE I_41 = @clauseId ORDER BY CreateDateTime DESC)
+	    SELECT @clauseCount = COUNT(*) FROM DocumentIndex WHERE I_41 = @clauseId AND Status = 'A' -- 且有啟用的
+	    IF @clauseCount > 1
+	    BEGIN
 
+		    UPDATE DocumentIndex SET Status = 'C' WHERE I_41 = @clauseId
+		    UPDATE DocumentIndex SET Status = 'A' WHERE DocumentId = 
+			    (SELECT TOP 1 DocumentId FROM DocumentIndex WHERE I_41 = @clauseId ORDER BY CreateDateTime DESC)
+        
+		END
     END
 
     FETCH NEXT FROM cur INTO @clauseId 
