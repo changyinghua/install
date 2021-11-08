@@ -3,6 +3,7 @@ GO
 
 DECLARE @clauseId varchar(50)
 DECLARE @clauseCount int
+DECLARE @amt int = 0
 
 DECLARE cur CURSOR FOR
 SELECT DISTINCT I_41 FROM DocumentIndex WHERE ScanType = 'CLU'
@@ -18,13 +19,15 @@ BEGIN
 	BEGIN
 
 	    SELECT @clauseCount = COUNT(*) FROM DocumentIndex WHERE I_41 = @clauseId AND Status = 'A' -- 且有啟用的
-	    IF @clauseCount > 1
+	    IF @clauseCount >= 1
 	    BEGIN
 
 		    UPDATE DocumentIndex SET Status = 'C' WHERE I_41 = @clauseId
 		    UPDATE DocumentIndex SET Status = 'A' WHERE DocumentId = 
 			    (SELECT TOP 1 DocumentId FROM DocumentIndex WHERE I_41 = @clauseId ORDER BY CreateDateTime DESC)
-        
+
+		    SET @amt = @amt + 1
+		    PRINT @amt
 		END
     END
 
