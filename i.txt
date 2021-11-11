@@ -1,9 +1,128 @@
-<!-- LIS CLM
-		CL1 CLM 個險
-		CL2 CLM 照會
-		CL3 CLM 補件
-		CL4 CLM 結案補掃-->
-	<add key="CL1_Action" value="ezAcquire.Commit.Server.Action.LISCLMAction,ezAcquire.Commit.Server.Action" />
-	<add key="CL2_Action" value="ezAcquire.Commit.Server.Action.LISCLMAction,ezAcquire.Commit.Server.Action" />
-	<add key="CL3_Action" value="ezAcquire.Commit.Server.Action.LISCLMAction,ezAcquire.Commit.Server.Action" />
-	<add key="CL4_Action" value="ezAcquire.Commit.Server.Action.LISCLMAction,ezAcquire.Commit.Server.Action" />
+USE [ezAcquire]
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'APL', N'要保書報局文件', 34, N'NotInclude(VersionCode)', N'2', N'VersionCode', N'N', 1, N'Y', N'', 34, NULL, NULL, NULL)
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'APN', N'文件補掃', 35, N'NotInclude(FilingNumber)', N'2', N'FilingNumber', N'N', 1, N'Y', N'', 35, NULL, NULL, NULL)
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'BLS', N'疑異常通報客戶', 8, N'NotInclude(BlacklistNo)', N'2', N'BlacklistNo', N'N', 1, N'Y', N'', 8, NULL, NULL, NULL)
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'CGN', N'團險不給付件', 26, N'NotInclude(AccidentDate+AccidentId+ClmReceiveDate+CloseDate)', N'2', N'AccidentDate,AccidentId,ClmReceiveDate,CloseDate', N'N', 3, N'Y', N'', 26, NULL, NULL, NULL)
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'CGP', N'團險給付件', 25, N'NotInclude(AccidentDate+AccidentId+ClmReceiveDate+CloseDate)', N'2', N'AccidentDate,AccidentId,ClmReceiveDate,CloseDate', N'N', 4, N'Y', N'', 25, NULL, NULL, NULL)
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'CL1', N'理賠 個險', 60, N'EqualTo(FormId=CA0320)', NULL, NULL, N'N', 1, N'Y', NULL, 60, N'SysAdmin', CAST(N'2021-08-11T10:15:21.7266667' AS DateTime2), N'6C8C3C76-D0F1-44B3-85C8-391E786BE2D0')
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'CL2', N'理賠 照會', 61, N'EqualTo(FormId=CA0820)', NULL, NULL, N'N', 1, N'Y', NULL, 61, N'', NULL, N'')
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'CL3', N'理賠 補件', 62, N'EqualTo(FormId=CA0820)', NULL, NULL, N'N', 1, N'Y', NULL, 62, N'', NULL, N'')
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'CL4', N'理賠 結案補掃', 63, N'EqualTo(FormId=CA0120)', NULL, NULL, N'N', 1, N'Y', NULL, 63, N'SysAdmin', CAST(N'2021-06-23T10:04:53.7633333' AS DateTime2), N'4F588372-B8F9-4555-8454-AC2F3C94A400')
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'CLC', N'CAS 理賠文件', 41, N'EqualTo(FormId=000000)', N'2', N'PolicyId', N'N', 1, N'Y', N'', 41, NULL, NULL, NULL)
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'CLU', N'條款', 31, N'NotInclude()', N'2', N'', N'N', 1, N'Y', NULL, 31, NULL, NULL, NULL)
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'CNP', N'個險不給付件', 24, N'NotInclude(AccidentDate+AccidentId+ClmReceiveDate+CloseDate)', N'2', N'AccidentDate,AccidentId,ClmReceiveDate,CloseDate', N'N', 3, N'Y', N'', 24, NULL, NULL, NULL)
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'CPY', N'個險給付件', 23, N'NotInclude(AccidentDate+AccidentId+ClmReceiveDate+CloseDate)', N'2', N'AccidentDate,AccidentId,ClmReceiveDate,CloseDate', N'N', 4, N'Y', N'', 23, NULL, NULL, NULL)
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'CTN', N'旅平險不給付件', 28, N'NotInclude(AccidentDate+AccidentId+ClmReceiveDate+CloseDate)', N'2', N'AccidentDate,AccidentId,ClmReceiveDate,CloseDate', N'N', 3, N'Y', N'', 28, NULL, NULL, NULL)
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'CTP', N'旅平險給付件', 27, N'NotInclude(AccidentDate+AccidentId+ClmReceiveDate+CloseDate)', N'2', N'AccidentDate,AccidentId,ClmReceiveDate,CloseDate', N'N', 4, N'Y', N'', 27, NULL, NULL, NULL)
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'EXB', N'前掃新契約', 37, N'', N'', N'', N'B', 1, N'Y', N'', 37, NULL, NULL, NULL)
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'EXP', N'前掃保服', 38, N'', N'', N'', N'P', 1, N'Y', N'', 38, NULL, NULL, NULL)
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'EXT', N'前掃其他', 42, NULL, NULL, NULL, N'N', 1, N'Y', NULL, 42, NULL, NULL, NULL)
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'FMT', N'Formatting 入櫃', NULL, N'', NULL, NULL, N'B', 1, N'N', N'', NULL, N'', NULL, N'')
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'HSC', N'合約文件', 9, N'NotInclude(CompanyId)', N'2', N'CompanyId', N'N', 1, N'Y', N'{[Simplex],[Y]}', 9, NULL, NULL, NULL)
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'IED', N'iEDMS 轉入', 38, NULL, NULL, NULL, N'N', NULL, N'Y', NULL, 38, NULL, NULL, NULL)
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'LIS', N'LIS 線上入櫃', NULL, N'', NULL, NULL, N'B', 1, N'N', N'', NULL, N'', NULL, N'')
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'NB1', N'LIS-NB 新件', 40, N'FormGroup(NBSAPP)', NULL, NULL, N'N', 1, N'Y', NULL, 40, N'', NULL, N'')
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'NB2', N'LIS-NB 照會', 41, N'NotInclude(NotifyNo)', NULL, NULL, N'N', 1, N'Y', NULL, 41, N'SysAdmin', CAST(N'2021-10-01T16:17:47.6933333' AS DateTime2), N'0F8B6795-D96E-4D35-8385-2D39F5BCD511')
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'NB3', N'LIS-NB 補件', 42, N'NotInclude(PolicyId)', NULL, NULL, N'N', 1, N'Y', NULL, 42, N'', NULL, N'')
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'NB4', N'LIS-NB 結案後掃描', 44, N'NotInclude(PolicyId)', NULL, NULL, N'N', 1, N'Y', NULL, 44, N'', NULL, N'')
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'NB5', N'LIS-NB 契撤', 43, N'NotInclude(PolicyId)', NULL, NULL, N'N', 1, N'Y', NULL, 43, N'', NULL, N'')
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'NBC', N'CAS 新契約文件', 39, N'EqualTo(FormId=000000)', N'2', N'PolicyId', N'N', 1, N'Y', N'', 39, NULL, NULL, NULL)
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'NBF', N'新契約保後文件', 36, N'NotInclude(PolicySerialNo)', N'2', N'PolicySerialNo', N'N', 1, N'Y', N'', 36, NULL, NULL, NULL)
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'NBS', N'新契約承保件', 1, N'NotInclude(PolicySerialNo)', N'2', N'PolicySerialNo', N'B', 1, N'Y', N'', 1, NULL, NULL, NULL)
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'NRG', N'大宗掛號(契約部)', 5, N'NotInclude(RegReceiveDate+RegSendDate)', N'2', N'RegReceiveDate,RegSendDate', N'N', 2, N'Y', N'', 5, NULL, NULL, NULL)
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'NRM', N'契撤文件', 2, N'NotInclude(PolicySerialNo)', N'2', N'PolicySerialNo', N'B', 1, N'Y', N'', 2, NULL, NULL, NULL)
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'NSB', N'簽收回條', 4, N'NotInclude(PolicySerialNo)', N'2', N'PolicySerialNo', N'B', 2, N'Y', N'', 4, NULL, NULL, NULL)
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'NUA', N'未承保件', 3, N'NotInclude(PolicySerialNo)', N'2', N'PolicySerialNo', N'B', 2, N'Y', N'', 3, NULL, NULL, NULL)
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'OLD', N'有效件', 17, N'NotInclude(PolicyId+PolicySerialNo)', N'2', N'PolicyId,PolicySerialNo', N'B', 1, N'Y', N'', 17, NULL, NULL, NULL)
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'ONF', N'契約不歸檔文件', 6, N'NotInclude(PolicyId+PolicySerialNo)', N'2', N'PolicyId,PolicySerialNo', N'B', 1, N'Y', N'', 6, NULL, NULL, NULL)
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'ONL', N'OnlineImport 入櫃', NULL, N'', NULL, NULL, N'B', 1, N'N', N'', NULL, N'', NULL, N'')
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'OSN', N'委外掃描', 33, N'NotInclude()', N'2', N'', N'B', 1, N'Y', NULL, 33, NULL, NULL, NULL)
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'PCN', N'解約', 12, N'NotInclude(CloseDate+PolicySerialNo+VaryDate)', N'2', N'CloseDate,PolicySerialNo,VaryDate', N'P', 1, N'Y', N'', 12, NULL, NULL, NULL)
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'PDF', N'PDFImport', NULL, NULL, NULL, NULL, N'N', 1, N'Y', NULL, NULL, NULL, NULL, NULL)
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'PID', N'簽章樣式卡', 29, N'PictureCount(2)', N'2', N'SalesId', N'N', 1, N'Y', N'{[DefaultFormId],[111120]}', 29, NULL, NULL, NULL)
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'PLN', N'貸款', 11, N'NotInclude(CloseDate+PolicySerialNo+VaryDate)', N'2', N'CloseDate,PolicySerialNo,VaryDate', N'P', 1, N'Y', N'', 11, NULL, NULL, NULL)
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'POS', N'契變件', 10, N'NotInclude(CloseDate+PolicySerialNo+VaryDate)', N'2', N'CloseDate,PolicySerialNo,VaryDate', N'P', 1, N'Y', N'', 10, NULL, NULL, NULL)
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'PRG', N'大宗掛號(保服部)', 13, N'NotInclude(RegReceiveDate)', N'2', N'RegReceiveDate', N'N', 1, N'Y', N'{[CustomDefaultFormId],[Y]}', 13, NULL, NULL, NULL)
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'PS1', N'POS 新件', 50, N'FormGroup(POSAPL)', NULL, NULL, N'N', 1, N'Y', NULL, 50, N'', NULL, N'')
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'PS2', N'POS 照會', 51, N'NotInclude(NotifyNo)', NULL, NULL, N'N', 1, N'Y', NULL, 51, N'', NULL, N'')
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'PS3', N'POS 補件', 52, N'NotInclude(POSNumber)', NULL, NULL, N'N', 1, N'Y', NULL, 52, N'', NULL, N'')
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'PS4', N'POS 後掃', 53, N'NotInclude(POSNumber)', NULL, NULL, N'N', 1, N'Y', NULL, 53, N'', NULL, N'')
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'PSC', N'CAS 保服文件', 40, N'EqualTo(FormId=000000)', N'2', N'PolicyId', N'N', 1, N'Y', N'', 40, NULL, NULL, NULL)
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'RA1', N'保費 轉帳授權書', 70, N'Exist(PaidSerialNo)', NULL, NULL, N'N', 1, N'Y', NULL, 70, N'', NULL, N'')
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'RA2', N'保費 結案後掃描', 70, N'Exist(PaidSerialNo)', NULL, NULL, N'N', 1, N'Y', NULL, 70, N'', NULL, N'')
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'RAD', N'收費地址', 22, N'NotInclude(CloseDate+MainId+ProcessUser)', N'2', N'CloseDate,MainId,ProcessUser', N'N', 1, N'Y', N'', 22, NULL, NULL, NULL)
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'RPA', N'授權書/終止授權文件(歸檔)', 18, N'NotInclude(PaidSerialNo)', N'2', N'PaidSerialNo', N'N', 1, N'Y', N'', 18, NULL, NULL, NULL)
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'RPN', N'授權書/終止授權文件(不歸檔)', 19, N'NotInclude(PaidSerialNo)', N'2', N'PaidSerialNo', N'N', 1, N'N', N'', 19, NULL, NULL, NULL)
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'RPO', N'保費相關文件', 20, N'NotInclude(PolicyId)', N'2', N'PolicyId', N'N', 1, N'Y', N'', 20, NULL, NULL, NULL)
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'RRG', N'大宗掛號(保費部)', 20, N'NotInclude(RegReceiveDate)', N'2', N'RegReceiveDate', N'N', 1, N'Y', N'', 20, NULL, NULL, NULL)
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'SAM', N'業務行政合約', 30, N'NotInclude(SalesId)', N'2', N'SalesId', N'N', 1, N'Y', N'', 30, NULL, NULL, NULL)
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'SCA', N'文件重掃', 32, N'NotInclude(ReplaceKey)', N'2', N'ReplaceKey', N'N', 1, N'Y', N'', 32, NULL, NULL, NULL)
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'SCL', N'業務員聲明書', 21, N'NotInclude(SalesId)', N'2', N'SalesId', N'N', 1, N'Y', N'', 21, NULL, NULL, NULL)
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'SID', N'保服簽章樣式卡', 14, N'NotInclude(MainId)', N'2', N'MainId', N'S', 1, N'Y', N'', 14, NULL, NULL, NULL)
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'SRP', N'滿期生存給付', 16, N'NotInclude(PolicyId)', N'2', N'PolicyId', N'N', 1, N'Y', N'', 16, NULL, NULL, NULL)
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'WBF', N'網路保後文件', 37, N'NotInclude(PolicySerialNo)', N'2', N'PolicySerialNo', N'B', 1, N'Y', N'', 37, NULL, NULL, NULL)
+GO
+INSERT [dbo].[ScanTypes] ([ScanTypeId], [ScanTypeName], [Sorting], [DivideRule], [DivideType], [DivideValue], [IsList], [DocumentClassId], [RequireFiling], [ExtendSettings], [Seq], [ModifiedUser], [ModifiedTime], [ModifiedUID]) VALUES (N'WEB', N'電子要保書', 1, N'NotInclude(PolicySerialNo)', N'0', N'', N'B', 1, N'Y', N'', 1, NULL, NULL, NULL)
+GO
