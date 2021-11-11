@@ -1,58 +1,9 @@
-USE ezAcquire
-GO
-
-DECLARE @clauseId varchar(50)
-DECLARE @clauseCount int
-DECLARE @amt int = 0
-DECLARE @documentId varchar(50)
-DECLARE @clauseTable TABLE
-(
-    DocumentId varchar(50),
-    CreateDateTime datetime,
-    [Status] varchar(50)
-)
-
-DECLARE cur CURSOR FOR
-SELECT DISTINCT I_41 FROM DocumentIndex WHERE ScanType = 'CLU'
-
-OPEN cur
-FETCH NEXT FROM cur INTO @clauseId
-
-WHILE @@FETCH_STATUS = 0
-BEGIN
-    IF ISNULL(@clauseId, '') <> ''
-    BEGIN
-
-        delete @clauseTable
-
-        insert into @clauseTable
-        select DocumentId, CreateDateTime, [Status] from DocumentIndex
-        where ScanType = 'CLU' AND I_41 = @clauseId
-
-        select @clauseCount = COUNT(*) from @clauseTable                                                            -- 同條款代碼有多筆
-
-        IF @clauseCount > 1
-        BEGIN
-
-            SELECT @clauseCount = COUNT(*) FROM @clauseTable WHERE [Status] = 'A'                                   -- 且有啟用的
-
-            IF @clauseCount >= 1
-            BEGIN
-                
-                SELECT TOP 1 @documentId = DocumentId FROM @clauseTable ORDER BY CreateDateTime DESC
-
-                UPDATE DocumentIndex SET Status = 'C' WHERE DocumentId IN (select DocumentId from @clauseTable)
-                UPDATE DocumentIndex SET Status = 'A' WHERE DocumentId = @documentId
-
-
-                SET @amt = @amt + 1
-                PRINT @amt
-            END
-        END
-    END
-
-    FETCH NEXT FROM cur INTO @clauseId
-END
-
-CLOSE cur
-DEALLOCATE cur
+<!-- LIS CLM
+		CL1 CLM 個險
+		CL2 CLM 照會
+		CL3 CLM 補件
+		CL4 CLM 結案補掃-->
+	<add key="CL1_Action" value="ezAcquire.Commit.Server.Action.LISCLMAction,ezAcquire.Commit.Server.Action" />
+	<add key="CL2_Action" value="ezAcquire.Commit.Server.Action.LISCLMAction,ezAcquire.Commit.Server.Action" />
+	<add key="CL3_Action" value="ezAcquire.Commit.Server.Action.LISCLMAction,ezAcquire.Commit.Server.Action" />
+	<add key="CL4_Action" value="ezAcquire.Commit.Server.Action.LISCLMAction,ezAcquire.Commit.Server.Action" />
