@@ -1,91 +1,21 @@
------BEGIN CERTIFICATE-----
-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
-xP410YN3S6Vn+f9l2DWW7ksf/uCfNn42fWLgW9dJ4dVXprcwHcndJ7OTGs2XSydH
-LcrO15N5wzmZOTpoTOhec4pFdQpf8hKmcXJxhCfp+GMneYAnS7qD6emYdkNZIhc3
-c/hWdyCxbceD4LnxjXc9N1io+j++ctBI5V/+jf984lO0Z8Htiz3L//VSuc72VFOn
-cLL6CvhYZpSgaGdx5nT+WM2vOxtQSQP8j16EG1zl/hdtEZ/lvfMufPD+d3RsH8CH
-VR8EPhS6ER7BM+MUHOG7VhpPzhEYRnoAYb/7Xzf4nvTubVePq6vS7vUoadl3Bveb
-JEGtGu5W/fyUwtdh3N0mcP9i1/18VIafTyV+1mv8pGA7oHu9KJ1kH0HRJ/YM4J41
-yzXt4jKd879uPBlZsT8M9chnO2oRTG5jFiPSkNK59iSU0aqDJ0IGplFnnO+0FDH+
-uRb6+fiKvT68bchyP8xFfn6Unk7cIhb0HOF7u101vgtHdM7fzG4ECI/PPVdK6HOh
-yvNfZS+O52UB3NKM4YwQGMQxea6BZcKEWR5BHk83x6v/YW5vxOMbnr2Kv6WPbdfN
-+yg/p3I4JgvOx8p7JyjLxi/NWldVvnbx/Cb4k5KOVsahwJ91fvkYd9z/pusjr073
-+/7VHvj/6//g9d9QSwECHwAUAAAACACpimxTkiRecvsPAAAAIgAAEgAkAAAAAAAA
-ACAAAAAAAAAAQ3VzdC5Ud2wuVG9vbHMuZGxsCgAgAAAAAAABABgANdiZpqbX1wHa
-N5umptfXATDV0Re0utcBUEsFBgAAAAABAAEAZAAAACsQAAAAAA==
------END CERTIFICATE-----
+INSERT INTO Form (FormId, FormName, PageCount, Security, SaveFlg, StartDate, EndDate, CreatedTime, CreatedUser) VALUES ('RNA001','繳費通知單',0, 0, 'Y', '2021/11/15', '2121/11/15', getdate(), 'SysAdmin')
+INSERT INTO Form (FormId, FormName, PageCount, Security, SaveFlg, StartDate, EndDate, CreatedTime, CreatedUser) VALUES ('RNA002','繳費通知單(高齡版)',0, 0, 'Y', '2021/11/15', '2121/11/15', getdate(), 'SysAdmin')
+INSERT INTO Form (FormId, FormName, PageCount, Security, SaveFlg, StartDate, EndDate, CreatedTime, CreatedUser) VALUES ('RNA003','扣/請款未成功通知單',0, 0, 'Y', '2021/11/15', '2121/11/15', getdate(), 'SysAdmin')
+INSERT INTO Form (FormId, FormName, PageCount, Security, SaveFlg, StartDate, EndDate, CreatedTime, CreatedUser) VALUES ('RNC001','續期保險費送金單',0, 0, 'Y', '2021/11/15', '2121/11/15', getdate(), 'SysAdmin')
+INSERT INTO Form (FormId, FormName, PageCount, Security, SaveFlg, StartDate, EndDate, CreatedTime, CreatedUser) VALUES ('RNB001','保險費催告(繳費)通知書',0, 0, 'Y', '2021/11/15', '2121/11/15', getdate(), 'SysAdmin')
+INSERT INTO Form (FormId, FormName, PageCount, Security, SaveFlg, StartDate, EndDate, CreatedTime, CreatedUser) VALUES ('RNA004','保險單停效通知書',0, 0, 'Y', '2021/11/15', '2121/11/15', getdate(), 'SysAdmin')
+INSERT INTO Form (FormId, FormName, PageCount, Security, SaveFlg, StartDate, EndDate, CreatedTime, CreatedUser) VALUES ('RNA005','保險費自動墊繳憑證',0, 0, 'Y', '2021/11/15', '2121/11/15', getdate(), 'SysAdmin')
+INSERT INTO Form (FormId, FormName, PageCount, Security, SaveFlg, StartDate, EndDate, CreatedTime, CreatedUser) VALUES ('RNC003','保單借款還款收據/自動墊繳送金單',0, 0, 'Y', '2021/11/15', '2121/11/15', getdate(), 'SysAdmin')
+INSERT INTO Form (FormId, FormName, PageCount, Security, SaveFlg, StartDate, EndDate, CreatedTime, CreatedUser) VALUES ('RNA006','保單借款本金及利息繳費通知單',0, 0, 'Y', '2021/11/15', '2121/11/15', getdate(), 'SysAdmin')
+INSERT INTO Form (FormId, FormName, PageCount, Security, SaveFlg, StartDate, EndDate, CreatedTime, CreatedUser) VALUES ('RNC002','保單借款本金/利息繳納收據',0, 0, 'Y', '2021/11/15', '2121/11/15', getdate(), 'SysAdmin')
+INSERT INTO Form (FormId, FormName, PageCount, Security, SaveFlg, StartDate, EndDate, CreatedTime, CreatedUser) VALUES ('RNB002','停效催告通知函',0, 0, 'Y', '2021/11/15', '2121/11/15', getdate(), 'SysAdmin')
+INSERT INTO Form (FormId, FormName, PageCount, Security, SaveFlg, StartDate, EndDate, CreatedTime, CreatedUser) VALUES ('RNA008','保險費繳納證明單',0, 0, 'Y', '2021/11/15', '2121/11/15', getdate(), 'SysAdmin')
+INSERT INTO Form (FormId, FormName, PageCount, Security, SaveFlg, StartDate, EndDate, CreatedTime, CreatedUser) VALUES ('RNB003','現金價值不足扣除應收費用通知書',0, 0, 'Y', '2021/11/15', '2121/11/15', getdate(), 'SysAdmin')
+INSERT INTO Form (FormId, FormName, PageCount, Security, SaveFlg, StartDate, EndDate, CreatedTime, CreatedUser) VALUES ('RNB006','保單借款本息逾保單價值準備金停效催告通知書',0, 0, 'Y', '2021/11/15', '2121/11/15', getdate(), 'SysAdmin')
+INSERT INTO Form (FormId, FormName, PageCount, Security, SaveFlg, StartDate, EndDate, CreatedTime, CreatedUser) VALUES ('RNB007','保險單借款/保險費自動墊繳利息逾一年未繳通知單',0, 0, 'Y', '2021/11/15', '2121/11/15', getdate(), 'SysAdmin')
+INSERT INTO Form (FormId, FormName, PageCount, Security, SaveFlg, StartDate, EndDate, CreatedTime, CreatedUser) VALUES ('RNB004','保險契約停止效力通知書(帳戶不足扣周月應扣費用)',0, 0, 'Y', '2021/11/15', '2121/11/15', getdate(), 'SysAdmin')
+INSERT INTO Form (FormId, FormName, PageCount, Security, SaveFlg, StartDate, EndDate, CreatedTime, CreatedUser) VALUES ('RNB005','保單借款本息超過保單價值總額還款/終止通知',0, 0, 'Y', '2021/11/15', '2121/11/15', getdate(), 'SysAdmin')
+INSERT INTO Form (FormId, FormName, PageCount, Security, SaveFlg, StartDate, EndDate, CreatedTime, CreatedUser) VALUES ('RNA007','保險契約復效提醒通知書',0, 0, 'Y', '2021/11/15', '2121/11/15', getdate(), 'SysAdmin')
+INSERT INTO Form (FormId, FormName, PageCount, Security, SaveFlg, StartDate, EndDate, CreatedTime, CreatedUser) VALUES ('RNA009','投資型商品定期（不）定額不扣款通知單',0, 0, 'Y', '2021/11/15', '2121/11/15', getdate(), 'SysAdmin')
+INSERT INTO Form (FormId, FormName, PageCount, Security, SaveFlg, StartDate, EndDate, CreatedTime, CreatedUser) VALUES ('RNA013','保險費付款授權書授權結果通知單',0, 0, 'Y', '2021/11/15', '2121/11/15', getdate(), 'SysAdmin')
+INSERT INTO Form (FormId, FormName, PageCount, Security, SaveFlg, StartDate, EndDate, CreatedTime, CreatedUser) VALUES ('RNA010','續期交易投資組合明細表',0, 0, 'Y', '2021/11/15', '2121/11/15', getdate(), 'SysAdmin')
