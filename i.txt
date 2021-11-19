@@ -1,1214 +1,1005 @@
-USE [TWLife]
-GO
-/****** Object:  StoredProcedure [dbo].[sp_TWLife_RoleScantypeMap_Report]    Script Date: 2021/11/19 下午 02:18:37 ******/
-DROP PROCEDURE IF EXISTS [dbo].[sp_TWLife_RoleScantypeMap_Report]
-GO
-/****** Object:  StoredProcedure [dbo].[sp_TWLife_RoleFunctionMap_Report]    Script Date: 2021/11/19 下午 02:18:37 ******/
-DROP PROCEDURE IF EXISTS [dbo].[sp_TWLife_RoleFunctionMap_Report]
-GO
-/****** Object:  StoredProcedure [dbo].[sp_TWLife_RoleFormGroupMap_Report]    Script Date: 2021/11/19 下午 02:18:37 ******/
-DROP PROCEDURE IF EXISTS [dbo].[sp_TWLife_RoleFormGroupMap_Report]
-GO
-/****** Object:  StoredProcedure [dbo].[sp_TWLife_Report_RPTB18]    Script Date: 2021/11/19 下午 02:18:37 ******/
-DROP PROCEDURE IF EXISTS [dbo].[sp_TWLife_Report_RPTB18]
-GO
-/****** Object:  StoredProcedure [dbo].[sp_TWLife_Report_RPTB17]    Script Date: 2021/11/19 下午 02:18:37 ******/
-DROP PROCEDURE IF EXISTS [dbo].[sp_TWLife_Report_RPTB17]
-GO
-/****** Object:  StoredProcedure [dbo].[sp_TWLife_Report_RPTB16]    Script Date: 2021/11/19 下午 02:18:37 ******/
-DROP PROCEDURE IF EXISTS [dbo].[sp_TWLife_Report_RPTB16]
-GO
-/****** Object:  StoredProcedure [dbo].[sp_TWLife_Report_RPTB15]    Script Date: 2021/11/19 下午 02:18:37 ******/
-DROP PROCEDURE IF EXISTS [dbo].[sp_TWLife_Report_RPTB15]
-GO
-/****** Object:  StoredProcedure [dbo].[sp_TWLife_Report_RPTB14]    Script Date: 2021/11/19 下午 02:18:37 ******/
-DROP PROCEDURE IF EXISTS [dbo].[sp_TWLife_Report_RPTB14]
-GO
-/****** Object:  StoredProcedure [dbo].[sp_TWLife_Report_RPTB13]    Script Date: 2021/11/19 下午 02:18:37 ******/
-DROP PROCEDURE IF EXISTS [dbo].[sp_TWLife_Report_RPTB13]
-GO
-/****** Object:  StoredProcedure [dbo].[sp_TWLife_Report_RPTB12]    Script Date: 2021/11/19 下午 02:18:37 ******/
-DROP PROCEDURE IF EXISTS [dbo].[sp_TWLife_Report_RPTB12]
-GO
-/****** Object:  StoredProcedure [dbo].[sp_TWLife_Report_RPTB08]    Script Date: 2021/11/19 下午 02:18:37 ******/
-DROP PROCEDURE IF EXISTS [dbo].[sp_TWLife_Report_RPTB08]
-GO
-/****** Object:  StoredProcedure [dbo].[sp_TWLife_Report_RPTB07]    Script Date: 2021/11/19 下午 02:18:37 ******/
-DROP PROCEDURE IF EXISTS [dbo].[sp_TWLife_Report_RPTB07]
-GO
-/****** Object:  StoredProcedure [dbo].[sp_TWLife_Report_RPTB06]    Script Date: 2021/11/19 下午 02:18:37 ******/
-DROP PROCEDURE IF EXISTS [dbo].[sp_TWLife_Report_RPTB06]
-GO
-/****** Object:  StoredProcedure [dbo].[sp_TWLife_Report_RPTB05]    Script Date: 2021/11/19 下午 02:18:37 ******/
-DROP PROCEDURE IF EXISTS [dbo].[sp_TWLife_Report_RPTB05]
-GO
-/****** Object:  StoredProcedure [dbo].[sp_TWLife_Report_RPTB04]    Script Date: 2021/11/19 下午 02:18:37 ******/
-DROP PROCEDURE IF EXISTS [dbo].[sp_TWLife_Report_RPTB04]
-GO
-/****** Object:  StoredProcedure [dbo].[sp_TWLife_DeptRoleUserMap_Report]    Script Date: 2021/11/19 下午 02:18:37 ******/
-DROP PROCEDURE IF EXISTS [dbo].[sp_TWLife_DeptRoleUserMap_Report]
-GO
-/****** Object:  StoredProcedure [dbo].[sp_TWLife_BusinessRoleUserMap_Report]    Script Date: 2021/11/19 下午 02:18:37 ******/
-DROP PROCEDURE IF EXISTS [dbo].[sp_TWLife_BusinessRoleUserMap_Report]
-GO
-/****** Object:  StoredProcedure [dbo].[sp_TWLife_BusinessRoleUserMap_Report]    Script Date: 2021/11/19 下午 02:18:37 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE PROCEDURE [dbo].[sp_TWLife_BusinessRoleUserMap_Report]
-	@iBusinessType	Varchar(20),		--業務別
-	@iRoleId		Varchar(20),		--角色別
-	@iIsActive		Varchar(20)			--啟用狀況
-AS
-BEGIN
-	SET NOCOUNT ON;
-
-/***********************************************************************/
-/****************************** 建立暫存檔 *****************************/	
-	
-	DECLARE @InsertStr		VARCHAR(max);
-	DECLARE @UpdateStr		VARCHAR(max);
-	DECLARE @roleValue		VARCHAR(100);
-	DECLARE @BusinessValue	VARCHAR(100);
-	DECLARE @CreateTableStr VARCHAR(1000);
-	
-	--建立暫存檔
-	CREATE TABLE #RoleUserTmp
-	(
-		UnitCode 			varchar(50),		--分公司代碼
-		UnitName 			varchar(50),		--分公司名稱
-		BusinessTypeCode 	varchar(50),		--業務代碼
-		BusinessTypeName	varchar(50),		--業務名稱
-		UserId				varchar(50),		--使用者代碼
-		UserName			varchar(50),		--使用者姓名
-		IsActive			varchar(50),		--啟用狀態		
-	)
-
-	Create Table #RoleTmp( RoleId bigint);
-	
-	SET @InsertStr = 'INSERT INTO #RoleUserTmp (UnitCode,UnitName,businessTypeCode,businessTypeName,UserId,UserName,IsActive) ' 
-				   + 'select distinct UnitCode,UnitName,businessTypeCode,businessTypeName,UserId,UserName,IsActive '
-				   + 'from ezAcquireAudit.dbo.vw_ezAcquireAudit_UserRoleData '
-				   +  'where businessTypeCode <> '''' and UnitCode <> '''' '
-	
-	IF(@iRoleId <> '' )
-		SET @InsertStr = @InsertStr + ' AND RoleId = ''' + @iRoleId + ''''
-
-	IF(@iIsActive <> '')
-		SET @InsertStr = @InsertStr + ' AND IsActive = ''' + @iIsActive + ''''
-
-	EXEC(@InsertStr)
-	
-	IF(@iRoleId <> '')
-	BEGIN
-		IF(@iBusinessType = '' )
-		BEGIN	
-			DECLARE Role_Data CURSOR FOR
-			select distinct RoleId,RoleBusinessTypeCode 
-			from ezAcquireAudit.dbo.vw_ezAcquireAudit_UserRoleData 
-			where RoleBusinessTypeCode <> '' 
-			AND Roleid = @iRoleId 
-			order by RoleBusinessTypeCode,RoleId	
-		END
-		IF(@iBusinessType <> '' )
-		BEGIN	
-			DECLARE Role_Data CURSOR FOR
-			select distinct RoleId,RoleBusinessTypeCode 
-			from ezAcquireAudit.dbo.vw_ezAcquireAudit_UserRoleData 
-			where RoleBusinessTypeCode = @iBusinessType
-			AND Roleid = @iRoleId 
-			order by RoleBusinessTypeCode,RoleId	
-		END
-	END
-
-	IF(@iRoleId = '')
-	BEGIN	
-		IF(@iBusinessType = '' )
-		BEGIN	
-			DECLARE Role_Data CURSOR FOR
-			select distinct RoleId,RoleBusinessTypeCode 
-			from ezAcquireAudit.dbo.vw_ezAcquireAudit_UserRoleData 
-			where RoleBusinessTypeCode <> '' 
-			order by RoleBusinessTypeCode,RoleId	
-		END		
-		IF(@iBusinessType <> '' )
-		BEGIN
-			DECLARE Role_Data CURSOR FOR
-			select distinct RoleId,RoleBusinessTypeCode 
-			from ezAcquireAudit.dbo.vw_ezAcquireAudit_UserRoleData 
-			where RoleBusinessTypeCode  = @iBusinessType
-			order by RoleBusinessTypeCode,RoleId	
-		END	
-	END
-			
-	OPEN Role_Data
-		FETCH NEXT FROM Role_Data
-		INTO @roleValue,@BusinessValue
-
-	WHILE @@FETCH_STATUS = 0
-		BEGIN			
-			--建立RoleId的欄位
-			SET @CreateTableStr = 'ALTER TABLE #RoleUserTmp ADD RoleId_' + @roleValue + ' Varchar(100) '
-			EXEC(@CreateTableStr)
-
-			--將RoleFunctionMap的值寫入RoleId欄位
-			SET @UpdateStr = 'Update #RoleUserTmp Set RoleId_' + @roleValue + ' = ''Y'' ' +  
-							 ' where UserId in (' + 
-							 'select distinct UserId from ezAcquireAudit.dbo.vw_ezAcquireAudit_UserRoleData where RoleId = ' + @roleValue + ')'
-			EXEC(@UpdateStr)
-
-			insert into #RoleTmp(Roleid) values ( @roleValue);
-
-			FETCH NEXT FROM Role_Data 
-			INTO @roleValue,@BusinessValue																	
-		END
-
-	CLOSE Role_Data
-	DEALLOCATE Role_Data	
-	
-	DELETE #RoleUserTmp 
-	WHERE USERID NOT in (
-		select distinct UserId from ezAcquireAudit.dbo.vw_ezAcquireAudit_UserRoleData 
-		where RoleId IN (SELECT RoleId FROM #RoleTmp)
-		AND USERID IS NOT NULL
-	) 
-
-/****************************************************************************/
-/********************************* 傳出結果 *********************************/	
-	select * from #RoleUserTmp;
-
-	--Exec TWLife.dbo.sp_TWLife_BusinessRoleUserMap_Report 'CU','',''
-
-END
-GO
-/****** Object:  StoredProcedure [dbo].[sp_TWLife_DeptRoleUserMap_Report]    Script Date: 2021/11/19 下午 02:18:37 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE PROCEDURE [dbo].[sp_TWLife_DeptRoleUserMap_Report]
-	@iBusinessType	Varchar(20),		--業務別
-	@iRoleId		Varchar(20),		--角色別
-	@iIsActive		Varchar(20)			--啟用狀況
-AS
-BEGIN
-	SET NOCOUNT ON;
-
-/***********************************************************************/
-/****************************** 建立暫存檔 *****************************/	
-	
-	DECLARE @InsertStr		VARCHAR(max);
-	DECLARE @UpdateStr		VARCHAR(max);
-	DECLARE @roleValue		VARCHAR(100);
-	DECLARE @BusinessValue	VARCHAR(100);
-	DECLARE @CreateTableStr VARCHAR(1000);
-	
-
-	--建立暫存檔
-	CREATE TABLE #RoleUserTmp
-	(
-		UnitCode 			varchar(50),		--分公司代碼
-		UnitName 			varchar(50),		--分公司名稱
-		UserId				varchar(50),		--使用者代碼
-		UserName			varchar(50),		--使用者姓名
-		IsActive			varchar(50),		--啟用狀態		
-	)
-	
-	SET @InsertStr = 'INSERT INTO #RoleUserTmp (UnitCode,UnitName,UserId,UserName,IsActive) ' 
-				   + 'select distinct UnitCode,UnitName,UserId,UserName,IsActive '
-				   + 'from ezAcquireAudit.dbo.vw_ezAcquireAudit_UserRoleData '
-				   +  'where businessTypeCode <> '''' and UnitCode <> '''' '
-	IF(@iBusinessType <> '' )
-		SET @InsertStr = @InsertStr + ' AND businessTypeCode = ''' + @iBusinessType + ''''
-
-	IF(@iIsActive <> '')
-		SET @InsertStr = @InsertStr + ' AND IsActive = ''' + @iIsActive + ''''
-
-	EXEC(@InsertStr)
-	
-	IF(@iRoleId <> '')
-	BEGIN
-		IF(@iBusinessType = '' )
-		BEGIN	
-			DECLARE Role_Data CURSOR FOR
-			select distinct RoleId,RoleBusinessTypeCode 
-			from ezAcquireAudit.dbo.vw_ezAcquireAudit_UserRoleData 
-			where businessTypeCode <> '' and RoleId <> 0 
-			AND Roleid = @iRoleId 
-			AND userid in 
-			( select userid from ezAcquireAudit.dbo.vw_ezAcquireAudit_UserRoleData where RoleId = @iRoleId	)
-			order by RoleBusinessTypeCode,RoleId	
-		END
-		IF(@iBusinessType <> '' )
-		BEGIN	
-			DECLARE Role_Data CURSOR FOR
-			select distinct RoleId,RoleBusinessTypeCode 
-			from ezAcquireAudit.dbo.vw_ezAcquireAudit_UserRoleData 
-			where businessTypeCode <> ''  and RoleId <> 0
-			AND Roleid = @iRoleId 
-			AND userid in 
-			( select userid from ezAcquireAudit.dbo.vw_ezAcquireAudit_UserRoleData where businessTypeCode = @iBusinessType  AND RoleId = @iRoleId	)
-			order by RoleBusinessTypeCode,RoleId	
-		END
-	END
-
-	IF(@iRoleId = '')
-	BEGIN	
-		IF(@iBusinessType = '' )
-		BEGIN	
-			DECLARE Role_Data CURSOR FOR
-			select distinct RoleId,businessTypeCode 
-			from ezAcquire.dbo.RoleBusinessTypeMap
-			where businessTypeCode <> ''  and RoleId <> 0
-			order by businessTypeCode,RoleId	
-		END		
-		IF(@iBusinessType <> '' )
-		BEGIN
-			DECLARE Role_Data CURSOR FOR
-			select distinct RoleId,RoleBusinessTypeCode 
-			from ezAcquireAudit.dbo.vw_ezAcquireAudit_UserRoleData 
-			where businessTypeCode <> '' and RoleId <> 0 
-			AND userid in 
-			( select userid from ezAcquireAudit.dbo.vw_ezAcquireAudit_UserRoleData where businessTypeCode = @iBusinessType	)
-			order by RoleBusinessTypeCode,RoleId	
-		END	
-	END
-			
-	OPEN Role_Data
-		FETCH NEXT FROM Role_Data
-		INTO @roleValue,@BusinessValue
-
-	WHILE @@FETCH_STATUS = 0
-		BEGIN			
-			--建立RoleId的欄位
-			SET @CreateTableStr = 'ALTER TABLE #RoleUserTmp ADD RoleId_' + @roleValue + ' Varchar(100) '
-			EXEC(@CreateTableStr)
-
-			--將RoleFunctionMap的值寫入RoleId欄位
-			SET @UpdateStr = 'Update #RoleUserTmp Set RoleId_' + @roleValue + ' = ''Y'' ' +  
-							 ' where UserId in (' + 
-							 'select distinct UserId from ezAcquireAudit.dbo.vw_ezAcquireAudit_UserRoleData where RoleId = ' + @roleValue + ')'
-			EXEC(@UpdateStr)
-
-			FETCH NEXT FROM Role_Data 
-			INTO @roleValue,@BusinessValue																	
-		END
-
-	CLOSE Role_Data
-	DEALLOCATE Role_Data	
-	
-
-/****************************************************************************/
-/********************************* 傳出結果 *********************************/	
-	select * from #RoleUserTmp order by UnitCode,UserId;
-
-	--Exec TWLife.dbo.sp_TWLife_DeptRoleUserMap_Report 'PS','',''
-
-END
-GO
-/****** Object:  StoredProcedure [dbo].[sp_TWLife_Report_RPTB04]    Script Date: 2021/11/19 下午 02:18:37 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE PROCEDURE [dbo].[sp_TWLife_Report_RPTB04]
-
-	@iBranch			varchar(20),	--分公司
-	@iSendDateS			varchar(20),	--接收日期起
-	@iSendDateE			varchar(20),	--接收日期迄
-	@iCommitDateS		varchar(20),	--品管日期起
-	@iCommitDateE		varchar(20),	--品管日期迄
-	@iScanUserId		varchar(20),	--掃描人員
-	@iVerifyUserId		varchar(20),	--品管人員
-	@iProcessUser		varchar(20),	--經辦人員
-	@iKind				varchar(20),	--掃描種類,N:新承保件、U:未承保件、R:契撤文件、B:簽收回條
-	@iProcessStatus		varchar(20)		--品管完成,U:未處理  F:處理完成
-		
-	--exec dbo.sp_TWLife_Report_RPTB04 '88','','','','','','','','',''
-	
-AS
-BEGIN
-	SET NOCOUNT ON;
-	
-/****************************************************************************/
-/******************************* 組合查詢字串 *******************************/	
-	
-	DECLARE		@oScriptString		varchar(max);
-	
-	SET @oScriptString = 'select * from vw_TWLife_RPTB04 ' +
-						 'where SerialKey IS NOT NULL '
-	
-	--分公司
-	IF(@iBranch IS NOT NULL AND @iBranch <> '') 
-		SET @oScriptString = @oScriptString + 'and Branch =''' + @iBranch  + ''' '
-	
-	--接收日期起
-	IF(@iSendDateS IS NOT NULL AND @iSendDateS <> '') 
-		SET @oScriptString = @oScriptString + 'and SendDate >=''' + @iSendDateS +''''
-	
-	--接收日期迄
-	IF(@iSendDateE IS NOT NULL AND @iSendDateE <> '') 
-		SET @oScriptString = @oScriptString + 'and SendDate <=''' + @iSendDateE +''''
-	
-	
-	--品管日期起	
-	IF(@iCommitDateS IS NOT NULL AND @iCommitDateS <> '') 
-		SET @oScriptString = @oScriptString + 'and CommitDateTime >=''' + @iCommitDateS +' 00:00:00'' '
-	
-	--品管日期迄	
-	IF(@iCommitDateE IS NOT NULL AND @iCommitDateE <> '') 
-		SET @oScriptString = @oScriptString + 'and CommitDateTime <=''' + @iCommitDateE +' 23:59:59'' '
-		
-	
-	
-	--掃描人員
-	IF(@iScanUserId IS NOT NULL AND @iScanUserId <> '') 
-		SET @oScriptString = @oScriptString + 'and ScanUserId = ''' + @iScanUserId  + ''''
-	
-	--品管人員
-	IF(@iVerifyUserId IS NOT NULL AND @iVerifyUserId <> '') 
-		SET @oScriptString = @oScriptString + 'and VerifyUserId = ''' + @iVerifyUserId  + ''''
-	
-	--經辦人員
-	IF(@iProcessUser IS NOT NULL AND @iProcessUser <> '') 
-		SET @oScriptString = @oScriptString + 'and ProcessUser = ''' + @iProcessUser  + ''''
-	
-	--掃描種類
-	IF(@iKind IS NOT NULL AND @iKind <> '') 
-		SET @oScriptString = @oScriptString + 'and Kind = ''' + @iKind  + ''''
-	
-	--品管完成
-	IF(@iProcessStatus IS NOT NULL AND @iProcessStatus <> '') 
-		SET @oScriptString = @oScriptString + 'and ProcessStatus = ''' + @iProcessStatus  + ''''
-		
-/****************************************************************************/
-/********************************* 傳出結果 *********************************/	
-
-	EXEC( @oScriptString);
-		
-END
-
-GO
-/****** Object:  StoredProcedure [dbo].[sp_TWLife_Report_RPTB05]    Script Date: 2021/11/19 下午 02:18:37 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE PROCEDURE [dbo].[sp_TWLife_Report_RPTB05]
-
-	@iBranch			varchar(20),	--分公司
-	@iCloseDateS		varchar(20),	--結案日期起
-	@iCloseDateE		varchar(20),	--結案日期迄
-	@iScanUserId		varchar(20),	--掃描人員
-	@iProcessUser		varchar(20),	--結案者
-	@iProcessStatus		varchar(20)		--品管完成,U:未處理  F:處理完成
-		
-	--exec dbo.sp_TWLife_Report_RPTB05 '','','','','','U'
-	
-AS
-BEGIN
-	SET NOCOUNT ON;
-	
-/****************************************************************************/
-/******************************* 組合查詢字串 *******************************/	
-	
-	DECLARE		@oScriptString		varchar(max);
-	
-	SET @oScriptString = 'select * from vw_TWLife_RPTB05 ' +
-						 'where SerialKey IS NOT NULL '
-	
-	--分公司
-	IF(@iBranch IS NOT NULL AND @iBranch <> '') 
-		SET @oScriptString = @oScriptString + 'and Branch = ''' + @iBranch  + ''''
-	
-	--接收日期起
-	IF(@iCloseDateS IS NOT NULL AND @iCloseDateS <> '') 
-		SET @oScriptString = @oScriptString + 'and CloseDate >= ''' + @iCloseDateS  + ''''
-	
-	--接收日期迄
-	IF(@iCloseDateE IS NOT NULL AND @iCloseDateE <> '') 
-		SET @oScriptString = @oScriptString + 'and CloseDate <= ''' + @iCloseDateE  + ''''
-	
-	--掃描人員
-	IF(@iScanUserId IS NOT NULL AND @iScanUserId <> '') 
-		SET @oScriptString = @oScriptString + 'and ScanUserId = ''' + @iScanUserId  + ''''
-	
-	--結案者
-	IF(@iProcessUser IS NOT NULL AND @iProcessUser <> '') 
-		SET @oScriptString = @oScriptString + 'and ProcessUser = ''' + @iProcessUser  + ''''
-		
-	--品管完成
-	IF(@iProcessStatus IS NOT NULL AND @iProcessStatus <> '') 
-		SET @oScriptString = @oScriptString + 'and ProcessStatus = ''' + @iProcessStatus  + ''''
-		
-/****************************************************************************/
-/********************************* 傳出結果 *********************************/	
-
-	EXEC( @oScriptString);
-		
-END
-
-GO
-/****** Object:  StoredProcedure [dbo].[sp_TWLife_Report_RPTB06]    Script Date: 2021/11/19 下午 02:18:37 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE PROCEDURE [dbo].[sp_TWLife_Report_RPTB06]
-
-	@iBranch			varchar(20),	--分公司
-	@iSendDateS			varchar(20),	--接收日期起
-	@iSendDateE			varchar(20),	--接收日期迄
-	@iProcessUser		varchar(20),	--負責人員
-	@iProcessStatus		varchar(20)		--品管完成,U:未處理  F:處理完成
-		
-	--exec dbo.sp_TWLife_Report_RPTB06 '','','','','U'
-	
-AS
-BEGIN
-	SET NOCOUNT ON;
-	
-/****************************************************************************/
-/******************************* 組合查詢字串 *******************************/	
-	
-	DECLARE		@oScriptString		varchar(max);
-	
-	SET @oScriptString = 'select * from vw_TWLife_RPTB06 ' +
-						 'where SerialKey IS NOT NULL '
-	
-	--分公司
-	IF(@iBranch IS NOT NULL AND @iBranch <> '') 
-		SET @oScriptString = @oScriptString + 'and Branch = ''' + @iBranch  + ''''
-	
-	--接收日期起
-	IF(@iSendDateS IS NOT NULL AND @iSendDateS <> '') 
-		SET @oScriptString = @oScriptString + 'and SendDate >= ''' + @iSendDateS  + ''' '
-	
-	--接收日期迄
-	IF(@iSendDateE IS NOT NULL AND @iSendDateE <> '') 
-		SET @oScriptString = @oScriptString + 'and SendDate <= ''' + @iSendDateE  + ''' '
-		
-	--負責人員
-	IF(@iProcessUser IS NOT NULL AND @iProcessUser <> '') 
-		SET @oScriptString = @oScriptString + 'and ProcessUser = ''' + @iProcessUser  + ''''
-		
-	--品管完成
-	IF(@iProcessStatus IS NOT NULL AND @iProcessStatus <> '') 
-		SET @oScriptString = @oScriptString + 'and ProcessStatus = ''' + @iProcessStatus  + ''''
-		
-/****************************************************************************/
-/********************************* 傳出結果 *********************************/	
-
-	EXEC( @oScriptString);
-		
-END
-
-GO
-/****** Object:  StoredProcedure [dbo].[sp_TWLife_Report_RPTB07]    Script Date: 2021/11/19 下午 02:18:37 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE PROCEDURE [dbo].[sp_TWLife_Report_RPTB07]
-
-	@iBranch			varchar(20),	--分公司
-	@iCloseDateS		varchar(20),	--結案日期起
-	@iCloseDateE		varchar(20),	--結案日期迄
-	@iProcessUser		varchar(20),	--審核員
-	@iProcessStatus		varchar(20)		--品管完成,U:未處理  F:處理完成
-		
-	--exec dbo.sp_TWLife_Report_RPTB07 '','','','','U'
-	
-AS
-BEGIN
-	SET NOCOUNT ON;
-	
-/****************************************************************************/
-/******************************* 組合查詢字串 *******************************/	
-	
-	DECLARE		@oScriptString		varchar(max);
-	
-	SET @oScriptString = 'select * from vw_TWLife_RPTB07 ' +
-						 'where SerialKey IS NOT NULL '
-	
-	--分公司
-	IF(@iBranch IS NOT NULL AND @iBranch <> '') 
-		SET @oScriptString = @oScriptString + 'and Branch = ''' + @iBranch  + ''''
-	
-	--結案日期起
-	IF(@iCloseDateS IS NOT NULL AND @iCloseDateS <> '') 
-		SET @oScriptString = @oScriptString + 'and CloseDate >= ''' + @iCloseDateS  + ''''
-	
-	--結案日期迄
-	IF(@iCloseDateE IS NOT NULL AND @iCloseDateE <> '') 
-		SET @oScriptString = @oScriptString + 'and CloseDate <= ''' + @iCloseDateE  + ''''
-		
-	--審核員
-	IF(@iProcessUser IS NOT NULL AND @iProcessUser <> '') 
-		SET @oScriptString = @oScriptString + 'and ProcessUser = ''' + @iProcessUser  + ''''
-		
-	--品管完成
-	IF(@iProcessStatus IS NOT NULL AND @iProcessStatus <> '') 
-		SET @oScriptString = @oScriptString + 'and ProcessStatus = ''' + @iProcessStatus  + ''''
-		
-/****************************************************************************/
-/********************************* 傳出結果 *********************************/	
-
-	EXEC( @oScriptString);
-		
-END
-
-GO
-/****** Object:  StoredProcedure [dbo].[sp_TWLife_Report_RPTB08]    Script Date: 2021/11/19 下午 02:18:37 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE PROCEDURE [dbo].[sp_TWLife_Report_RPTB08]
-
-	@iBranch			varchar(20),	--分公司
-	@iSendDateS			varchar(20),	--接收日期起
-	@iSendDateE			varchar(20),	--接收日期迄
-	@iProcessStatus		varchar(20)		--品管完成,U:未處理  F:處理完成
-		
-	--exec dbo.sp_TWLife_Report_RPTB08 '','','','U'
-	
-AS
-BEGIN
-	SET NOCOUNT ON;
-	
-/****************************************************************************/
-/******************************* 組合查詢字串 *******************************/	
-	
-	DECLARE		@oScriptString		varchar(max);
-	
-	SET @oScriptString = 'select * from vw_TWLife_RPTB08 ' +
-						 'where SerialKey IS NOT NULL '
-	
-	--分公司
-	IF(@iBranch IS NOT NULL AND @iBranch <> '') 
-		SET @oScriptString = @oScriptString + 'and Branch = ''' + @iBranch  + ''''
-	
-	--結案日期起
-	IF(@iSendDateS IS NOT NULL AND @iSendDateS <> '') 
-		SET @oScriptString = @oScriptString + 'and SendDate >= ''' + @iSendDateS  + ''''
-	
-	--結案日期迄
-	IF(@iSendDateE IS NOT NULL AND @iSendDateE <> '') 
-		SET @oScriptString = @oScriptString + 'and SendDate <= ''' + @iSendDateE  + ''''
-		
-	--品管完成
-	IF(@iProcessStatus IS NOT NULL AND @iProcessStatus <> '') 
-		SET @oScriptString = @oScriptString + 'and ProcessStatus = ''' + @iProcessStatus  + ''''
-		
-/****************************************************************************/
-/********************************* 傳出結果 *********************************/	
-
-	EXEC( @oScriptString);
-		
-END
-
-GO
-/****** Object:  StoredProcedure [dbo].[sp_TWLife_Report_RPTB12]    Script Date: 2021/11/19 下午 02:18:37 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE PROCEDURE [dbo].[sp_TWLife_Report_RPTB12]
-
-	@iBranch			varchar(20),	--分公司
-	@iCreateDateS		varchar(20),	--接收日期起
-	@iCreateDateE		varchar(20),	--接收日期起
-	@iProcessUser		varchar(20),	--審核員
-	@iProcessStatus		varchar(20)		--品管完成,U:未處理  F:處理完成
-		
-	--exec dbo.sp_TWLife_Report_RPTB12 '','','','','U'
-	
-AS
-BEGIN
-	SET NOCOUNT ON;
-	
-/****************************************************************************/
-/******************************* 組合查詢字串 *******************************/	
-	
-	DECLARE		@oScriptString		varchar(max);
-	
-	SET @oScriptString = 'select * from vw_TWLife_RPTB12 ' +
-						 'where SerialKey IS NOT NULL '
-	
-	--分公司
-	IF(@iBranch IS NOT NULL AND @iBranch <> '') 
-		SET @oScriptString = @oScriptString + 'and Branch = ''' + @iBranch  + ''''
-	
-	--接收日期起
-	IF(@iCreateDateS IS NOT NULL AND @iCreateDateS <> '') 
-	BEGIN
-		SET @iCreateDateS = CONVERT(VARCHAR,(  CONVERT(BIGINT,@iCreateDateS) + 19110000 ))
-		SET @oScriptString = @oScriptString + 'and SendDate >= CONVERT(DATE,''' + @iCreateDateS  + ''',120) '
-	END
-	
-	--接收日期迄
-	IF(@iCreateDateE IS NOT NULL AND @iCreateDateE <> '') 
-	BEGIN
-		SET @iCreateDateE = CONVERT(VARCHAR,(  CONVERT(BIGINT,@iCreateDateE) + 19110000 ))
-		SET @oScriptString = @oScriptString + 'and SendDate <= CONVERT(DATE,''' + @iCreateDateE  + ''',120) '
-	END	
-		
-	--審核員
-	IF(@iProcessUser IS NOT NULL AND @iProcessUser <> '') 
-		SET @oScriptString = @oScriptString + 'and ProcessUser = ''' + @iProcessUser  + ''''
-		
-	--品管完成
-	IF(@iProcessStatus IS NOT NULL AND @iProcessStatus <> '') 
-		SET @oScriptString = @oScriptString + 'and ProcessStatus = ''' + @iProcessStatus  + ''''
-		
-/****************************************************************************/
-/********************************* 傳出結果 *********************************/	
-
-	EXEC( @oScriptString);
-		
-END
-
-GO
-/****** Object:  StoredProcedure [dbo].[sp_TWLife_Report_RPTB13]    Script Date: 2021/11/19 下午 02:18:37 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE PROCEDURE [dbo].[sp_TWLife_Report_RPTB13]
-
-	@iBranch			varchar(20),	--分公司
-	@iCloseDateS		varchar(20),	--結案日期起
-	@iCloseDateE		varchar(20),	--結案日期迄
-	@iProcessUser		varchar(20),	--審核員
-	@iProcessStatus		varchar(20)		--品管完成,U:未處理  F:處理完成
-		
-	--exec dbo.sp_TWLife_Report_RPTB13 '','','','','U'
-	
-AS
-BEGIN
-	SET NOCOUNT ON;
-	
-/****************************************************************************/
-/******************************* 組合查詢字串 *******************************/	
-	
-	DECLARE		@oScriptString		varchar(max);
-	
-	SET @oScriptString = 'select * from vw_TWLife_RPTB13 ' +
-						 'where SerialKey IS NOT NULL '
-	
-	--分公司
-	IF(@iBranch IS NOT NULL AND @iBranch <> '') 
-		SET @oScriptString = @oScriptString + 'and Branch = ''' + @iBranch  + ''''
-	
-	--結案日期起
-	IF(@iCloseDateS IS NOT NULL AND @iCloseDateS <> '') 
-		SET @oScriptString = @oScriptString + 'and CloseDate >= ''' + @iCloseDateS  + ''''
-	
-	--結案日期迄
-	IF(@iCloseDateE IS NOT NULL AND @iCloseDateE <> '') 
-		SET @oScriptString = @oScriptString + 'and CloseDate <= ''' + @iCloseDateE  + ''''
-		
-	--審核員
-	IF(@iProcessUser IS NOT NULL AND @iProcessUser <> '') 
-		SET @oScriptString = @oScriptString + 'and ProcessUser = ''' + @iProcessUser  + ''''
-		
-	--品管完成
-	IF(@iProcessStatus IS NOT NULL AND @iProcessStatus <> '') 
-		SET @oScriptString = @oScriptString + 'and ProcessStatus = ''' + @iProcessStatus  + ''''
-		
-/****************************************************************************/
-/********************************* 傳出結果 *********************************/	
-
-	EXEC( @oScriptString);
-		
-END
-
-GO
-/****** Object:  StoredProcedure [dbo].[sp_TWLife_Report_RPTB14]    Script Date: 2021/11/19 下午 02:18:37 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE PROCEDURE [dbo].[sp_TWLife_Report_RPTB14]
-
-	@iBranch			varchar(20),	--分公司
-	@iCloseDateS		varchar(20),	--結案日期起
-	@iCloseDateE		varchar(20),	--結案日期迄
-	@iProcessUser		varchar(20),	--審核員
-	@iProcessStatus		varchar(20)		--品管完成,U:未處理  F:處理完成
-		
-	--exec dbo.sp_TWLife_Report_RPTB14 '','','','','U'
-	
-AS
-BEGIN
-	SET NOCOUNT ON;
-	
-/****************************************************************************/
-/******************************* 組合查詢字串 *******************************/	
-	
-	DECLARE		@oScriptString		varchar(max);
-	
-	SET @oScriptString = 'select * from vw_TWLife_RPTB14 ' +
-						 'where SerialKey IS NOT NULL '
-	
-	--分公司
-	IF(@iBranch IS NOT NULL AND @iBranch <> '') 
-		SET @oScriptString = @oScriptString + 'and Branch = ''' + @iBranch  + ''''
-	
-	--結案日期起
-	IF(@iCloseDateS IS NOT NULL AND @iCloseDateS <> '') 
-		SET @oScriptString = @oScriptString + 'and CloseDate >= ''' + @iCloseDateS  + ''''
-	
-	--結案日期迄
-	IF(@iCloseDateE IS NOT NULL AND @iCloseDateE <> '') 
-		SET @oScriptString = @oScriptString + 'and CloseDate <= ''' + @iCloseDateE  + ''''
-		
-	--審核員
-	IF(@iProcessUser IS NOT NULL AND @iProcessUser <> '') 
-		SET @oScriptString = @oScriptString + 'and ProcessUser = ''' + @iProcessUser  + ''''
-		
-	--品管完成
-	IF(@iProcessStatus IS NOT NULL AND @iProcessStatus <> '') 
-		SET @oScriptString = @oScriptString + 'and ProcessStatus = ''' + @iProcessStatus  + ''''
-		
-/****************************************************************************/
-/********************************* 傳出結果 *********************************/	
-
-	EXEC( @oScriptString);
-		
-END
-
-GO
-/****** Object:  StoredProcedure [dbo].[sp_TWLife_Report_RPTB15]    Script Date: 2021/11/19 下午 02:18:37 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE PROCEDURE [dbo].[sp_TWLife_Report_RPTB15]
-
-	@iBranch			varchar(20),	--分公司
-	@iSendDateS			varchar(20),	--接收日期起
-	@iSendDateE			varchar(20),	--接收日期迄
-	@iCommitDateS		varchar(20),	--品管日期起
-	@iCommitDateE		varchar(20),	--品管日期迄
-	@iScanUserId		varchar(20),	--掃描人員
-	@iVerifyUserId		varchar(20),	--品管人員
-	@iProcessUser		varchar(20),	--經辦人員
-	@iProcessStatus		varchar(20)		--品管完成,U:未處理  F:處理完成
-		
-	--exec dbo.sp_TWLife_Report_RPTB15 '','','','','','','','',''
-	
-AS
-BEGIN
-	SET NOCOUNT ON;
-	
-/****************************************************************************/
-/******************************* 組合查詢字串 *******************************/	
-	
-	DECLARE		@oScriptString		varchar(max);
-	
-	SET @oScriptString = 'select * from vw_TWLife_RPTB15 ' +
-						 'where SerialKey IS NOT NULL '
-	
-	--分公司
-	IF(@iBranch IS NOT NULL AND @iBranch <> '') 
-		SET @oScriptString = @oScriptString + 'and Branch = ''' + @iBranch  + ''''
-	
-	--接收日期起
-	IF(@iSendDateS IS NOT NULL AND @iSendDateS <> '') 
-		SET @oScriptString = @oScriptString + 'and SendDate >= ''' + @iSendDateS  + ''' '
-	
-	--接收日期迄
-	IF(@iSendDateE IS NOT NULL AND @iSendDateE <> '') 
-		SET @oScriptString = @oScriptString + 'and SendDate <= ''' + @iSendDateE  + ''' '
-	
-	--品管日期起
-	IF(@iCommitDateS IS NOT NULL AND @iCommitDateS <> '') 
-		SET @oScriptString = @oScriptString + 'and CommitDateTime >= CONVERT(VARCHAR(10),CONVERT(DATE,''' + @iCommitDateS  + ''',120)) ' + ' + '' 00:00:00'' '
-	
-	--品管日期迄
-	IF(@iCommitDateE IS NOT NULL AND @iCommitDateE <> '') 
-		SET @oScriptString = @oScriptString + 'and CommitDateTime <= CONVERT(VARCHAR(10),CONVERT(DATE,''' + @iCommitDateE  + ''',120)) '   + ' + '' 23:59:59'' '
-	
-	--掃描人員
-	IF(@iScanUserId IS NOT NULL AND @iScanUserId <> '') 
-		SET @oScriptString = @oScriptString + 'and ScanUserId = ''' + @iScanUserId  + ''''
-	
-	--品管人員
-	IF(@iVerifyUserId IS NOT NULL AND @iVerifyUserId <> '') 
-		SET @oScriptString = @oScriptString + 'and VerifyUserId = ''' + @iVerifyUserId  + ''''
-	
-	--經辦人員
-	IF(@iProcessUser IS NOT NULL AND @iProcessUser <> '') 
-		SET @oScriptString = @oScriptString + 'and ProcessUser = ''' + @iProcessUser  + ''''
-	
-	--品管完成
-	IF(@iProcessStatus IS NOT NULL AND @iProcessStatus <> '') 
-		SET @oScriptString = @oScriptString + 'and ProcessStatus = ''' + @iProcessStatus  + ''''
-		
-/****************************************************************************/
-/********************************* 傳出結果 *********************************/	
-
-	EXEC( @oScriptString);
-		
-END
-
-GO
-/****** Object:  StoredProcedure [dbo].[sp_TWLife_Report_RPTB16]    Script Date: 2021/11/19 下午 02:18:37 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE PROCEDURE [dbo].[sp_TWLife_Report_RPTB16]
-
-	@iBranch			varchar(20),	--分公司
-	@iSendDateS			varchar(20),	--接收日期起
-	@iSendDateE			varchar(20),	--接收日期迄
-	@iCommitDateS		varchar(20),	--品管日期起
-	@iCommitDateE		varchar(20),	--品管日期迄
-	@iScanUserId		varchar(20),	--掃描人員
-	@iVerifyUserId		varchar(20),	--品管人員
-	@iProcessUser		varchar(20),	--經辦人員
-	@iProcessStatus		varchar(20)		--品管完成,U:未處理  F:處理完成
-		
-	--exec dbo.sp_TWLife_Report_RPTB16 '','','','','','','','','','','U'
-	
-AS
-BEGIN
-	SET NOCOUNT ON;
-	
-/****************************************************************************/
-/******************************* 組合查詢字串 *******************************/	
-	
-	DECLARE		@oScriptString		varchar(max);
-	
-	SET @oScriptString = 'select * from vw_TWLife_RPTB16 ' +
-						 'where SerialKey IS NOT NULL '
-	
-	--分公司
-	IF(@iBranch IS NOT NULL AND @iBranch <> '') 
-		SET @oScriptString = @oScriptString + 'and Branch = ''' + @iBranch  + ''''
-	
-	--接收日期起
-	IF(@iSendDateS IS NOT NULL AND @iSendDateS <> '') 
-		SET @oScriptString = @oScriptString + 'and SendDate >= ''' + @iSendDateS  + ''' '
-	
-	--接收日期迄
-	IF(@iSendDateE IS NOT NULL AND @iSendDateE <> '') 
-		SET @oScriptString = @oScriptString + 'and SendDate <= ''' + @iSendDateE  + ''' '
-	
-	--品管日期起	
-	IF(@iCommitDateS IS NOT NULL AND @iCommitDateS <> '') 
-		SET @oScriptString = @oScriptString + 'and CommitDateTime >=''' + @iCommitDateS +' 00:00:00'' '
-	
-	--品管日期迄	
-	IF(@iCommitDateE IS NOT NULL AND @iCommitDateE <> '') 
-		SET @oScriptString = @oScriptString + 'and CommitDateTime <=''' + @iCommitDateE +' 23:59:59'' '
-			
-	--掃描人員
-	IF(@iScanUserId IS NOT NULL AND @iScanUserId <> '') 
-		SET @oScriptString = @oScriptString + 'and ScanUserId = ''' + @iScanUserId  + ''''
-	
-	--品管人員
-	IF(@iVerifyUserId IS NOT NULL AND @iVerifyUserId <> '') 
-		SET @oScriptString = @oScriptString + 'and VerifyUserId = ''' + @iVerifyUserId  + ''''
-	
-	
-	--經辦人員
-	IF(@iProcessUser IS NOT NULL AND @iProcessUser <> '') 
-		SET @oScriptString = @oScriptString + 'and ProcessUser = ''' + @iProcessUser  + ''''
-	
-	--品管完成
-	IF(@iProcessStatus IS NOT NULL AND @iProcessStatus <> '') 
-		SET @oScriptString = @oScriptString + 'and ProcessStatus = ''' + @iProcessStatus  + ''''
-		
-/****************************************************************************/
-/********************************* 傳出結果 *********************************/	
-
-	EXEC( @oScriptString);
-		
-END
-
-GO
-/****** Object:  StoredProcedure [dbo].[sp_TWLife_Report_RPTB17]    Script Date: 2021/11/19 下午 02:18:37 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE PROCEDURE [dbo].[sp_TWLife_Report_RPTB17]
-
-	@iBranch			varchar(20),	--分公司
-	@iSendDateS			varchar(20),	--接收日期起
-	@iSendDateE			varchar(20),	--接收日期迄
-	@iCommitDateS		varchar(20),	--品管日期起
-	@iCommitDateE		varchar(20),	--品管日期迄
-	@iScanUserId		varchar(20),	--掃描人員
-	@iVerifyUserId		varchar(20),	--品管人員
-	@iProcessUser		varchar(20),	--經辦人員
-	@iProcessStatus		varchar(20)		--品管完成,U:未處理  F:處理完成
-		
-	--exec dbo.sp_TWLife_Report_RPTB17 '','','','','','','','','U'
-	
-AS
-BEGIN
-	SET NOCOUNT ON;
-	
-/****************************************************************************/
-/******************************* 組合查詢字串 *******************************/	
-	
-	DECLARE		@oScriptString		varchar(max);
-	
-	SET @oScriptString = 'select * from vw_TWLife_RPTB17 ' +
-						 'where SerialKey IS NOT NULL '
-	
-	--分公司
-	IF(@iBranch IS NOT NULL AND @iBranch <> '') 
-		SET @oScriptString = @oScriptString + 'and Branch = ''' + @iBranch  + ''''
-	
-	--接收日期起
-	IF(@iSendDateS IS NOT NULL AND @iSendDateS <> '') 
-		SET @oScriptString = @oScriptString + 'and SendDate >= ''' + @iSendDateS  + ''' '
-	
-	--接收日期迄
-	IF(@iSendDateE IS NOT NULL AND @iSendDateE <> '') 
-		SET @oScriptString = @oScriptString + 'and SendDate <= ''' + @iSendDateE  + ''' '
-	
-	--品管日期起	
-	IF(@iCommitDateS IS NOT NULL AND @iCommitDateS <> '') 
-		SET @oScriptString = @oScriptString + 'and CommitDateTime >=''' + @iCommitDateS +' 00:00:00'' '
-	
-	--品管日期迄	
-	IF(@iCommitDateE IS NOT NULL AND @iCommitDateE <> '') 
-		SET @oScriptString = @oScriptString + 'and CommitDateTime <=''' + @iCommitDateE +' 23:59:59'' '
-		
-	
-	--掃描人員
-	IF(@iScanUserId IS NOT NULL AND @iScanUserId <> '') 
-		SET @oScriptString = @oScriptString + 'and ScanUserId = ''' + @iScanUserId  + ''''
-	
-	--品管人員
-	IF(@iVerifyUserId IS NOT NULL AND @iVerifyUserId <> '') 
-		SET @oScriptString = @oScriptString + 'and VerifyUserId = ''' + @iVerifyUserId  + ''''
-	
-	
-	--經辦人員
-	IF(@iProcessUser IS NOT NULL AND @iProcessUser <> '') 
-		SET @oScriptString = @oScriptString + 'and ProcessUser = ''' + @iProcessUser  + ''''
-	
-	--品管完成
-	IF(@iProcessStatus IS NOT NULL AND @iProcessStatus <> '') 
-		SET @oScriptString = @oScriptString + 'and ProcessStatus = ''' + @iProcessStatus  + ''''
-		
-/****************************************************************************/
-/********************************* 傳出結果 *********************************/	
-
-	EXEC( @oScriptString);
-		
-END
-
-GO
-/****** Object:  StoredProcedure [dbo].[sp_TWLife_Report_RPTB18]    Script Date: 2021/11/19 下午 02:18:37 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE PROCEDURE [dbo].[sp_TWLife_Report_RPTB18]
-
-	@iBranch			varchar(20),	--分公司
-	@iSendDateS			varchar(20),	--接收日期起
-	@iSendDateE			varchar(20),	--接收日期迄
-	@iProcessUser		varchar(20),	--負責人員
-	@iProcessStatus		varchar(20)		--品管完成,U:未處理  F:處理完成
-		
-	--exec dbo.sp_TWLife_Report_RPTB18 '','','','','U'
-	
-AS
-BEGIN
-	SET NOCOUNT ON;
-	
-/****************************************************************************/
-/******************************* 組合查詢字串 *******************************/	
-	
-	DECLARE		@oScriptString		varchar(max);
-	
-	SET @oScriptString = 'select * from vw_TWLife_RPTB18 ' +
-						 'where SerialKey IS NOT NULL '
-	
-	--分公司
-	IF(@iBranch IS NOT NULL AND @iBranch <> '') 
-		SET @oScriptString = @oScriptString + 'and Branch = ''' + @iBranch  + ''''
-	
-	--接收日期起
-	IF(@iSendDateS IS NOT NULL AND @iSendDateS <> '') 
-		SET @oScriptString = @oScriptString + 'and SendDate >= ''' + @iSendDateS  + ''' '
-	
-	--接收日期迄
-	IF(@iSendDateE IS NOT NULL AND @iSendDateE <> '') 
-		SET @oScriptString = @oScriptString + 'and SendDate <= ''' + @iSendDateE  + ''' '
-		
-	--負責人員
-	IF(@iProcessUser IS NOT NULL AND @iProcessUser <> '') 
-		SET @oScriptString = @oScriptString + 'and ProcessUser = ''' + @iProcessUser  + ''''
-		
-	--品管完成
-	IF(@iProcessStatus IS NOT NULL AND @iProcessStatus <> '') 
-		SET @oScriptString = @oScriptString + 'and ProcessStatus = ''' + @iProcessStatus  + ''''
-		
-/****************************************************************************/
-/********************************* 傳出結果 *********************************/	
-
-	EXEC( @oScriptString);
-		
-END
-
-GO
-/****** Object:  StoredProcedure [dbo].[sp_TWLife_RoleFormGroupMap_Report]    Script Date: 2021/11/19 下午 02:18:37 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE PROCEDURE [dbo].[sp_TWLife_RoleFormGroupMap_Report]
-	@iBusinessType	Varchar(20),		--業務別
-	@iRoleId		Varchar(20),		--角色別
-	@iFormGroupCode	Varchar(20),		--表單群組代碼
-	@iFormId		Varchar(20)			--表單代碼
-AS
-BEGIN
-	SET NOCOUNT ON;
-
-/****************************************************************************/
-/****************************** 建立暫存檔 *****************************/	
-	
-	DECLARE @SelectStr		VARCHAR(max);
-	
-	Set @SelectStr = ' select distinct  '
-				   + ' BM.BusinessTypeCode,B.BusinessTypeName,R.RoleId,R.RoleName, '
-				   + ' FG.FormGroupCode,FG.FormGroupName,SUBSTRING(F.FormId,1,4) FormId,F.FormName '
-				   + ' from ezAcquire.dbo.Roles R '
-                   + ' LEFT JOIN ezAcquire.dbo.RoleFormGroupMap GM ON R.RoleId = GM.RoleId '
-				   + ' LEFT JOIN ezAcquire.dbo.FormGroupMap FGM ON FGM.FormGroupCode = GM.FormGroupCode '
-				   + ' LEFT JOIN ezAcquire.dbo.FormGroups FG ON FG.FormGroupCode = FGM.FormGroupCode '
-				   + ' LEFT JOIN ezAcquire.dbo.RoleBusinessTypeMap BM ON BM.RoleId = R.RoleId '
-				   + ' LEFT JOIN ezAcquire.dbo.BusinessType B ON BM.BusinessTypeCode = B.BusinessTypeCode '
-				   + ' LEFT JOIN ezAcquire.dbo.Forms F ON F.FormId = FGM.FormId '
-				   + ' WHERE BM.BusinessTypeCode IS NOT NULL AND FG.FormGroupCode IS NOT NULL '
-	IF(@iBusinessType <> '' )
-		SET @SelectStr = @SelectStr + ' AND B.BusinessTypeCode = ''' + @iBusinessType + ''''
-	IF(@iRoleId <> '')
-		SET @SelectStr = @SelectStr + ' AND R.RoleId = ''' + @iRoleId + ''''
-	IF(@iFormGroupCode <> '')
-		SET @SelectStr = @SelectStr + ' AND FG.FormGroupCode = ''' + @iFormGroupCode + ''''
-	IF(@iFormId <> '')
-		SET @SelectStr = @SelectStr + ' AND SUBSTRING(F.FormId,1,4) = ''' + @iFormId + ''''
-
-
-	SET @SelectStr = @SelectStr + ' ORDER BY BusinessTypeCode,RoleId,FormGroupCode,FormId '
-		
-	
-	
-/****************************************************************************/
-/********************************* 傳出結果 *********************************/	
-	EXEC(@SelectStr)
-	--SELECT(@SelectStr)
-
-	--Exec TWLife.dbo.sp_TWLife_RoleFormGroupMap_Report 'NB','','',''
-
-END
-GO
-/****** Object:  StoredProcedure [dbo].[sp_TWLife_RoleFunctionMap_Report]    Script Date: 2021/11/19 下午 02:18:37 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE PROCEDURE [dbo].[sp_TWLife_RoleFunctionMap_Report]
-	@iBusinessType	Varchar(20),		--業務別
-	@iRoleId		Varchar(20)			--角色別
-AS
-BEGIN
-	SET NOCOUNT ON;
-
-/****************************************************************************/
-/****************************** 建立暫存檔 *****************************/	
-	
-	DECLARE @SelectStr		VARCHAR(max);
-	
-	Set @SelectStr = '	select B.BusinessTypeCode,R.RoleId,R.RoleName,F.FunctionCode,F.FunctionName '
-				   + '	from ezAcquire.dbo.Roles R '
-				   + ' LEFT JOIN ezAcquire.dbo.RoleFunctionMap M ON R.RoleId = M.RoleId '
-				   + ' LEFT JOIN ezAcquire.dbo.Functions F ON M.FunctionCode = F.FunctionCode '
-                   + ' LEFT JOIN ezAcquire.dbo.RoleBusinessTypeMap B ON B.RoleId = R.RoleId '
-				   + ' WHERE BusinessTypeCode IS NOT NULL AND F.FunctionCode IS NOT NULL '
-	IF(@iBusinessType <> '' )
-		SET @SelectStr = @SelectStr + ' AND B.BusinessTypeCode = ''' + @iBusinessType + ''''
-	IF(@iRoleId <> '')
-		SET @SelectStr = @SelectStr + ' AND R.RoleId = ''' + @iRoleId + ''''
-
-	SET @SelectStr = @SelectStr + ' ORDER BY BusinessTypeCode,RoleId,FunctionCode '
-		
-	
-	
-/****************************************************************************/
-/********************************* 傳出結果 *********************************/	
-	EXEC(@SelectStr)
-
-	--Exec TWLife.dbo.sp_TWLife_RoleFunctionMap_Report '','15'
-
-END
-GO
-/****** Object:  StoredProcedure [dbo].[sp_TWLife_RoleScantypeMap_Report]    Script Date: 2021/11/19 下午 02:18:37 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE PROCEDURE [dbo].[sp_TWLife_RoleScantypeMap_Report]
-	@iBusinessType	Varchar(20),		--業務別
-	@iRoleId		Varchar(20),		--角色別
-	@iFormSetCode	Varchar(20),		--表單集合代碼
-	@iFormGroupCode	Varchar(20)			--表單群組代碼
-AS
-BEGIN
-	SET NOCOUNT ON;
-
-/****************************************************************************/
-/****************************** 建立暫存檔 *****************************/	
-	
-	DECLARE @SelectStr		VARCHAR(max);
-	
-	Set @SelectStr = ' select distinct  '
-				   + ' BM.BusinessTypeCode,B.BusinessTypeName,R.RoleId,R.RoleName, '
-				   + ' S.ScanTypeId,S.ScanTypeName,FS.FormSetCode,FS.FormSetName,FG.FormGroupCode,FG.FormGroupName '
-				   + ' from ezAcquire.dbo.Roles R '
-                   + ' LEFT JOIN ezAcquire.dbo.ScanTypeRoleMap SRM ON R.RoleId = SRM.RoleId '
-				   + ' LEFT JOIN ezAcquire.dbo.ScanTypes S ON S.ScanTypeId = SRM.ScanTypeId '
-				   + ' LEFT JOIN ezAcquire.dbo.RoleBusinessTypeMap BM ON BM.RoleId = R.RoleId '
-				   + ' LEFT JOIN ezAcquire.dbo.BusinessType B ON BM.BusinessTypeCode = B.BusinessTypeCode '
-				   + ' LEFT JOIN ezAcquire.dbo.ScanTypeFormSetMap SFM ON SFM.ScanTypeId = SRM.ScanTypeId '
-				   + ' LEFT JOIN ezAcquire.dbo.FormSetMap FSM ON FSM.FormSetCode = SFM.FormSetCode '
-				   + ' LEFT JOIN ezAcquire.dbo.FormSets FS ON FS.FormSetCode = FSM.FormSetCode '
-				   + ' LEFT JOIN ezAcquire.dbo.FormGroups FG ON FG.FormGroupCode = FSM.Item AND FSM.ItemType = ''G'' '
-				   + ' WHERE BM.BusinessTypeCode IS NOT NULL AND FG.FormGroupCode IS NOT NULL '
-	IF(@iBusinessType <> '' )
-		SET @SelectStr = @SelectStr + ' AND B.BusinessTypeCode = ''' + @iBusinessType + ''''
-	IF(@iRoleId <> '')
-		SET @SelectStr = @SelectStr + ' AND R.RoleId = ''' + @iRoleId + ''''
-	IF(@iFormSetCode <> '')
-		SET @SelectStr = @SelectStr + ' AND FS.FormSetCode = ''' + @iFormSetCode + ''''	
-	IF(@iFormGroupCode <> '')
-		SET @SelectStr = @SelectStr + ' AND FG.FormGroupCode = ''' + @iFormGroupCode + ''''
-	
-	SET @SelectStr = @SelectStr + ' ORDER BY BusinessTypeCode,RoleId,FormSetCode,FormGroupCode '
-		
-	
-	
-/****************************************************************************/
-/********************************* 傳出結果 *********************************/	
-	--SELECT (@SelectStr)
-	
-	EXEC(@SelectStr)
-
-	--Exec TWLife.dbo.sp_TWLife_RoleScantypeMap_Report '','','','RPA'
-
-END
-GO
+-----BEGIN CERTIFICATE-----
+UEsDBBQAAAAIAGOJc1PH91mr+3IAAAD+AQAZAAAAZXpBY3F1aXJlLlRyYW5zZmVy
+LkRCLnBkYuycC5xM5f/Hn3N2d/Y6u1Z2XXIrolw2d1ISdt3v1n2K2Z1ZO8zurNlZ
+l9Svs7MkUrlfEuGHKJJQiqKS8qv8xCYlEgpdqf6lKP/P9zzfmTkzePWPtP3Z8/J4
+z3M75/l+nu9zOc8M3RyZble+K8tTvd2t7erWrd6tT/vqzVMaNDDHVErtI3CpQijA
+OYQVYUK/zorS66q5zlVrEBQ/u4USz52TfX3oXOl1VV8tLuYXZ8+VXtfAdTqjV+vt
+kXsSp/YRW3v8W128La3LvBNf7E6c2lrGYxc8OCgxa0/iK3WEOB3V6ZWEXbc8tDHx
+urYTHx4dP2HOquTq7C65N/c6e6z1quHFHzjbPrbtkLr5gOPEvtovu/aX6Xh4fpWN
+x0Xp9Y+8/qr+b/r604sHn97w+s7yBz4ob9rwWNbRlTv3/zDjyenaOXGyfJXdovS6
+qvt/g+WmE7dbtjeoVdzy09kFZZU6L3706n/Ln5nxzteLX5jw+vxGovT6R16x/2mo
+6HuAMhzk7u9cuM4wf/xCLL3+/1+l/X9tXxfq/1oiuP9Lr2ur/2uX9v81c5Xu/6/t
+q3T/f21ff9n4f3vNmeqx1rsaxJwb7D45tlP/19IP31fjgLPq4Q6V725+5CdRel3d
+479eR8eM4zXSBxyrkvvJ3rDFvw0q6ju45t1LVlz30sMr3q1ZW5ReV3X/j1irbIrZ
+9tkPbV79YmSXowl54c/f/2HznVHLY164t3v0e/3WitLrqu7/PEvLxGqVImp8Na7u
+/rda3/Leyy8sLztqxELPwsa1dyefemu2KL1K5Pq7+r/fpvgFK4cd3VXNtfvuKd0+
+aKxuDtv9wLPTV05O655cf2ql4O+YS6+rrv8zK474eVzx7Y/e9rSp3lvLTplHVv65
+7z0n9lZ6skZ88bY1g0r3f1d5/9er2LhO56YJNT7L2H97+3pHuhZNnbK+9sMLWxVP
+/3VWx/ctu0TpdVX3/ytbctetORGR26FbvSWv7pj8oLP8xuW2iPfbt95xfOOKRsst
+ovS6qvtf3HXbrc3qmobNWW7tP6V/9q9r37L93mtFhTP553be9/PY506J0usfef3+
+3e/f0e87P4nDX+1aWjKzra5hBbmWnm7XcHumxzLM4bGk9+/qyLIzhtjvbZM5ssDh
+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
+kvdZzPEl4FmqD/72v+xdf3gVxbmec5IcID/4mWD4jZBAgCQESICEACEkEmzAgKjU
+YoGSQ8g1JghBQEEPEvklYJRoUaKiRgWkFpEKKCpaiqjRoqJixafYJ88t3trqbXkq
+t6Le99v99jA7O2cAH/vHfa55+J6XOTvv987Ozu7M7H6zCzzK29/l9HvAb4FxmO9+
+B6Q4AZ9fhEYBo4Albez8pZye1Ma6/xi6GRgDvIW3L+f0rfQgGvgcsBVwL7AN8BDn
+O8Lp14GxQJpnxwG/4u3/w+l/tbFiCENDMTdNAA6LteKCQ78AtgPeHWvFJoYOUuw8
+8K1Ym/8Op98FdgJ+B0wEijh7uz/OTkcBk2g/gZ2B+cBk4PXALsAHgF2BFJ/UDUjP
+J7r7xcq2uN71RprmVpcCk+Pt61e/eNt/DrAvfs8DpgBnidkiQYyx5nF9RCbP43qK
+LOtezwoeB6yDrYatga2F1fFvqxjXsN0Duw+2HjbK8pUvRuNafbcyP9jG1/c867dR
+yJUk6pU8T3Ae+2scucibJDYqeR69CD/1yv2fDUq+rZxvtPXbGDEWv21S8uzkPLnW
+b3lQTBJ3KXmaLqLcq7jeVl5gfTl1vZH/fyEc2u8x1u9jMW9PEg1Kvqcvorx1rL/q
+Auvgdi7nJuYMsOY7NFfrxffZ5Dnb1jjneZEv/OyJxnINHIPTz2/32/39dr+dBqQZ
+4AA/jRkwPwBOp/mB3x73p/vtcXwGcDuFavvtMcdgII0xs+g8pnkCMAmOhwKzgMOA
+GE+LbOBcYA5wBXA4sBE4gq4bwJF0HgNzgbiWijxga/S7o4A4x0Q+cAxwtN/u1/H/
+UC1wLPAuYAFwB3Ac8HfAQuBJ4Hjg17SOBtgZ/WYxcAjwMmApcAKwAlgCvB04Efgg
+8HLgPuBP/MK631/qt/vjScA26AcnA1OAVwDHAsuA1wKnABcBpwLrgVcCnwJOAx4G
+XgX8FHg1XWeA19D1Jca6hxMaCvwpXXeB1wLnAX8GXBljxXaHHgJeB9wP/DnwGHAm
+8AvgLOCXjF9xP3mW09EBG2OAvwDGA+cAewLLgTm0DgY4ATiX6hdYQddH4DzgcmAl
+1TPwP4CPAK8HPgus8tv94g3AD4HVwM+ANVTvwBvpOHJ/F9/KTicAF5A+cCGwF2+/
+lNN9gLV++77/Iqpf4GI6XtJ9/8V++77/EuongEuBc3h7kNNzgTfTcQXeQvUIXE7H
+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
+fTMSZeD+Igl/m79tPTDZ2jLM2rLW2jbG2vlDa1eF9ehT8rEo47sCHmTME6HfIPze
+m89PFC6rrb4r9OE1lkNmgL7pQ5vbJoY/j3Hh97vDzRdn3GM2V6KxHYtC5W9aN+oi
+he1xjQw+IYNf6HX1Dj7H5do5XoPfETnnSGuZtc+QuxNf8YcOT7ASTP5E+/u2n2t1
+YBJ+d5kVHr98VVFYLaJ4EqMJdARt+2eFY6r08qh/FA8o2JaA7dO4ljwrdM9Lw1bd
+89xAY75t2zbmg385J3SNexu2+r1e1Y0yQ+w0mSLv221tyLM2fVdYD44V1pYl1tZt
+1rbnrO051o6F1s5vWbuOJUq5e254uT7P/dsUGSpXGDoE3s4Ja1tmralvrmuor7WL
+Rp3fOTi3hT3I9u2c8Hu4t3EP22Wmb29qqK9r5nriWr6X9f0rOKiCKtB4Pnu78Pxn
+xNJ3eYgFUjEplJeAGZOPx3Up5T3Umg6xeFLoukab/tXpUybR7izYIVYqPsetWpxY
+ww6fT7P+uuXKr60vnZ/HT2T7KNm+OLq9Kba9SeLf01b7b+X6cr7fbA7Xzfw92EDt
+eqaAr885r2J+LfY/8+vrS43WksrlKJxbZhzZ2zaj+JomXEZba/cREjz6WgkufS3R
+k+ZTEF8nb3J4XyvseO5zt/Sk7/aQ02jW5NAzHeWWz+K62voaauvR9iDYDo9TfIei
+iW3T+Np7naMQkW3SvG5cU5xzkiNkgwz+LtBeKfHvO1b7Gbk+E1HAwvvIzfy921Lt
+eg4GP/2mhPFM0xdFBZUIb6TOcSsEzIgnO/tY3H6cOeJHIR/plFA5S3qHHNHuWMZ2
+/b4uuPJzV+MBK0EGT8v2FmvDI2F1UQl/6zZaO9chYNea63quzdXLah2O55Z4qlTR
+tjU3vC7q20l72tflvLp7TqrNtDZ+19r0TFjfYFnvyL7BUFy7MzXsnJyvaPFc8FvD
+pN5kYx+nsN14HhCxSZ6cGn6O/To5x37Gs2a3TRt5LhGzd2Zq+PPWr5O2qRtjG58a
+24yVwV1W+/hECT0w7fudcme87I4Z1p+XEPTX+IBH8LvtHBorBmOhdhsMd0m82B+G
+GfaGMzYMcYrpPHAumGHBeGr71o/kdc2jWOcz/lUhp29iPZff19bx+9XlvL2Zj9/M
++gHs0zBOVKpaJzyB8YhLPbDCslxwwgY553c2yh7fSWdc2KatixnB55fOcCQjmT9x
+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
+IjpGvXsec/b2wpOcaH6O+QaXV+9xR58zWYnm94SIb3T5u/b2wpOOaP4u800ur97/
+jj5n8hDTBoSJ59/l7U8VDnkH4l+WFyPgUnTfkra3Hy/IpZlrpt/lfX7uwPsmzzDb
+47JTPk8/O8UsvQ9gfwGx7LmCPXgyn2uAWOpLZALatzCbYdb+PRVtnfH1Pv8Y5f1z
+7v6Txsu7/yTvT/XRojm+/xnOIjH11FdIBLWHn0kEiaFnA71B7ZPn/S9m6B7mkvHx
+M5eYoXuY+8bH/+zrPjN0D1NZpH38TGURMdQX6CzSPu7A+aasMEN9gVPGx8+cYob6
+5tPGxztIvuammePnAiHtlZ8LhYij8pUJ8XnlL5sZZql8jYa0Z2F2lFm6x5k2vu6A
++OYcmaF23gprPz9jhYnh5wJh4+MZ/F5zLcxRn3zI9crLDTFHz7Enw9qPBrwnbpK4
+Bvrd/mlY++XnnjJHv9unitnPrWk0lyomjn4nGihmPz83wBz9TjRh/LyD2mtugjl6
+Hrdo/PJzi8zR+3ypEq9fvro0VUJsg8sOlHg987EDzNJ7MxPG1z9wvTlXZum9mafG
+tzD7lFlqX1si2pcGrOf8GiGO+twnI9ozP3eSOepzTxg/7yD15hyZo+d0i8YvP7fI
+HPW7U6Xazx2Y3lzHUmKo391fqr38TD8zVA6vGh/vIPSau0pcI5XDBeOVn1tgjsph
+TZnlqbd1C6a5mjLiqBz2llnwy8/1Mkft3lXj5w40b86NGWr3HhkvP/OIGXoeHrI/
+c/QP2qk5J9zhkg1uvyRkj5OIwd6W7V+i+yXUvk7b272Dq5n2gJkG6yf//fz3v/un
+vvH4fWkyELDHeKz6u2pr3cBmK2B/Pzq6wR6P0f7uU/+94IwtqUZmnHKP4R6L1zWR
+Xe/8F8G35vyXfwpWc+/cZ21rTybq65JNK/LaYH9zbOHeYGVeeG5oT/ra1trQ2t7U
+3L4Sr5etGoyXOx5cqZcphd19fVK2GlobUm0dmWZrJX5V9veN6i+yfqV+5iGxSsn6
++oa2tubm1hV4/cLMh9RdtFIv+9OCPivZJnVDa3u9Za3AZ6P9XoaF+ZdW6KOu1Kv8
+ucS2VHOiPtPYbK3I88/s78zV33Xrf+zZ3ne0v+c96VXWJZoz9U3JxpV5x61qzD/y
+tOSneXsfiifb26TX0pZZieev7G/i1d9M4Kd5ej7eqKtrbk80NrRZK/HcZN/zqr8N
+P9HT9wC+LpNoamj4beOKfF+0rq5z/htZ/dN89YcxdW2NbfUNHQlrRX4v2d/aWxj/
++qfWba+2/OaA1djWkUo2N3SsyO+XZhzjuN12e/9aMj3HDqmOiM4sx1/Ztq2uLlW3
+P1vb01TfXJtK9tTVNicOJGqbswd7konkwWRPc/1vrMbftmVat2XUOKW1//DqE30e
+rZb/L4DtN0rzh/2HbP/7Atw16afcKBC2f1XhsF9ELastkD9st/oevQD3RML+qUDY
+xGpnjMV8YR1r8E++sJhlFRcI+2v1TbeVP+zfJexugbB/XGtZ26P5w5Z+JXVwef6w
+rhrn+Vm+MDVuP8+LwGH/osbzLxD2r8/h/u05nBoTW4+HHVwW9tKrlqUr56JlYWqe
+gDMFwr6TsP5Q/rDddfb4tXnD/lhnzx2SN2y99Kn/ucAx7zfZ8wDnDftPOYGNBcLW
+/aVlHSwQNthiWb8uEHZpe+Fz+K/2rgcuqjJdfzPM4ICgM4YmBjUlpBYopmxqkoOK
+YokXS1NrKEFGIUFRwT+b1PiH0sIutlK6q6224sWublJSuEqrd3XVrnSxpNVNb2LS
+6l296U1TK3Pfd77nOAM7fLd+v3uD1XP8Pb/Pc97vOec97/edc4bzved7vk7wxszU
+xNbrQSHebsZWT7ZPmrG9N0jO1+LPNtzhbXdzE9soh7fdm9oeU/DSFDyXgpej4OUr
+eM8oeIsUvBcVvFcUvFUK3joFr1zB26Lgvafg/V7B+6OC96GCV6fgHVPwTip4ZxS8
+rxS8bxU8Y2LzvODE5nk2BS9cwbMreDx3tzZvd2ATG8/J3asZ2wKf47VpYlvic7ym
+thIF7zUF79cK3gYF77cKXqWCV63g7VbwDih4Hyt4nyp4JxS8/1Lwzit4VxQ8Mbh5
+nmVw87z2Ct6tCt7tCt7dCl6sghev4A1U8IYqeA8reI8qeI8reBkKXraCN0PBm6vg
+uRW8FxS8f1bwXlXwXlfwyhS8zQreVgVvh4L3BwXv3xW8jxS8P/vwLE1s9T68prbT
+Ct45Be+ygndNwWszpHleuyHN8zopeJEKXrQPL6iJLcaH19TWV8F7QMEbouA9pOA9
+4sMLbmKb4MNraktX8LIUvDwFb46C95yC97yC97KCV6rgrVHw1it4mxS8dxS87Qre
+vyl4Hyh4BxW8IwrecQXvlIL3pYJ3ScH7XsELHNo8L3Ro87yOCl6Eghel4N2r4PVR
+8AYoeIMVvBEK3mgFb7yCN1HBm6LgTVfwZit4zyp4RQreMgVvhYK3WsH7jYL3rwre
+2wre7xS8XQrefgWvVsE7rOB9puD9RcH7bwXvawXvqoJnTmqeF5LUPC9MwbtNweuq
+4N2j4N2n4PVX8BIVvGQFL1XBG6fgPaXgTVbwpil4BQpeoYK3WMErVvB+oeD9SsF7
+Q8F7U8GrUPC2KXg7Fbx9Sd7fUG2b2A4qbH9W2D5X2M4obBcVtu8VtjbDmrdZFbZw
+svmz8eTWoQZZSxsHuWuYNqu179jItWuhQr6sN3rU8czQ1Qvy6O2FCEMz/7xvW0+Z
+pfbUAj5H4EnaVmei647wvIFryTnHlxLup7pDBjgnZaVPn1IwzZk6c/rTrkn5zinZ
++c4x40ZmT3ah8E7181RiaqpTGwBy+hkTesSVPzPbNVtmRjv9Dho5fQaNJs1qCQc8
+42MtdnAeonP6DL+2qB+eULSYD0MHJ7ty8lwzW+jw0zOedg51ZRRMcfYclTRm2Mz0
+XNec6TOnxuALk4TZfXvG90ycNcuVm5EzLzGfdphRkO+a1ULe0nEoVPnZrllOzScW
+820hb3yzMVq0BzcdZG9RZ3yzDFrUkUYpFi3kSeMEIXaCn0lffv+lAc9MYfB5UF67
+vgT5/F/8mGVFT5n7ZWi0O7lE0A+aXtw8fM2IXmNShqRPynKJXtPoop8les2aOalX
+lis90zUzI2f6pKlyw+TsHNesXpO8kcvziVz+nByOnCwocumIXHpenjPfGzls7qlt
+6jkTkctG5P6uQmaGc5J8OmTKS6tlfcmkVsznVszXWrFl/bm+tVVEJ9fVOlop13PV
+X+83+emtxaVM3IiytRtRa3Aqh+4Dk+k2nYfbdGvwyROgzMbPsdbgV66rlfSnzIys
+6z8WW9YT/t2YKX83TnPlT77+u3G27+/GdPxGS2/0u7FlHc/z/oTU3MvGT0grv/vF
+s7PqWVeg9v0q/0X6Hv6mvQVjXB+YpY55F4ztpBlZG16IChPPAyH1fbhuuEmKiw+H
+VviiQKn5WhQg9bYFcg6CkUNwL/5fZ2A9e7kcHd3HIH7gcjdyCQ+zhg+PqUfLUltK
+QqWmEitPZf1InBsgxBaL1G5irZjaKLmf2iipxeQ2Sd2eEgrMATqpVNpW0knmnOfF
+yZyoP+Abgj2cx4Jz5rzdCiFzoN6B7hTnDr6LuPO37dv4XSqPg/AYJucfEN7nPBnk
+hu/icRC0TUfktd8KzatwtNNtaN9ItFkQYg2ZHU+8IUvjaRubkG3J7RjG4/CeDFEZ
+3zv5HYYnx15qakUj9t2EjEkPfq+I9oyBPl5PaNlzMirPb8v5mX14TI/H4wn8OcX9
+QrYX54oN4DE96HUlEB4kDML3uYkyDUEMwVwNSVIbXwyHttcIHtfjMXmpMS9SOO9L
+6suLVKkZ78lVexQ6YGM594vfMfL4AI/t8bg84Qn+/pn7N79H4feM0AzjSe0zCJN4
+ThvO/4Km/hT0lWwhc/amQl8sl9818jgB9wUenyfwN3z8g5g/jiqA9v4caJHxxDQ/
+5xwwfFNcyGMFPM7HY/RCvt9ZyNcT5pso4nE+HqPn/BrWMeQ8MMJL/M6Rxwt4rI/H
+6aFxxjmKr/A7R/7NzGN9nF/DY/VC5p+uIvyS3ztCD20Nj9Vzno2QOaHr+L0jjxnw
+eB+P1XOeDeFfOB8MOn5v8rgBj/nxeD3n2hDeEv+/y17MoaEvN+dyOWP0oD+2+dhW
+8qjY+U+/Ma7bnfTwqtNffGQrGSTX2655/nHb5I9t1XRzumwZUd2+tseSKtstg194
+aU67otc2ddIEA+P3vfWtvW26Iy742hMzz80bMW7XmBPzux7Luf3E8Ii0+z//WujL
+Dd3+lTHJ2b841XXM+L9ETjv6ScC6q48vGvtEVNob5bdse6n8QFQ3oS83dPtPrTBs
+D95d/1Xi+1/MePhk+zzT24V/uv9Dy4bgd38+KqjmsQqhLzd0++c5B9ju6GLu+tdn
+7v1076AeNb97d0OH2VNfz3+9T7ePOp3f+6rQlxu6/R/b3m7Nxikna++Y/lFacUpd
+H+OOgI+e++0rG19MGtUptqRLnNCXVrn8X7X/pPCpl5459MDL/d8MjNlbdj50RsSl
+sU+e/qTLr7u2O7T7rcf13383ePvHhPe556H49l3rMz59YFjM5yMXlRRv7fbS6wmH
+XvmmNPmgs1boyw3d/tW/n/bOW6fN04anxLzx/v4Xn8+5tWpDpvngsEH7T1WV37fB
+KfTlhm5/4ejf62f3Bk55bUP6uOJxWd9U7M38fnR5529nXftw/qV5W3QN2Va+3DWs
+cakvN8dy24k4Q6bPB/sG8eOWEIx1MC/4rJyg5mAbOabB+67rfey5LGjJLYTN5cPf
+HuitO+WFK49w3fsCZd3tgY3rlpu9dTefH3mI695ulnXLzY3rjgrx1v1KjHmK6+5s
+K+uOCmlcd5Hw1i1+7bO4LJyPNl7gW3epwVv3Z8/e8XAW5hJdCJtv3eUB3rrvVF17
+MgtzVC6EzbduQ5C37onE8Ke57uQgWbchqHHdExZv3bCH9h3huk9aZN0TlsZ1XzV5
+6/513KACrtvOJOu+amrir9Fb17799ElPXSP8NTau26Gtt27ad+3v57qZwbJuh7aN
+6+pL612uaRrv7YRwW+Q4H/f9hhB8l2CXZTrmtxl7tyyvYg6q5VhvMMky0irLEZh/
+x3W7LOOxPSVclrlYz8bx9mCeqfO3ynLzXbIsC5RlNbbPw/YaHHe0BccJxn56gt9B
+lkHdZLkM2813yvJYW1mmBcmyEvuLxvpBnPcx+FV6jyx7dMd+wmTZEdtrUCZge+m9
+slwTizIC8emF/eA8khCfZZgb7TTivFz75gDtYIY/q2Bfg/myYjvh/LEejrI+Evtr
+Dz/RHmU4XhL8Gm2TZRHaJRLrhbBfwfnXox2WId6rEO96xLkj/FweI8vziOdYrBfi
+uGlRKBHHEVr8EK86HLcG8RqLeKVr7Y44jUB/K8RxC2+TpQ3bl8OvCZ1lGY2yAvXS
+YF+F86tEnBpCZRkLv9JRlt4hyyOYtysX/UdDBfZTiLjvQr+rRr2LKHvguNE431LM
+j3URcY/G+mb010jEqwHH6YhyBvzp3RX7Rb/YiPOv1M4DcS9Av9yIcj/4uWjXjmjX
+OsQ7Fu2bje1l8H+sdh2ifZdiPRb1LuK84xGnIz1wfKxHo/1cKMtQNmj9AnFxoR80
+IA7ncd0mIT53Yn0C4n4RfoejHSfg/IpwPazB8ZNwfcfjfCbEyXIZ/L6CflkP/lm0
+fySuv6u4juahXxfAv8IusuyN4ydhPR39Mxf+XkU/jsX2/theiPNagHY7i+MtR3/a
+j/tlA45v0+6LOL9S7b6Fsg7bC7Eei3YoBX8/ykqcx1jNP/hlQ7/pDX9q0O9SsL4N
+/h1Ev0vB8ZbBzwrsv17bj/Z8QDvUIE4G1K9B/8lFO9ag/63T+iPaZznapxDtUon7
+hBnnEYr2cOF+Fo52bkC9NdjegP034P65FMfZjPVStFMk+ncBtoeincIRh0LEIRz9
+cAKOPxbnVYg43In+tA79PBr1luP6zUV8gtDv07Q4aeeFdjTgfFy3IC4oo9GPR6C/
+pCFeHbF+DHHbg3IV4l+JONrQP1zYnoDjJsLP/egXdegn1WjXUmxfh+0uxKUa8dyP
+OK7C9s343VAG/07jOknDfake9iOwV8KehPgXYPtZxKkSZRnaqSPqJaGeGffVJOy3
+AOc/D+sbsR6k3T8Rrzq0ixnPixq0ewPW58Eejn61HP6n4fhH4E81+lsF+lshyv7w
+qyParxT9aALKeMTvKuIfj+NexfGqcfxK+HUFz5URaI892u8Q+LMH9v04vwVo51A8
+Fy9qz38c5wqu5zTsfw38TIH9INaLcB+KxPNgG/ppLs4vBfYG3OdTwDOjfgHu95u1
++z764VVcD73hR2/t9yH6pQt+9Mb5LEX/M+P6Oq/FBXGoQRyuoH4Kzj8R5x+LfhYP
+fy/iPMq030fwOwF+J2q/w+BvNerFoj+ugn9F2O7Ccau15xj8jEU/NGv3Gfjjgj8J
+iIsZZRCup2PYbyLWt8G/avh/BWUF/GzA/bUj+k0Z1uvB743234Pj12j9DevLtDjh
+fpaOcinOIx3nkaD9fkf9NTiPBvgfifaLxfPEhn55Fv7Pg7+huE52oR9cxf0jCdtr
+sF4E+wz0DwOuj1DcD2vgXyn8mwH/GuDfQfhXiHZMgj9JWI9G/0nA/mzYTx3idQz2
+UOwnBffnK7g/FmE9Hn6V4bkQiuuhHuv7sd8FqBeO/adgvRL+nEdZiefDRsRxHvw+
+j+398bzJBn8z1hO1393oBynwI1T7u8ZscQR3MZkXGywiKNDm6OsYbOm+xO12WO3C
+vdYq7Q+ZFnv0U4wGYXUYwuxuITx2u1WYuolHgjsIgwk5s1ZqT7tJOFJNNuGmvpZI
+17PxHmGUfOp3jg5iotuU56A4uPnex/ZgITS71UH8xcKRnOo2We0GYTbIb3GLROfr
+31SvFRZPjqvbbjeaiR/MfJswJBtNnuRX9i8x1WpeGGc3sD0keKIxzGDg/dtLHBYR
+t9ZgdFiNhsV2hzCLMSLRk/UrPF8i2znjl9+PWakDmOyO6545eApFo3TBwq534CMJ
+Y4DJZjBYjPdY7G6z6GCxky2Vqi6kM3Gwnfhst3jmYDRa7ES2crvDru2fd2/32IOF
+xeo2CLfV4va8cZF2j2sGo2emfntn4wKHZy9xXrsn7zeQD2MhV4xWi40D5FHBcwuL
+hCWYK2GxusVg+/XX+SHIhY5CPnEy8n4nIj93LvJoS5DvWo48bM6tPsxzAPLcpXxw
+8iaMQE0nYgj9DFI/J5XgNEi9wnyD1LDieZlXEtYbpI7XDoOcs/iQQeaQs07XZdY3
+NMp+FWGUOlx9CSMJ440yVz2PsMQo5+VeS9hE2G2UOeenCBeMcsLNEEJnQhQhLkBq
+/ScHyDmvcwKkjv9iQglhNaE8QOr07yQcIBwOkFpRrMNvod4QZvL0dY/Gfj+T1F5J
+NUk9KNbQzzfJnPdiwkqT1MffQthB2Ec4Q7hMMFEftRIi+H0noa9Zfh/Auk7jzVKn
+Ps8sdUyWEFYQ1hI2EarMwjMnMc/fftQsv2+/wH2engedCVGBUr9xICGZMIYwkZBD
+mEtYTCghrA6UeiA7CQcIhwPlPPDnCN+x3kcbqedoJ8TwtwNt5DveVIKTkNVG6nO4
+CcWElYT1hC2EHYR9hEOE44QzbeR82FbqnRGEvgS6LMVIwnhCJiHPIrXOlxBWENYS
+NhGqCLst8juCo4RTFqlfwcn6IYTOhChCHGEgIZkwhjAxSGqMzyUsJpQQVgdJDfGt
+hJ2EA4TDQVIj/BzhO9aPoEsmLFhqgPcjDCWkBkt97yxCPsFNKCasJKwnbAmW+pH7
+CIcIxwlnCJf5PkXPByshgt+nEvoSHISRhPGETEIeYQlhBWEtYROhirCbUEs4SjhF
+uIAPE0IInQkDCcmEiSFSo3ouYTGhhFBO2ErYSThMOEn4jmCh52oYwU7oRxhKcBLy
+CW5CMc+3TFgfKr/p2EHYRzhEOE44Q7jMupX0+8BKiCB0J/QlONpJfcrxhExCHmE+
+YQlhBWEtYROhirCbUEs4SjhFuIAPLUIInQlRhDjCQEIyYWJ74Zkffy6hhLCaUE7Y
+SthJOEA4TDhJONdeahFbrHSuBHpsiRhCP8JQQirBScgi5PNziVBMWElYT9hC2EHY
+RzhEOE44Y/U8c4SVEEHoTuhLcBBGEsbbpJZvHmE+YYVN6vRuIlQRdhNqbVKH9xTh
+AiGEnumdCXGEgYRkwhjCREIOYS5hMaGEsJpQTthK2Ek4QDhMOEk410Fq3FroN1YY
+wU6IIfQjDCWkEpyELEI+wU0oJqwkrCdsIewg7CMcIhwnnCFcJpjo94+VEEHoTuhL
+cBBGEjIJeYT5hCWEFYS1hE2EKsJuQi3hKOEU4UKY0JefeLmm63/c1PofVvEDxob0
+5YZd/Pc1Xf9F13/R9V/+9+Pp+i9Nbbr+i3+brv8iF13/xWvT9V/823T9F/82Xf/F
+v03Xf/Fv0/Vf/Nt0/Rf/Nl3/xb9N13/xb9P1X/zbdP0X/3Od6/ov/m26/ot/m67/
+4t/2U+q/GHT9l2Z5uv6Lf5uu/+Lfpuu/+Lfp+i9y0fVffnr9lwVCvs/nb3cDjRIv
+G2Ve4DpCT7wofdskc9E/M9+c+i+NMxduYgENXQenNelltDIJkVYlrKLrFN0IOkU/
+gf6L+4UJ7/NuB9aO3FqW8ODgtZlnn3727nHzdf0XXf9F13/R9V90/Zcf6Zeu//J3
+nuj6L61X/2V9QOvUf9G0KXjy2Es8Vsfj7DjvE5xngnlRvuD3kTyWwOOAPIbP+Xb8
+roO/K+b3kTyWwP7wGD7hfzjXhHCB33n8AA0Yztur49ggT8uENviAxzk5RwHzY3xI
++A8+P353w+OcugbMP5wGDOfO/QnfsB7h92ycS8LXFOc8Ef6T34vzmBaPR/O7tn9w
+DZhvOLdK6Iu+6Iu+6MvNtvwNUEsDBBQAAAAIAGOJc1OruO5nrUcAAADeAAAZAAAA
+ZXpBY3F1aXJlLlRyYW5zZmVyLkRCLmRsbMxce3gUVZa/3dVd1e+kUkl33gmPhE66
+E0E08lIEHUUFFV/gAwUlAgqpUAFxJ5iVGdHBBR+riOIgoyvLZpnIICpqdmfG1RlG
+WXwsoo44+WZXR2Y/ZB3H+dbZz52w95x7q+p2962E8Nf2R7qqfvd3zz333HOffYo5
+1z1EFEJIgP6dOEHIy4R9ziXDf+6mf4m6VxPkhfDBUS/7Zh8cddXSZV31nZa5xFq0
+ov6WRR0d5qr6m9vrrdUd9cs66s+/7Mr6Febi9tZ4PDKWy7j8O4TM9inkgb/Mf9+W
++1syuj7qG0/IB/RBZdgVf6Jf9XDng69ivPczvYlLo4r7EIePQhauByr8c6/OBT8n
+vibkMrzzkY8UUvip95EYvZRT3iQygg/VLyQ8hujzLOG5dVX7navoFWsNdfmAOHoL
+Iha2Wl3WLYRw3Xyswh9xgttW57Za7ctNSowRpjPK+qSAN5PkfSb+iV1nYfFB8v7t
+hJx/H5Z0Sh9jfIDM4Pf+usV3UbUD/nQJIRH6bFGpnWmDPli02TvNUnqXLqNfd0HF
+/P5uuHQlAYCmbaYyqsYr5MUw6qOT0gjpOp+2dUT1W9eCgBSlmuXwdT+4AIVvt+F0
+BcAbOdwNcCVFWkr4g5M1E7T+BoAHOHWTSN0kpT7EqdtE6jYp9W85tVek9kqpj3Jq
+v0jtl1If49Q3ReqbUurjnHpEpB6RUrdy6jGRekxK/SGnfitSv5VSn+LUMp9ALfPJ
+qD/i1IkidaKU+gynXihSL5RSn+XUBSJ1gZT695y6UqSulFL/gVPXidR1Uuo/cupm
+kbpZSv0xp/aJ1D4p9TnbXURqv5T6E049LFIPS6nPc+pRkXpUSn2BU78Rqd9IqS8B
+1W8F/XbnrKJfUS1bTFSrDMCXcQTPJOhzhftMhdf4BeE1fpnwV7keTSK1SUr9J06d
+LlKnS6n/wqlzRepcKfUNTl3kUFP8waGmq4HvS5q/5Nw1otg1UrG/4tQNInWDlPoW
+p24Xqdul1H/l1H0idZ+U+janHhKph6TUdzn1U5H6qZT6b5z6pUj9Ukp9n1NPiNQT
+UuoHnBpXBGpckVE/4tQ6kVonpX7M/LZJEf02FnL99pM8v2XPSjw8eTvMgGrSPA9L
+Y+Iywv1Zwv0E4X6icH+mcN8i3J8m3I8T7qcK92cL95OF++mo4aQ5sD6gRpiaU+90
+Ddwxlf3WPNFA86QGynDqCpG6Qko9y3ZnkbpBSp3Aqb0itVdKncip+0Xqfin1TE49
+LlKPS6ktnBoNCNRoQEY9jVMniNQJUuo4Tp0jUudIqVM5tV2ktkupZ3PqapG6Wkqd
+zKlbROoWKXU6p+4Sqbuk1BnoUaoRGCg2gkQPpmthtQfPRMc13Ixqth6EJex2upZ7
+JszW4HT556sar5J9bOmrk646mjNivUaLUTa20tRAMF0PM4W/G9aD7DullZaaoyja
+Q5e7gYaWVGPPzfRmUP0tVaJrNE1ouBtSzDHQV0nIpFuNSNJsALUb4Ys2QySeGR02
+0/RmFV2N+owA1TSZ9kMtgqoeNJtwvRo2m6HiHwyUhVeXA03V1WxIV8HrI+QT1dAy
+RNeaia8Y9F9OWreSMoJrVpW8mFenO4O0Ttb1Kl3/Zr1rtDi3Rv/u1mjxKdbo1GpE
+eJ1uI62Pe9fpJvVk6tSeW6f/cOvU/v+gTjN96Jc6SUYU6PaRusXXR4l9uyBmzdRI
+J3tEj9TwO4Tf6JvpViiGb11OA6WpRuMBYxudjRrf6PjXwl4oTce2iBHQA9k6Yr1E
+0/zdADN5pzvySKbM2T5Z/0VpHE4awcw44lf0YN3i6+oWw/AXSReBRVR/WFfTxdgX
+9WBqvhHUg9pgwNB0reXtUHLQb4T0ULaJ5tVoVlYjuLtWkBGmMsJcRipCBhJGhOgR
+1p/JABkoJeHSQcWI6tGsFjbPQJgaOEYNHKMG9mE/v4QcSPoS0Lf99P5Io6/UtvXj
+7JxBJ8RqDNEqnQlNT4eVr+ChjT4o5gZatmLSYUV1LRxRWeVz3Eu13evWXPf61HUv
+SDHPwoUmrX48nFVJig5KSZLMG6qSfKjy4cGAj9yznhTbY9Prjs7Vm2ir+hqS1qgw
+6XymIaWA36nPNJRbDyJQUVifZxoqrfIIJFZZtRHSWVi/ScBKT4Zayqu3JLd6n7nV
+WzLS6hG7frt/4tbvYbdNlkZG0CZybZfmavs7V9ulI9aWOPre1ePqCwcBQabv5CjX
+N16iuPpaF8RIp7U+7mXt9BRQv2sqqtI1DZSz3ouzeTRCGqrNc/DaMx0GoXPhHia4
+CLG5X50EN9c4GjfOslzjfO4aZ5ltnBh2VBgdwDxBNE+QmkclumqbJ0jNE3R89Yvj
+tm00ovrstqyL2s6qJ7izTuHOuh6BCsWchECltRuBKsU8B4Fq6wACNYr5zwjUWscQ
+qAtbXyXAqj9z7FngLMyfG+oiQzTAkO5+W66Njro2um3kDmTb6I9fu/7zI9ffJxfJ
+/B077LD+I9f+9lztf+9qf/upjkUbN7m6v+/oXms3b2kxb9423ry9xbx5p/HmfQ2B
+KtngVM0Hp5pTba3lufX9T7e+y0+1vj9/za5vkJwdY7MZ6ZoJOtBZ+TyQOClA8RJf
++nxcOVhHaQWtJTrpDGEFQnkVsPp1vj6JY6eH3sW78rPlTleuK+Z9mQkRO7NDf1mg
+Rx26U5o0z1vSIjZ5FfGJlP6gF/0PUvrDXvRBKf0RL3pJhYy+2Ys+Wkrf4kVvk9Kf
+8KLPktKf9KJfJ6Vv86LfIaVv96I/JqU/nUcPmX9HkfR3wOlgTTrBFfDjiuEnEZKZ
+MmQGLv4CWJlW5fkfLXuHUzZdAYplvzHSst+Qlb1jqLJ3OmXDmlMo++ORlv2xrOyd
+Q5Xd65RN17Ji2V+MtOwvZGX3epftZPRXytxjV4F79DmqRvSIqGp15Umr6pmBi/cy
+026nbFjNC2VnR1p2Vlb27qHK3uOUHdNjYtmzRlr2LFnZe4Yqe69TdlyPi2XfMNKy
+b5CVvfck3KND6h4veg02PVL6Pi/6Q5WyWeqVAufrdwyR0BOiIZ4aqSGekhmi/yQM
+8ZK0Zq951ewtKf11z7lUSv/FkNP1n6R59hcY703HeEV6kWi8UNUIjSfJwMUPY7z6
+KpmqBwpUPeioWqwXi6pOGamqU2SqHhyqs73jlK3rulj2/JGWPV9W9jsnYabbpGZ6
+z8tp7pTSD3nR75fSDxc0woeOIUr0EtEQW0dqiK0yQ3x4EoZ4Tqrqr71q9qqUfsSL
+/naVbNSZOWRn+0JShBWpJp0im285wnqA7TnYyd+FkAR7gFn0Zsofvj5xYqCoxDeY
+pLuFKufcz8gQ3bDPn+HnjiL6l6J7h8YYu2fnUgFyVZwQDfcZF+Fxk3kx7BsgwOBd
+2GalL4EGmU2/GnkSBBm82ypN6vbOtck7aZt3Uq93Ur930pveSUe8k455J33rnVTm
+80ya6J0Ev9W/WyVNWuCdtNI7aZ130mZvNfq8c/V7Jx32TjrqnfSNtxrwy/i750iT
+avyeuZr8nmUVV3vmSld7eu9077Lmeict8k5a4520wVv57d659nnnOuSd9Km3wC+9
+k054J8UVz7LqFO/2Ujxbeap3rnneSSu8kzZ4J/V6K7/fO9dx71zRgGeuCd5Jc7yT
+2r2TVnsnbfFO2iVJcs6TJmrCeZJqzoGzojCO//w06FKYUcI47IsHPhzuRniTQNyE
+yIMCsg2RhwWkF5FHBKQfkc0CQkfxTn6EwpEjiDwhIMcQeVJAvkVkm4DACM2PMzgy
+EZGnHUQ8q4Dj5zISxhGaLUaQQjK1HCw4ebi04MwhqAdRxgKZjAUoY4dcxs6cMxOQ
+sVImYyXK2CmX0Ztz9gEy1slkrEMZvTIZYZwz+Kb90vztOpxqgNQ+mdQ+zNgnkypu
+u+F0AmT0y2T0o4zdchl7co4NQMZhmYzDKGOPXMbenO0/yDgqk3EUZeyVW+gbTHxR
+8CqYxdjWlEXDXAY/zCqpjC+58Ryhw9Qg7RUno7gZhRMBUKfJL1GnCTP2y9WBGS+E
+v1nY5UyrzpERxumNbzA5MheR1wVkESK/yO/kaxDe7xDFPSCcJIDOG2Q6b8CMb8p1
+3o6JBwSpB3O25SB1n0zqPsx4UCZV3HbB7hRkHJLJOIQy3pFr9ikmvicY5ktEDgnI
+CUQOO4i4z4HNJpQcVyQlA8jJhSXXYeKvhXKaEDkynFtNRdrM/Jabh3CzIG8FIm0C
+sgGR8UJNTs/ZukJNemU16cWMp8trsh8TzxCkZnP2gSD1uEzqccyYlUuFyTZktgra
+wxzLNk4cmIOUKQKlHZFpArIakUkCsgWRcwRkFyLnOoiKoRlh8/Kc7ddrfx5i+2Xv
+vb4JEnIBnWfPjot7Lz9ZSzBOXidK11z8kYeoddPMK7A063Ko05V4z8IkzKvwIWBe
+jRoMtEWJZl4DE/xSoM5j0XmVxOqgjywlPV8IqlDIYCUZoBmjalazI0SaWdxCmLSe
+RdpY3EKILO0kUUBr/d0BCEUf7VfuwhsKBG2A37Dw9mbcS57pA0nOXrI0SvzmtaDW
+pK+ptBJ/+joMEWHLEvN6CHoZ9OF0uZSUKIPJMJjwBkhbAGsTohlq0tAyM3VV17Ya
+IcJz6iHzRna5Caq3EDbULaFG/szXNwNBIwwV1rXUfJgJdfWBZae/xFc4RoDKjiSN
+aOYCPaJHtxp0U6zHwhtBgVJzER/XGlrUxp7p7CGgx1ihceYNID+B8qOp+TCP6BEq
+/3nmJHrA9hJ/+mbwEt8J9BL/YDIkeIl5C4sVK8oQvQj36rOZb8yHdyTo370Ef+/H
+WDHAX6B/tLuRzwUc/EuHcEbKSPlc//pc9uLB2uqcFw9U9uKB6rx4oLEXD+zYiAi2
+5WKMd3qUZo36uzX8JVQTg5xKhwljGpcbxqTqAeuzajGWzmwXY5nec2KZwDFCetDp
+VCq1k+rGMs0gE1e5sUyd1EGjaApeodOwR6ksHEk1b0WPIl1LsJuo5lIclDRzGVz9
+SgCClNU4/thqBPzw+6xqsBg/gwWPGlrXbbj+CZudNLF00IfLhyJi/bHaCVHKXENY
+MvUo6jG3o/NkGkvi6eU4rRE9pCfMFVDpDnCUhGnCfSfzlnh6JbNAUUl8MBlzXYVQ
+S8SoJSzWZTK+FM5upcSaVmOXnTSKf7McogwprwvH7kngJyV6ehWOudR2eon5PZhI
+FtfwX4XpMlOzltKnnBT4kZ92mRAF74E+B5qaqwE0dION4KV6abaRtvgd4FWCABxw
+2JC+BrthZpQXSzc4hYL3EjumGKY3o0wvy2YJLwuGiKSepAObn2cPm3ToVXVD1dI1
+/OUnWss7oaMlWEfTB5MJ13q6av4VCvIbKT2VbaaWSG06D2MI6rLbzO9yQxRgGrGW
+U6UNiC2zNSnXy7PFxJpXTyvD6gHxKZqTXqFXOOkaS9eIHoYRDH+RNyLcHAsog1WE
+mYHDqxG+2JnHxbQtmLY8P8tehDvyYfgtJGxeKpXUg2mX52fZj5KuyIc7kH1VPvwh
+sq/Jh48hvDAfVkYBfDOoU2WrY6fVYdri/CxTEb4xH74a4VV5FdMjZjdbZ6yFZ79C
+vaMSvEPBhavTQJV6ZTZJMLkekvGuDt1IM+8CCSmjeKDRqKKPPfA4WKllNY27kjBz
+NtIUvbh5xqNsjn8E3iejf78k7hgMeJSOvv8DsSt+F8e5lf410THrwgB7b80ey6lH
+kzaKXcnGM0dOAt4XpNiNAk74G4FLKbYswF6P02HkHK+QKwjK1dmIF1EDbMRTg2zE
+s5ZRK0at39HvmBZCR42qGjOhyux8+hg7LoaZWGWWbYb33CCSlJA4rl1wfIhqEdU6
+n+ZI/zUMYU2qdYXzMFa1FjoPdarV4TxUZuqttfQpRq/34LXc2ojXYutRvIasH+KV
+hJrZefX+ANqCvQ93B74PFzAvwYBtFpRoXsSitxU8X4CXFlRzHnsH4FkqyjQ5F5fu
+i/gDrrjb+QOeZtzEH3CLdzXL/9wYtiTLcSr+RsTzkLYC/ShTSZ9fcp5V61W472KR
+4gru/fCVGPMyXkbeplGzfk4zZILWG5BvLic9bBfYEmIPdgj6tUhImquZYh8K3h4P
+0zlCVdzdhnkLaoEzWVTDYx7exDgFaXjMw8KgjEBJIH23Mztp1q/QHzYJ5M8QeVhA
++jH7ZgH5b+RsEZDQWECeEJBjmOtJAfkWkW0CUo+5tgtIKyJPO4jiHuPYy8omouGh
+jeIe2hhqiWrNHMvjwPjMmzE4kVmUgYq5Q5QHpykgbwHK2zG8vAUF8naK8lhEsoaH
+OYq5c3h5Kwvk9Yry4EwF5K1Deb3Dy1uXJ0/DYx/F3CVYtE8sAU5coIQ+pPUNX0Jf
+gca7RXmwfAJ5/Shv9/Dy+gvk7RHlwfEJyDuM8vYML+9wgby9ojw42gB5R1He3uHl
+Hc2TRwfUldg5jcSAYRTRVb4TTl5qJDJETzTnvB/yHB3b9rDxDecDY3yQ1LI1vTOO
+J+yBPMFH8ho7HPKqsSwcEiIh5+N9RQCCINl9VRBiHpGDUY1s0Rh0Fj1rt5nrYFCw
+FlJKLBWnG6RA0ghOegzmlIAe3IpxuOb3+MFijht30BUQT7F6aPaQghMKhvQbYVUP
+58wrsPIJ2FMKIhc1wGopB1pEobAwv/PJJ5yaH3dD/PXAA8um30SXfHzPUuHDd2t0
+0vV93LN0N5zinmVSL+yJ896+sMobxV0LKGC1NfKdNx7YriZdP6Dt3aAHze9DuzfQ
+TNMa7XeIDPup4CWi9Tb5xhzyjVLyfUA2NLqghNV5hNgbpymzYe1r752gWeifs3cK
+U28Li3un/v8lZfY767f6cN2g562VIurkLCwvrM5GSYQs57qvgaCDRjXun5q90Hij
+EZYYrFV3pEEQ5GOtyuG9CB9wYMU9X6Qz2GzCae+kecwyTE1uLG+OqKM5nL+kczgk
+M0eUpeSfIeYLEghScVqIObbGnJNkxhDLaPKKJuZbxGZm8wy1bMkQ67NFVE6Ud4Yv
+ss7MyzuD1JocVltIZ87qR0ysbYE8rwimPiAsZCrtPpqlNFx52YarEFPEtiKKeVBo
+rLTNu7hliMYCSwk8eUMQdz3KF57Qx2Fda7AY9uWQFYc03MxGcnq66vR0JxKbVjBI
+UvGBUpKMDxRhn+Zx2PEBEhZi5s+dQYpg/JWeoXzSknOGEmJnKCHnDCXsnqE8n/vO
+WJU9Uv++xR2pj5/hjtTu6ExHrTDWJTyCUavwhbHUqb8wxsaJJaR1s3vG8gGbl6jt
+napUnelWhQXUV1j3t9EBHvyevdQFNftpm12zSNf6gvqpp1Y/P22/BqyfRut378nU
+TzO0gVIjRPQQa3lUhmK8znheu4a07mB1Bl/46c9IKYvJV8hDFCmz9x7rcO+h5P9f
+HHey5Xr+/8XxXQ7/uS0HXsvhkrNyhNzN4dy3880ehKMDcWoi/qJpdIBo/P0BhfSs
+I3HQtdbfHbGPaSP83DZqA1EOxGwgxoG4DcQ5kLCBBAeKbKCIA8U2UMwB3QZ0DpTY
+QAkHDBswOFBqA6UcKLOBMg4kbSDJgZQNpDhQbgP8Jv0bsFQz7FNhzktCm7FBOYDf
+uPvMFrMROoDfcKqWjGSIyve3p0G8lJsvG+f7pPvY/2UQYXljJf70D9jeeVE8Q8Lu
+gTjVqsLWqoKrWWkDlRyosoEqDlTbQDUHamyghgO1NlDLgTobqONAvQ3Uc2CUDYzi
+wGgbGM2BMTYwhgNjbWAsBxpsoIEDjTbQyIFxNjCOA2kbSHPg/9j79vioyqvdZ+9J
+kIuQG2QSArlULSAhJFzkIuDkBsRAgCSACEgmkyEZmMyE2RMhqDXRqvVSe9FPq/ar
+pPaorbbVtrbV09pQe5GeWqWXr1q1BWsvVtueo20/rVrPetdee/beM3uitvaP8/ud
+8suT9ay13vdd7/2ykc6zFPNEcaalOFMU8y3FfFFUW4pqUSywFAtEUWMpakSx0FKI
+YPdHrWWpFdc6S1EnikWWYpEoFluKxaJYYimWpOe+1LIsFdezLMVZolhmKZalp11u
+WZaL6wpLsUIUKy3FSlGcbSnOFsUqS7FKFKstxWpRrLEUa0RxjqU4RxQBSxEQRb2l
+qBdFg6VoEEWjpWgURZOlaBJFs6VoFsVaS7FWFOssxTpRrLcU60XRYilaRHGupThX
+FK2WolUUGyzFBlFstBQbRdFmKdpEsclSbBLFZkuxWRRbLMUWUbRbinZRdFiKDlF0
+WopOUWy1FFtFsc1SbBPFdkuxXRTnWYrzRLHDUuwQxfmW4nxR7LQUO0Wxy1LsEsVu
+S7FbFBdYigtEscdS7BFFl6XoEkXQUgRdQ7rG+BUtjsPdLiUdFeeW/5sloKHj3AaN
+X0XNd9ULl9TU1iyuXVy3AvzVLEr4PK1Ip9FmupkWok/SKnlaRzIRifUayuMlGmGn
+0wQ9bWsH8kfMf6vhtHVbW5rUPy1G/PQJxBui8W77bVbbXvHpSZPUd4i/a4vVZqNK
+bzLfR7m8F+jnRnmr/ZD8Pqzx/sKfL86Xb3t5Ypsgv81arPabvyfjv6dfWTYBoRkK
+n2CMTO8sK8Kd6piPe6d3lkzA2hkK5zB+jfFyxk8yPsI+n5jeS2l3Mk5m/S+n31A8
+AVPLb/VPw+9K3youpCPrcd8E5JTe6p+A72l9OYUoK1eayrIts+hkm3ervxC/L6kt
+L8TteUq/tEBpXpo5t7QQz0ybW7odC8vUDaeqsrZ8AgIc+Wc1ldsUinkCLmGcOLOz
+pBBncD5/mVZbPhlfLj/DPxl/851Bnl+icotxz8yX/TNxuOTS3MkoqNxWOQH3lKt8
+HqfcJmNsptKMFavSgwXHfYXYW6LwIcZzCo/7JuMY+RTi6ZK5pa3I5agaClTM2/0q
+1fUlSl5ZqPJ8mOv1gF9p7vYrzZulqn0+y/o7OM5XZ6oanTNTafwl6hwHPMVdpPGf
+fPyp9DmtOcXq/Irl0FFihA5qZbMUm4Bitj1RajI/s2PMJuJ9zFbnTPLXUq+/n9mT
+Myf5m1GKZma3V5hsPbPmPMVqcZCZv1SxpbjMjMWn2HJcDV9VPnpyQDl045dk+3zx
+qz4Nr5W+ThgrfouwbJqeo2H/xFd9bqtT/u5UJVdMmUSeY6couZ5xD+tHWA4yXs6a
+r+Uq/CtrDk5R+CnWNLE1n7HnVFV6Lvs8P0HJ356o8n+G9c+wvpo910xQePUkzv9U
+hVVs3cb6UdY8yvJznMOn2YpJSr6RS39rqsrzDs5hBeN5U6aS9S7O/6FpyjqJc/jq
+FCU/zDH8mWO+klumlfEIY93EV9P8/4s9Kznnx7nEDpZ/y/K5HGEd4xc51QHGjzCe
+xvgy+784WeFTLC9g+RVOdZQ1j7Hmy4wTptgtY7bVM+y5nq1nT1P4/FS7Fuewf/8k
+pfkHyz3sGWPPaSwPM17LmhLO7dMs38L681j2T3zVdxZ+phXSHP0pignfZDxdU7iR
+UWPN+xk3MMYYP8r4JcLN/O9aXlmyskzNliPMbsKUnIociuJMtuGXs+fk+NA532Tv
+q1icMwFzq002mdgpeENYZc7qnInoqzHZ/bPW5UzCrIUmq81dlzMZbwhrIDYF99aa
+bIw8T8WjdSZ7nNhUvLRISic2DXcvNtkfieXhE0sUG8Fb0zbm0A5Rb7KRvF05Bbi4
+zWSLcnpp1azkf2DzyonfKY/nTMdcYT8vP0isTtjK/FbMwAph6/PziTVsstuF2o7Z
+Tbglb5ja7ZnNts2Pki1mZGfOui7Hj0eFfab8RmJPbjNjedZ/W04plm832WjBQszC
+fcJuqrgzZzaO7DLZZRVfyKnAD3ebbFrpQzmnI2ePyS4vvo3YoS6T/bzstpw5uC8o
+vZLbiTNR2W1HNh+7TIYXfI/kzEd1yGSBvB/lLEB1j0Sd91TOQjxpson3zm6ldeyE
+sIdn5xN7Qdhvik7k1OH/CHu16Dc5dfi7sGdzWrEIethkL1GfLMIUYVf4WrEYRcI+
+4csnNktYCZW3BKcLW0jlLcECYZdTnkuxVNjNlOdSrBF2D+V5FtYKe5jyPAubhK2l
+PJdhu7DdlOcydFmxaK20FvdZedJ+sBwHhG3NbcUKDAnbl5tP7DJh3y9uxUpcI+zn
+xfnEbhDWT3mejduEDVGeZ+Mzwt6Y1YpVuFfYZIplFR4QdgPZVuObwj49i3YcfE/Y
+jJk+bQ1+JGzOzFyswc/Ddt+egxPMfqtNn/Vizjko2Wuy8rxXcurRsdf2bMAuk02s
+pzZrQI+wzdRmDegXVurzaY0YFLbAl4tGfEDYd/NP5DThSmFP5v+G2EeEPVDmox3z
+ZmHfKsul3e2IsMnUnmtxt7Bias+1uF9YkvpoHR4Udim1yzp8W1hEb6V99QeWp55P
+7CfC/lDQihY8Ley/C/KJPS9s3cxWnIuXhJ03M5/YX4Xtobq34k1hCap7Kyb0SulU
+3gZME/ZhKm8D/MIilOdGVAgbojw3Yq6w1yldG2qFTaY827BC2IvUZptQL+wNarNN
+OFfYPTSuN6Nd2DdoXG/GTmElBSdytiAkbH7Bb4hFhR30t6IdSWHX+fOJXSLsULlP
+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
+VJDjYfmoIMfD8klBjmcCRyLI8bBcJcjxsFwvyPGwHBTkeFgeEeR4WB4V5HhYPirI
+8bB8UpDjOYUjEeR4WK4S5HhYrhfkeFgOCnI8LI8IcjwsjwpyPCwfFeR4WD4pyPFM
+5EgEOR6WqwQ5HpbrBTkeloOCPGZYHmF5lOVRlo+yfJTlkyyfZBmTuERBLpflKkEu
+l+V6QS6X5aAgtwPLI4LcDiyPCnI7sHxUkNuB5ZOCHM9kjkSQ42G5SpDjYblekONh
+OSjI8bA8IsjxsDwqyPGwfFSQ42H5pCDHM4UjEeR4WK4S5HhYrhfkeFgOCnI8LI8I
+cjwsjwpyPCwfFeR4WD4pyPGcypEIcjwsVwlyPCx3MQ4zHmEcYzzBiKkKKxkDjF2M
+w4xHGMcYTzBiGvszBhi7GIcZjzCeYEQeezIGGLsYhxmPMI4xnmBEPnsydjEOMx5h
+HGM8wVhZwJ6MXYzDjEcYxxhPMKKQ/RkDjF2Mw4xHGMcYTzCiiP0ZA4xdjMOMRxjH
+GE8wYjr7MwYYuxiHGY8wjjGeYMQM9mcMMHYxDjMeYRxjPMGIYvZnDDB2MQ4zHmEc
+YzzBCD/7Mwb87M84zHiEcYzxBCNK2J8xwNjFOMx4hHGM8QQjStmfMcDYxTjMeIRx
+jPEEI2ayP2OAsYtxmPEI4xjjCUaUsT9jgLGLcZhxJZ3o/4zTtTbtUu0n2my9Tr9G
+v1Nf4Fvqq/ed70v4rvfd4vuM7/O+J3xP+Z71+egmcQrdZyehEJMxj04sNTgV6hPg
+0+X5uUA4v4Tw27MVvlE0i/B/5yj5kz6Fi1l/G2u+zZqgqdEUxnIVPl2s8BLWTGPr
+nbMUzp9ZRXiYU9X5lPxMvsr/kTIlz+W0f2b/G3WFrxco3DVT4YWc6mOsv4Q101iD
+ApXDGMezkOWP+pV8bbnKs6pQyR/gfDYUn0F4O+c/WKmsZ3Nuz/mV/CmOrYo1w9wC
+sxi/wvhKXkma/0SWd3DOLaUK72b5ApbHGO9ifIU972P8KeMexi9xbA8WKbyZ5VcY
+r+K2Gmb5VrZezPhskd0yZls9UqYwn/X/KFcYK7drsXy6wscKlOZCjqSGPX9Swcj5
+t7Dmj6z5CPvolQq7Wf8Q60NUd139hVAaN4WEOp2hc6HuPrkkv5/GkoY5hDrm0pjS
+aERNgvr7p1PUewuhTnelqSQvINRprOWRvJBQRy3lSrcMQh2LKFdNfa8keQlmkLyU
+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
+fhopQSX9bKKCKzEXF9HSdAnmkXwm/ayl5thEQ6US6YtVkLOrpMWgj3XhDB9ngZVY
+TT9zKPc6yn0OyfU0lJq45GzDoZIHqhnTIo5JGz6ZLWy1oqo//67AO7DIFfbb9YVK
+Nwdt77qqmm8e8P9aNXe8+2q2dPJSF1T/AaGMuUqeQkobkem/UsZLJcffz9tSTDaV
+lTIqMK8DB3ihGiTcz3UcoAjtJUstQYfV0rPM27PGw9dsDzOud5/O7CUMH9tK3dZE
+DdOJ5nG6qIMbebzuUY3cTNnOQXUqnbl+R7DXsUOt5ilWK1OsEttp7jfTEGnmoeI+
+Waz2nI7u08ZqaWRt4RDMPwuo3I2EPdz56+nPSsqzHyt5r63BXv6j9b+XNe/AYql5
+5u6g7NrwVcpcifEW+9VYx4VZQc2lOVSNd7IBWCP87Ztey1VNqbW8fbPXvm2zq47R
+hh9/d+34dtPVnqzvZhy9V6OImmZkyns7MMwpUQmvTc5agKvhvcEqe6bVu9FsP6uk
+dK273Hc0WkZWjzeq53gOz/Tixz//ZPdyTozAuPZ3Pkm8SzJPQ9lLsu3ZU2eWRGOp
+tRLv2USrGL8NUDF+5DDe22G9SOZo5ThDV5v3TgevVpY+UO2ytApls07nW/letIHQ
+QDK1pFVDW2d5NPJWHmOr2bpvP9Dt9UEbfuq9baglqYYar3ve6dpvpvgn1/7hG97b
+qi19m6VtxztYITS/98KlnfGOqnRpC42sSpo5mzjiZpxHc6KD81KHOPch1X0czYwr
+/VhYQ2V2U8k1WVsKHf/6/HaOPnVo1q78XQu5dnC2KmzF1Pn6vQl5bkaY1WkhWQu+
+bXc/31hcXbSrkf58Y2tMe/rzTTXczzfVcD/fVCPb8001xnu+qUbm8001vJ5vqpH5
+fKM83T6ZzzfV8H6+qYbz+aYa2Z5vqpH+fGMua0MO7ny+qYb7+cZeBA2OL/PZxvZw
+9p3z2aYaXs82bq3ZK17PNtXwfrbx0ttpzAjSuZnO/WxTDeezjc3stNazTTXSn22q
+x7nVVY97r5zHk7KeemcrjYIOmiEBjzkSyJglgYx5Ymvslg24ZkvAY74E0mZMwGPO
+BDJmTSBj3gTGmTmBt5k7Ac/ZE8gyfwKeMyiQMYcCnrMokHUeBdJmUmCcuRTwmE2B
+jPkUSJtRgYw5FXDNqkCWeRXwmFmBjLkVyDK7Ah7zK5BlhgWyzrHAuLMskDHPAq6Z
+FsiYa4G02RbwmG8Bx4wLeMy5wLizLjDOvJsHFGXOMxSkzzOlSfugUJQ5zzDVOc+U
+R8ZnhTxbZ/lkfFooSJ9nSpP2eaEs+zxTh/BxPzHM8Jpn8HvPM+Xt8aGhQHmn+3l8
+bCjNNs9US7g+OJRln2eqlTI+OhSkzzOVo+vDQ0H6PFP94/jo4PeeZ6q0jA8PBenz
+TKX2/PhQlDnP0n2drZPlE8Ts8eaZHU1KM9U5z5Q97VNEnnueqSgzPkdMseeZaU/7
+JDF7vHmmrOM83ueqNwj4vS9QKMq8NqFoIFPn9z5PInczWqkNvn/dLeGXd7+4s+2j
+dID1e99bsMlxHJfjuPNAvtPjfLsb6h9WM8+0pmyNs92uj100wloynynMl9hDqHTI
+6p9aHsI2ftcd5PfQCJ8CYvx2GqUyMMf2buLxqi6sEb6wmmtSJT4eXbVZ81UDvgBw
+2QuVMq3NxjEfkZPkWonsQc31sDV5vLbYE7eFNyyvidPJC1bYI7W9CW0UH1vj3PjS
+t0XnEEo/llrD187J0myVNnD7ZUZpLvHmfc5O05N2IFS16GabyivM9VKpkpSq0vEZ
+yO5Mgw9v3u0aeNuW9bqCB8Zp0YBHmzqXOe/jhrtlA67XMOcm7MzTu30D47RwYJw2
+DmRt5YBnO9dxO5+t7ru56r4Pv3cbo2r8NjY3z2ztiaLM9jQXT8diVpTZPvB7tw/K
+srcPyrK3D0qztQ+KMtsHF7nfVLLPd/tdxeuzVmPGO3YL9mA5lotHAHtlnJgL+Nn8
+Vt363hRe/y4Ltx8zTL8V4pf+4LKR/M4jrXvvmCsvGtWO9PN4IkdYVl/RDrl2hvHq
+9W6iXsc5buUvlQ3Y4UgxD1pBur/6iyi18qWszsUWudhiYYssz1PaKPcO/t2Ojfy7
+Q+1/p2zGJtabz12YVMM7yl7aRerpp5l+aNjmco6+HfTTRgPVPBlaA9k1HAtMm/Mv
+0zhPnzyY/c7zrCPt1I3yrZK9Mv7qC+kKrA9q6nNaD//1kTnQTlHPcvR79kbeL5O8
+L0YRdvTJHvVdUXWm945ofUrNtv/ZGdnrunoUSshBukPmrbKlr/6V467/3jkHxsnb
+XOu80qE0WzoM3zbeOeednXLe7gSyO+27eQv5dFBfGbzM9fOMi3ITxFKzvI37zc55
+LX/FVveTNgTNZTFXzQdUOUtXp6MBHkNDtl9Beu+jI/0mZ38zr8549LS/mlejMuPM
+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
+-----END CERTIFICATE-----
