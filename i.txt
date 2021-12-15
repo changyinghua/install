@@ -1,11 +1,18 @@
-{
-  "userId": "string",
-  "password": "string",
-  "operatorInfo": {
-    "operatorUserId": "string",
-    "clientIPAddress": "string",
-    "systemId": "string",
-    "serverIPAddress": "string",
-    "transactionId": "string"
-  }
-}
+2021-12-15 14:46:46,206 [DEBUG]  - select * from  twlife.dbo.NewPolicy where
+            (Kind='N' and (PrintStatus='N' or PrintStatus is null) and ProcessStatus='F')
+            or
+            (Kind='N' and (PrintStatus='E' or PrintStatus is null) and ProcessStatus='F' and ( Format(PrintDateTime, 'yyyy/MM/dd')  = Format(getdate(), 'yyyy/MM/dd')) )
+            ORDER BY Branch,CreateDate         select * from twlife.dbo.PosPolicy where
+            ((PrintType='A' OR PrintType='P') and (PrintStatus='N' or PrintStatus is null) and ProcessStatus='F')
+            or
+            ((PrintType='A' OR PrintType='P') and (PrintStatus='E' or PrintStatus is null) and ProcessStatus='F' and ( Format(PrintDateTime, 'yyyy/MM/dd')  = Format(getdate(), 'yyyy/MM/dd')))
+            ORDER BY Branch,CommitDateTime
+2021-12-15 14:47:24,407 [DEBUG]  - select * from  twlife.dbo.NewPolicy where
+            (Kind='N' and (PrintStatus='N' or PrintStatus is null) and ProcessStatus='F')
+            or
+            (Kind='N' and (PrintStatus='E' or PrintStatus is null) and ProcessStatus='F' and ( Format(PrintDateTime, 'yyyy/MM/dd')  = Format(getdate(), 'yyyy/MM/dd')) )
+            ORDER BY Branch,CreateDate         select * from twlife.dbo.PosPolicy where
+            ((PrintType='A' OR PrintType='P') and (PrintStatus='N' or PrintStatus is null) and ProcessStatus='F')
+            or
+            ((PrintType='A' OR PrintType='P') and (PrintStatus='E' or PrintStatus is null) and ProcessStatus='F' and ( Format(PrintDateTime, 'yyyy/MM/dd')  = Format(getdate(), 'yyyy/MM/dd')))
+            ORDER BY Branch,CommitDateTime
