@@ -1,10 +1,11 @@
-  <add key="ShareFolder" value="\\10.0.0.176\PDF"/>
-    <add key="ShareFolderUserid" value="True"/>
-    <add key="ShareFolderPassword" value="True"/>
-    
-    <!-- ========================================  -->
-
-    <add key="subject" value="develop@chaogun.com"/>
-    <add key="mailfrom" value="develop@chaogun.com"/>
-    <add key="mailTo" value="develop@chaogun.com"/>
-    <add key="EmailNotifyService" value="http://10.0.0.104/ezAcquire/NotifyService"/>
+{
+  "userId": "string",
+  "password": "string",
+  "operatorInfo": {
+    "operatorUserId": "string",
+    "clientIPAddress": "string",
+    "systemId": "string",
+    "serverIPAddress": "string",
+    "transactionId": "string"
+  }
+}
