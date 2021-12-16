@@ -1,0 +1,109 @@
+USE [ezAcquire]
+GO
+/****** Object:  View [dbo].[V_UserFormManage_Detail]    Script Date: 2021/12/16 下午 02:39:27 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE VIEW [dbo].[V_UserFormManage_Detail] AS 
+SELECT DISTINCT F.FormId, F.FormName, F.CreatedUser, FM.FormGroupCode, FM.EditFormFlg, FM.ScanFormFlg, FM.QueryFormFlg, FM.DeleteFormFlg,
+UR.RoleCode, UR.UserId
+FROM Form F
+LEFT JOIN FormManage FM ON FM.FormId=F.FormId
+LEFT JOIN RoleFormGroupMap RFG ON RFG.FormGroupCode=FM.FormGroupCode
+LEFT JOIN UserRoleMap UR ON UR.RoleCode=RFG.RoleCode
+GO
+/****** Object:  View [dbo].[V_UserFormManage]    Script Date: 2021/12/16 下午 02:39:27 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE VIEW [dbo].[V_UserFormManage] AS 
+SELECT DISTINCT V.UserId, V.FormId, V.FormName, 
+(
+   case when V.CreatedUser=V.UserId then 'Y' else 'N' end
+) AS OwnerFlg, --是否為建檔人員>0
+(
+   select CASE WHEN SUM(case when ISNULL(EditFormFlg,'N')='Y' then 1 else 0 end)>0 
+   THEN 'Y' ELSE 'N' END
+   from FormManage where FormId=V.FormId 
+) AS EditFormFlg, --可否編輯表單>0
+(
+   select CASE WHEN SUM(case when ISNULL(ScanFormFlg,'N')='Y' then 1 else 0 end)>0 
+   THEN 'Y' ELSE 'N' END
+   from FormManage where FormId=V.FormId 
+) AS ScanFormFlg, --可否設定掃描>0
+(
+   select CASE WHEN SUM(case when ISNULL(QueryFormFlg,'N')='Y' then 1 else 0 end)>0 
+   THEN 'Y' ELSE 'N' END
+   from FormManage where FormId=V.FormId 
+) AS QueryFormFlg, --可否設定調閱>0
+(
+   select CASE WHEN SUM(case when ISNULL(DeleteFormFlg,'N')='Y' then 1 else 0 end)>0 
+   THEN 'Y' ELSE 'N' END
+   from FormManage where FormId=V.FormId 
+) AS DeleteFormFlg --可否刪除表單>0
+FROM V_UserFormManage_Detail V
+WHERE V.UserId IS NOT NULL
+GO
+/****** Object:  View [dbo].[V_UserFormQuery]    Script Date: 2021/12/16 下午 02:39:27 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE VIEW [dbo].[V_UserFormQuery] AS 
+SELECT 
+	UR.UserId,
+	FQ.FormGroupCode,
+	FQ.FormId, 
+	F.PageCount,
+  (case when FQ.QueryPages IS NULL OR len(FQ.QueryPages)=0 
+     then REPLICATE('1',F.PageCount)
+     else FQ.QueryPages + REPLICATE('0',(F.PageCount - LEN(FQ.QueryPages)))
+     end
+  ) AS QueryPages,
+	(case when FQ.PrintPages IS NULL OR len(FQ.PrintPages)=0 
+     then REPLICATE('1',F.PageCount)
+     else FQ.PrintPages + REPLICATE('0',(F.PageCount - LEN(FQ.PrintPages)))
+     end
+  ) AS PrintPages,
+  (case when FQ.HideDocFlg='Y' then 1 else 0 end) AS HideDocFlg,
+	(case when FQ.CloseDocFlg='Y' then 1 else 0 end) AS CloseDocFlg
+  FROM FormQuery FQ
+	LEFT JOIN RoleFormGroupMap RFG ON RFG.FormGroupCode=FQ.FormGroupCode
+	LEFT JOIN UserRoleMap UR ON UR.RoleCode=RFG.RoleCode
+	LEFT JOIN Form F ON F.FormId=FQ.FormId
+GO
+/****** Object:  View [dbo].[View_Form]    Script Date: 2021/12/16 下午 02:39:27 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE VIEW [dbo].[View_Form] AS 
+SELECT FormId AS [Value], FormId+FormName AS [Label] FROM Form
+GO
+/****** Object:  View [dbo].[View_ScanType]    Script Date: 2021/12/16 下午 02:39:27 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE VIEW [dbo].[View_ScanType] AS 
+SELECT ScanTypeId AS [Value], ScanTypeId+ScanTypeName AS [Label] FROM ScanTypes
+GO
+/****** Object:  View [dbo].[View_Unit]    Script Date: 2021/12/16 下午 02:39:27 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE VIEW [dbo].[View_Unit] AS 
+SELECT UnitCode AS [Value], UnitCode+UnitFullName AS [Label] FROM [Unit]
+GO
+/****** Object:  View [dbo].[View_User]    Script Date: 2021/12/16 下午 02:39:27 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE VIEW [dbo].[View_User] AS 
+SELECT UserId AS [Value], UserId+UserName+'('+ U.UnitFullName+ ')' AS [Label] FROM [User]
+LEFT JOIN [Unit] U ON U.UnitCode=[User].UnitCode
+GO
