@@ -1,39 +1,8 @@
--完整單位資料
-with DIR_CTE ( UnitCode, UnitName, ParentUnitCode, UnitFullName, FULLSEQ ) as
-(  select UnitCode, UnitName, ParentUnitCode, UnitFullName,        
-         REPLICATE('0',(3 - LEN(CAST( Seq AS VARCHAR))))+CONVERT(VARCHAR,Seq)
-  from Unit
-  where ParentUnitCode = 'root'
-  union all
-  select D1.UnitCode, D1.UnitName, D1.ParentUnitCode, D1.UnitFullName,
-        concat(D2.FULLSEQ, '.', REPLICATE('0',(3 - LEN(CAST( D1.Seq AS VARCHAR)))))+CONVERT(VARCHAR,D1.Seq)
-  from Unit D1 inner join DIR_CTE D2 on D1.ParentUnitCode = D2.UnitCode
-)
---取得各單位前一日掃描文件數量
-select U.UnitCode, U.UnitFullName, U.ParentUnitCode, U.FULLSEQ, COUNT(DIEX.DocumentID) AS DocumentCount
-from DIR_CTE U
-left join DocumentIndexExtension DIEX ON DIEX.ScanStationUnitCode = U.UnitCode AND DIEX.ScanDate =@ScanDate
-group by U.UnitCode, U.UnitFullName, U.ParentUnitCode, U.FULLSEQ
-ORDER BY U.FULLSEQ
-
-
-	(2) 計算各單位及其所有階層子單位的掃描文件數量總和
-例如：單位02，要將本身及底下各子單位的數量相加，52+68+12+0+0+0+0=132
-	(3) 寫入StatisticUnitDaily
-	IF EXISTS (SELECT * FROM StatisticUnitDaily WHERE UnitCode=@UnitCode AND ScanDate=@ScanDate)
-  UPDATE StatisticUnitDaily 
-SET DocumentCount=@文件數量總和
-WHERE UnitCode=@UnitCode AND ScanDate=@ScanDate
+IF EXISTS ( SELECT * FROM StatisticScanStationDaily WHERE ScanStationCode= MachineCode AND ScanDate=@ScanDate )
+  UPDATE StatisticScanStationDaily 
+SET DocumentCount= ( select count(*) from DocumentIndexExtension where ScanStationCode= MachineCode and ScanDate = @ScanDate )
+WHERE ScanStationCode= MachineCode AND ScanDate=@ScanDate
 ELSE
-  INSERT INTO StatisticUnitDaily (UnitCode, UnitFullName, ScanDate, DocumentCount ) 
-VALUES (@UnitCode, @UnitFullName, @ScanDate, @文件數量總和)
-
-	(4) 單獨寫入一筆每日的掃描文件總量
-	IF EXISTS (SELECT * FROM StatisticUnitDaily WHERE UnitCode='root' AND ScanDate=@ScanDate)
-  UPDATE StatisticUnitDaily 
-SET DocumentCount=(select count(*) from DocumentIndexExtension where ScanDate=@ScanDate)
-WHERE UnitCode='root' AND ScanDate=@ScanDate
-ELSE
-  INSERT INTO StatisticUnitDaily (UnitCode, UnitFullName, ScanDate, DocumentCount ) 
-  SELECT 'root', total, @ScanDate, (select count(*) from DocumentIndexExtension where ScanDate=@ScanDate)
-
+  INSERT INTO StatisticScanStationDaily (ScanStationCode, ScanDate, DocumentCount)
+SELECT MachineCode, @ScanDate,  ( select count(*) from DocumentIndexExtension
+where ScanStationCode= MachineCode and ScanDate = @ScanDate )
