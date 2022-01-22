@@ -1,0 +1,19 @@
+2022-01-20 20:20:00,488 [DEBUG]  - POS 匯出筆數 =1117
+2022-01-20 20:20:00,488 [DEBUG]  - serverpath :\\10.1.2.44\image1\back
+2022-01-20 20:20:00,488 [DEBUG]  - p.Start()='True' arg='use \\10.1.2.44\image1\back' 
+2022-01-20 20:20:25,785 [DEBUG]  - SourceFile=D:\ezAcquire\ezAcquireCommitListService\TempPath\CommitPS-1110120.txt
+2022-01-20 20:20:25,785 [DEBUG]  - TargetFile=\\10.1.2.44\image1\back\CommitPS-1110120.txt
+2022-01-20 20:20:25,785 [DEBUG]  - SourceFile=D:\ezAcquire\ezAcquireCommitListService\TempPath\CommitID-20220120.txt
+2022-01-20 20:20:25,785 [DEBUG]  - TargetFile=\\10.1.2.44\image1\back\CommitID-20220120.txt
+2022-01-20 20:21:50,444 [INFO]  - Set file attributes only 'Normal'and file permissions to everyone , occured a exception Msg : 方法失敗，非預期錯誤碼 59。
+2022-01-20 20:21:50,444 [DEBUG]  - CopyTo OK
+2022-01-20 20:21:50,444 [DEBUG]  - 備份成功 TargetFile=D:\ezAcquire\ezAcquireCommitListService\CommitListBackup\2022\01\20\2021\CommitID-20220120.txt
+2022-01-20 20:21:50,444 [DEBUG]  - delarg:use \\10.1.2.44\image1\back /delete
+2022-01-20 20:21:50,460 [DEBUG]  - 產生檔案完畢 [D:\ezAcquire\ezAcquireCommitListService\TempPath\CommitID-20220120.txt] [P221730133,20220120172258,B122118361,20220120172309,M122692969,20220120172309,B221445585,20220120172309,L220893638,20220120172310,M121541936,20220120172310,E121215659,20220120172311,J221215888,20220120172311,Q123531299,20220120172311,A229710426,20220120172312,A222384026,20220120185128,T220045200,20220120185128,S102318109,20220120185128,]
+2022-01-20 20:21:50,460 [DEBUG]  - serverpath :\\10.1.2.44\image1\back
+2022-01-20 20:21:50,460 [DEBUG]  - p.Start()='True' arg='use \\10.1.2.44\image1\back' 
+2022-01-20 20:22:15,451 [DEBUG]  - SourceFile=D:\ezAcquire\ezAcquireCommitListService\TempPath\CommitID-20220120.txt.OK
+2022-01-20 20:22:15,451 [DEBUG]  - TargetFile=\\10.1.2.44\image1\back\CommitID-20220120.txt.OK
+2022-01-20 20:22:15,451 [INFO]  - Set file attributes only 'Normal'and file permissions to everyone , success.
+2022-01-20 20:22:15,451 [DEBUG]  - CopyTo OK
+2022-01-20 20:22:15,451 [DEBUG]  - 備份成功 TargetFile=D:\ezAcquire\ezAcquireCommitListService\CommitListBackup\2022\01\20\2022\CommitPS-1110120.txt
