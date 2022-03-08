@@ -1,3147 +1,1047 @@
-$(document).ready(function () {
-    // side menu
-    $('#li_F01').addClass("active");
-    $('#li_F01' + jsQueryPageId).addClass("active");
-    $('#li_navbar_F01').addClass("active");
-    $('#li_navbar_F01' + jsQueryPageId).addClass("active");
-    $('#title_functionName').text($('#li_F01' + jsQueryPageId).attr('functionName'));
-    $('#mobile_title_functionName').text($('#li_F01' + jsQueryPageId).attr('functionName'));
-
-    var output = document.getElementById("result");
-    var isImageSuccess, imagesLength, currentRowId, canvas = '', canvasArrayForDB, type, tagsNumber, degrees, containerWidth, containerHeight, bg, pane, rectCrop, rect, rect2, isDown, isDraw, origX, origY, imageOGWidth, imageOGHeight, imageProportion, imageWidthWithProportion, imageHeightWithProportion, drawingMode, cropingMode, editMode, dragMode, page, touchtime, baseScale;
-    var dataFromDB = [];
-    var isAnnoNeedToSave = false;
-    var isFullScreenMode = false;
-    var docMimeTypeList = [];
-    var curMimeType = 'N/A';
-    var blankImage = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADGCAIAAAAYMFi5AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAHuSURBVHhe7dIxAQAADMOg+TfdqcgHGrhBQCwSYpEQi4RYJMQiIRYJsUiIRUIsEmKREIuEWCTEIiEWCbFIiEVCLBJikRCLhFgkxCIhFgmxSIhFQiwSYpEQi4RYJMQiIRYJsUiIRUIsEmKREIuEWCTEIiEWCbFIiEVCLBJikRCLhFgkxCIhFgmxSIhFQiwSYpEQi4RYJMQiIRYJsUiIRUIsEmKREIuEWCTEIiEWCbFIiEVCLBJikRCLhFgkxCIhFgmxSIhFQiwSYpEQi4RYJMQiIRYJsUiIRUIsEmKREIuEWCTEIiEWCbFIiEVCLBJikRCLhFgkxCIhFgmxSIhFQiwSYpEQi4RYJMQiIRYJsUiIRUIsEmKREIuEWCTEIiEWCbFIiEVCLBJikRCLhFgkxCIhFgmxSIhFQiwSYpEQi4RYJMQiIRYJsUiIRUIsEmKREIuEWCTEIiEWCbFIiEVCLBJikRCLhFgkxCIhFgmxSIhFQiwSYpEQi4RYJMQiIRYJsUiIRUIsEmKREIuEWCTEIiEWCbFIiEVCLBJikRCLhFgkxCIhFgmxSIhFQiwSYpEQi4RYJMQiIRYJsUiIRUIsEmKREIuEWCTEIiEWCbFIiEVCLBJikRCLhFgkxCIhFgmxSIhFQiwSYpEQi4RYJMQisD2CZlsDA3NEnwAAAABJRU5ErkJggg==";
-    var errorImage = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADGCAIAAAAYMFi5AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAHuSURBVHhe7dIxAQAADMOg+TfdqcgHGrhBQCwSYpEQi4RYJMQiIRYJsUiIRUIsEmKREIuEWCTEIiEWCbFIiEVCLBJikRCLhFgkxCIhFgmxSIhFQiwSYpEQi4RYJMQiIRYJsUiIRUIsEmKREIuEWCTEIiEWCbFIiEVCLBJikRCLhFgkxCIhFgmxSIhFQiwSYpEQi4RYJMQiIRYJsUiIRUIsEmKREIuEWCTEIiEWCbFIiEVCLBJikRCLhFgkxCIhFgmxSIhFQiwSYpEQi4RYJMQiIRYJsUiIRUIsEmKREIuEWCTEIiEWCbFIiEVCLBJikRCLhFgkxCIhFgmxSIhFQiwSYpEQi4RYJMQiIRYJsUiIRUIsEmKREIuEWCTEIiEWCbFIiEVCLBJikRCLhFgkxCIhFgmxSIhFQiwSYpEQi4RYJMQiIRYJsUiIRUIsEmKREIuEWCTEIiEWCbFIiEVCLBJikRCLhFgkxCIhFgmxSIhFQiwSYpEQi4RYJMQiIRYJsUiIRUIsEmKREIuEWCTEIiEWCbFIiEVCLBJikRCLhFgkxCIhFgmxSIhFQiwSYpEQi4RYJMQiIRYJsUiIRUIsEmKREIuEWCTEIiEWCbFIiEVCLBJikRCLhFgkxCIhFgmxSIhFQiwSYpEQi4RYJMQisD2CZlsDA3NEnwAAAABJRU5ErkJggg==";
-    var oImg;
-    function setDefaultCurrentMimeType() {
-        if (docMimeTypeList.includes(".tif")) {
-            curMimeType = ".tif";
-        } else if (docMimeTypeList.includes(".tiff")) {
-            curMimeType = ".tiff";
-        } else if (docMimeTypeList.includes(".jpg")) {
-            curMimeType = ".jpg";
-        } else if (docMimeTypeList.includes(".jpeg")) {
-            curMimeType = ".jpeg";
-        } else if (docMimeTypeList.includes(".png")) {
-            curMimeType = ".png";
-        }
-    }
-
-    function upload(docId, pages) {
-        isImageSuccess = false;
-
-        var response = getDocumentImage(docId, 1, curMimeType);
-        if (response == null) {
-            alert("error");
-        } else {
-            if (response.needRedirect) {
-                window.location.href = response.redirectUrl;
-                return false;
-            }
-
-            if (response.error.errorFlag) {
-                alert(response.error.errorId + ' ' + response.error.errorMessage);
-            } else {
-                isImageSuccess = true;
-            }
-        }
-        
-        imagesLength = pages;
-
-        //page 1
-        if (isImageSuccess) {
-            curMimeType = response.list[0].mimeType;
-            $(".mimetype_icon").html(curMimeType.replace(".", "").toUpperCase());
-            handleImageInit(0, response.list[0].file);
-        } else {
-            curMimeType = "N/A";
-            $(".mimetype_icon").html(curMimeType.replace(".", "").toUpperCase());
-            handleErrorImageInit(0);
-        }
-
-        //page 2 ~ N
-        for (var i = 1; i < imagesLength; i++) {
-            handleBlankImage(i);
-        }
-    }
-
-    function handleBlankImage(index) {
-        var div = document.createElement("div");
-        div.innerHTML = "<img class='thumbnail thumbnail" + index + "' src='" + blankImage + "'" +
-            " title=Image_'" + index + "' mimetype='N/A'/>";
-        output.insertBefore(div, null);
-
-        // after load finish, start init fabric canvas
-        if ($('.thumbnail').length == imagesLength) {
-            initFabric();
-        }
-    }
-
-    function getDocumentImage(docId, pageId, mimeType) {
-        var formData = new FormData();
-        formData.append("documentId", docId);
-        formData.append("pageId", pageId);
-        formData.append("mimeType", mimeType);
-
-        var result = null;
-        $.ajax({
-            url: "/Query/Result/GetDocumentFileString",
-            type: "POST",
-            data: formData,
-            async: false,
-            processData: false,
-            contentType: false,
-            success: function (data) {
-                result = data;
-            },
-            error: function () {
-                result = null;
-            }
-        });
-        return result;
-    }
-
-    function getBase64PreString(mimeType) {
-        var str = 'data:image/png;base64,';
-        if (mimeType == '.jpg') {
-            str = 'data:image/jpeg;base64,';
-        }
-        return str;
-    }
-
-    //Initialize IMAGE
-    function handleImageInit(index, imageString) {
-        //jpeg
-        if (curMimeType == '.jpg' || curMimeType == '.png') {
-            handleJpgPngImageInit(imageString, index);
-
-        //tiff
-        } else {
-            var perImage = base64ImageToBlob(imageString);
-            handleTiffImageInit(perImage, index);
-        }
-    }
-
-    //handle TIFF > init
-    function handleTiffImageInit(image, index) {
-        var fr = new FileReader();
-        fr.onload = function (e) {
-            //initialize with 100MB for large files
-            Tiff.initialize({
-                TOTAL_MEMORY: 100000000
-            });
-            var tiff = new Tiff({ buffer: e.target.result });
-            var picFile = tiff.toDataURL("image/png", 1.0);
-            var div = document.createElement("div");
-            div.innerHTML = "<img class='thumbnail thumbnail" + index + "' src='" + picFile + "'" +
-                " title='doc_page_" + index + "' mimetype='" + curMimeType + "'/>";
-            output.insertBefore(div, null);
-
-            // after load finish, start init fabric canvas
-            if ($('.thumbnail').length == imagesLength) {
-                initFabric();
-            }
-        };
-        fr.readAsArrayBuffer(image);
-    }
-    //handle JPG、PNG > init
-    function handleJpgPngImageInit(imageString, index) {
-        var div = document.createElement("div");
-        div.innerHTML = "<img class='thumbnail thumbnail" + index + "' src='" + getBase64PreString(curMimeType) + imageString + "'" +
-            " title='doc_page_" + index + "' mimetype='" + curMimeType + "'/>";
-        output.insertBefore(div, null);
-
-        // after load finish, start init fabric canvas
-        if ($('.thumbnail').length == imagesLength) {
-            initFabric();
-        }
-    }
-    //handle ERROR > init
-    function handleErrorImageInit(index) {
-        var div = document.createElement("div");
-        div.innerHTML = "<img class='thumbnail thumbnail" + index + "' src='" + errorImage + "'" +
-            " title='doc_page_" + index + "' mimetype='" + curMimeType + "'/>";
-        output.insertBefore(div, null);
-
-        // after load finish, start init fabric canvas
-        if ($('.thumbnail').length == imagesLength) {
-            initFabric();
-        }
-    }
-
-    //before Switch Image
-    function beforeSwitchImage() {
-        var clickedTestDataItem = testData.filter(function (d) { return d.id == currentRowId; })[0];
-        var nowImage = document.getElementsByClassName('thumbnail' + page)[0].src;
-        var nowMimeType = document.getElementsByClassName('thumbnail' + page)[0].getAttribute("mimetype");
-
-        // 重新解析預設 MimeType
-        if (curMimeType == "N/A") {
-            setDefaultCurrentMimeType();
-        }
-
-        if (nowImage == blankImage || nowImage == errorImage || nowMimeType != curMimeType) {
-            isImageSuccess = false;
-
-            var response = getDocumentImage(clickedTestDataItem.images, page + 1, curMimeType);
-            if (response == null) {
-                alert("error");
-            } else {
-                if (response.needRedirect) {
-                    window.location.href = response.redirectUrl;
-                    return false;
-                }
-                if (response.error.errorFlag) {
-                    alert(response.error.errorId + ' ' + response.error.errorMessage);
-                } else {
-                    isImageSuccess = true;
-                }
-            }
-
-            if (isImageSuccess) {
-                curMimeType = response.list[0].mimeType;
-                $(".mimetype_icon").html(curMimeType.replace(".", "").toUpperCase());
-                handleImageSwitch(page, response.list[0].file);
-            } else {
-                curMimeType = "N/A";
-                $(".mimetype_icon").html(curMimeType.replace(".", "").toUpperCase());
-                handleErrorImageSwitch(page);
-            }
-        } else {
-            isImageSuccess = true;
-            switchImage();
-        }
-    }
-    //SWITCH IMAGE
-    function handleImageSwitch(index, imageString) {
-        //jpeg
-        if (curMimeType == '.jpg' || curMimeType == '.png') {
-            handleJpgPngImageSwitch(imageString, index);
-
-        //tiff
-        } else {
-            var perImage = base64ImageToBlob(imageString);
-            handleTiffImageSwitch(perImage, index);
-        }
-    }
-    //handle TIFF > switch
-    function handleTiffImageSwitch(image, index) {
-        var fr = new FileReader();
-        fr.onload = function (e) {
-            //initialize with 100MB for large files
-            Tiff.initialize({
-                TOTAL_MEMORY: 100000000
-            });
-            var tiff = new Tiff({ buffer: e.target.result });
-            var picFile = tiff.toDataURL("image/png", 1.0);
-
-            if (picFile) {
-                document.getElementsByClassName('thumbnail' + index)[0].src = picFile;
-                document.getElementsByClassName('thumbnail' + index)[0].setAttribute("mimetype", curMimeType);
-                init();
-            }
-        };
-        fr.readAsArrayBuffer(image);
-    }
-    //handle JPG、PNG > switch
-    function handleJpgPngImageSwitch(picFile, index) {
-        document.getElementsByClassName('thumbnail' + index)[0].src = getBase64PreString(curMimeType) + picFile;
-        document.getElementsByClassName('thumbnail' + index)[0].setAttribute("mimetype", curMimeType);
-        init(); 
-    }
-    //handle ERROR > switch
-    function handleErrorImageSwitch(index) {
-        document.getElementsByClassName('thumbnail' + index)[0].src = errorImage;
-        document.getElementsByClassName('thumbnail' + index)[0].setAttribute("mimetype", curMimeType);
-        init();
-    }
-
-    function initFabric() {
-        $('.upload').append('<div class="container"><canvas id="c" class="fabric_canvas"></canvas></div>');
-        canvas = new fabric.Canvas('c', { fireRightClick: true, stopContextMenu: true });
-        type = 'fit';
-        tagsNumber = 0;
-        canvasArrayForDB = dataFromDB;
-        degrees = 0;
-        containerWidth = containerWidth || $('.container').width();
-        containerHeight = containerHeight || $('.container').height();
-        drawingMode = false;
-        cropingMode = true;
-        editMode = false;
-        dragMode = false;
-        page = 0;
-        touchtime = 0;
-        baseScale = $('.container').width() / 1030;
-        $('.container').show();
-
-        init();
-
-        canvas.on('mouse:down', function (o) {
-            if (((new Date().getTime()) - touchtime) < 500) {
-                // double click occurred
-                type = 'fit';
-                resetZoomRotate();
-                touchtime = 0;
-            } else {
-                // not a double click so set as a new first click
-                touchtime = new Date().getTime();
-            }
-
-            if (o.button == 1) {
-                if (editMode) {
-                    drawingMode = true;
-                    cropingMode = false;
-                    dragMode = false;
-                    canvas.selection = true;
-                    if ($(window).width() < 1024) {
-                        pane.destroy();
-                    }
-                } else {
-                    if ($(window).width() < 1024) {
-                        drawingMode = false;
-                        cropingMode = false;
-                        dragMode = true;
-                        canvas.selection = false;
-                    } else {
-                        drawingMode = false;
-                        cropingMode = true;
-                        dragMode = false;
-                        canvas.selection = true;
-                    }
-                }
-            }
-
-            if (o.button == 3) {
-                drawingMode = false;
-                cropingMode = false;
-                dragMode = true;
-                canvas.selection = false;
-            }
-
-            isDown = true;
-            if (editMode) {
-                if (dragMode) { }
-
-                if (drawingMode) {
-                    canvas.selection = true;
-                    var pointer = canvas.getPointer(o.e);
-                    origX = pointer.x;
-                    origY = pointer.y;
-                    rect = new fabric.Rect({
-                        left: origX,
-                        top: origY,
-                        width: 0,
-                        height: 0,
-                        fill: 'transparent'
-                    });
-                    canvas.add(rect);
-                    canvas.renderAll();
-                }
-            }
-            if (!editMode) {
-                if (dragMode) { }
-
-                if (cropingMode) {
-                    canvas.selection = true;
-                    canvas.remove(rectCrop);
-                    var pointer = canvas.getPointer(o.e);
-                    origX = pointer.x;
-                    origY = pointer.y;
-                    rectCrop = new fabric.Rect({
-                        left: origX,
-                        top: origY,
-                        width: 0,
-                        height: 0,
-                        fill: '',
-                        stroke: 'red',
-                        strokeWidth: 1,
-                        hasControls: false,
-                    });
-                    canvas.add(rectCrop);
-                    canvas.renderAll();
-                }
-            }
-        });
-
-        canvas.on('mouse:move', function (o) {
-            if (dragMode) {
-                if (!isDown) return;
-
-                // move
-                if (o.e instanceof TouchEvent) {
-                    // we're on mobile
-                    setTimeout(function () {
-                        if (pane.getPercentScrolledX() == 1 && pane.getPercentScrolledY() != 1) {
-                            pane.scrollTo(canvas.width, pane.getContentPositionY() - o.e.touches[0].clientY);
-                        } else if (pane.getPercentScrolledX() != 1 && pane.getPercentScrolledY() == 1) {
-                            pane.scrollTo(pane.getContentPositionX() - o.e.touches[0].clientX, canvas.height);
-                        } else if (pane.getPercentScrolledX() == 1 && pane.getPercentScrolledY() == 1) {
-                            pane.scrollTo(canvas.width, canvas.height);
-                        } else {
-                            pane.scrollTo(pane.getContentPositionX() - o.e.touches[0].clientX, pane.getContentPositionY() - o.e.touches[0].clientY);
-                        }
-                    }, 300);
-                } else {
-                    // we're on desktop
-                    pane.scrollTo(pane.getContentPositionX() - o.e.movementX, pane.getContentPositionY() - o.e.movementY);
-                }
-            }
-
-            if (drawingMode) {
-                if (!isDown) return;
-                var pointer = canvas.getPointer(o.e);
-                isDraw = true;
-                if (origX > pointer.x) {
-                    rect.set({
-                        left: Math.abs(pointer.x)
-                    });
-                }
-                if (origY > pointer.y) {
-                    rect.set({
-                        top: Math.abs(pointer.y)
-                    });
-                }
-
-                rect.set({
-                    width: Math.abs(origX - pointer.x)
-                });
-                rect.set({
-                    height: Math.abs(origY - pointer.y)
-                });
-                rect.setCoords();
-                canvas.renderAll();
-            }
-
-            if (cropingMode) {
-                if (!isDown) return;
-                var pointer = canvas.getPointer(o.e);
-                isDraw = true;
-                if (origX > pointer.x) {
-                    rectCrop.set({
-                        left: Math.abs(pointer.x)
-                    });
-                }
-                if (origY > pointer.y) {
-                    rectCrop.set({
-                        top: Math.abs(pointer.y)
-                    });
-                }
-
-                rectCrop.set({
-                    width: Math.abs(origX - pointer.x)
-                });
-                rectCrop.set({
-                    height: Math.abs(origY - pointer.y)
-                });
-                rectCrop.setCoords();
-                canvas.renderAll();
-            }
-        });
-
-        canvas.on('mouse:up', function (o) {
-            isDown = false;
-            if (dragMode) { }
-
-            if (drawingMode) {
-                if (isDraw) {
-                    isDraw = false;
-                    var pointer = canvas.getPointer(o.e);
-                    if (pointer.x - origX > 5 && pointer.y - origY > 5) {
-                        origX = pointer.x;
-                        origY = pointer.y;
-                        rect2 = new fabric.IText(jsMultiLanguageObject.lbNote, {
-                            left: origX - rect.width + (24 / 2),
-                            top: origY - rect.height + (24 / 2),
-                            fill: 'rgba(45, 45, 45, 1)',
-                            textAlign: 'center',
-                            textBackgroundColor: 'rgba(33, 147, 211, 0.1)',
-                            cornerSize: 6,
-                            cornerColor: 'rgba(33, 147, 211, 1)',
-                            transparentCorners: false,
-                            fontSize: 24,
-                        });
-                        var tagNumber = Date.now();
-                        rect2.tagId = page + '_' + jsLoginUserId + '_' + tagNumber; // tagsNumber
-                        canvasArrayForDB[page].tags.push({
-                            id: rect2.tagId, // tagsNumber
-                            text: rect2.text,
-                            data: rect2
-                        });
-
-                        canvas.add(rect2);
-                        canvas.setActiveObject(rect2);
-                        rect2.setCoords();
-                        tagsNumber++;
-                    }
-
-                    canvas.remove(rect);
-                    canvas.renderAll();
-                };
-
-            }
-
-            if (cropingMode) {
-                if (isDraw) {
-                    isDraw = false;
-                    if (rectCrop.width > 5) {
-                        var s = containerWidth / rectCrop.width;
-                        if (s * baseScale > 20) {
-                            alert(jsMultiLanguageObject.msgZoomInError);
-                            canvas.remove(rectCrop);
-                            canvas.renderAll();
-                            return false;
-                        }
-                        canvas.setWidth((degrees == 90 || degrees == -90 || degrees == 270 || degrees == -270) ? imageHeightWithProportion * s : imageWidthWithProportion * s);
-                        canvas.setHeight((degrees == 90 || degrees == -90 || degrees == 270 || degrees == -270) ? imageWidthWithProportion * s : imageHeightWithProportion * s);
-                        zoomToFitCanvas(s * baseScale);
-                        pane.reinitialise();
-                        pane.scrollTo(rectCrop.getBoundingRect().left, rectCrop.getBoundingRect().top);
-                    }
-                    canvas.remove(rectCrop);
-                    canvas.renderAll();
-                };
-            }
-
-            if ($(window).width() < 1024) {
-                pane = $('.container').jScrollPane().data('jsp');
-            }
-        });
-
-
-        canvas.on('object:moving', function (e) {
-            if (editMode) {
-                isDraw = false;
-                isDown = false;
-                drawingMode = false;
-                cropingMode = false;
-
-                var obj = e.target;
-                obj.setCoords();
-                var top = obj.getBoundingRect().top;
-                var left = obj.getBoundingRect().left;
-                var width = obj.getBoundingRect().width;
-                var height = obj.getBoundingRect().height;
-                if (top < 0) {
-                    obj.top = 0;
-                }
-                if (top + height > canvas.height) {
-                    obj.top = (canvas.height - height) * (1 / canvas.getZoom());
-                }
-                if (left < 0) {
-                    obj.left = 0;
-                }
-                if (left + width > canvas.width) {
-                    obj.left = (canvas.width - width) * (1 / canvas.getZoom());
-                }
-                canvas.renderAll();
-            };
-        });
-
-        canvas.on('object:rotated', function () {
-            if (editMode) {
-                isDraw = false;
-                isDown = false;
-                drawingMode = false;
-                cropingMode = false;
-            };
-        });
-
-        canvas.on('object:scaled', function () {
-            if (editMode) {
-                isDraw = false;
-                isDown = false;
-                drawingMode = false;
-                cropingMode = false;
-            };
-        });
-
-        canvas.on('selection:created', function (e) {
-            if (e.target.type === 'activeSelection') {
-                canvas.discardActiveObject();
-            }
-        });
-
-        canvas.on('selection:cleared', function () {
-            if (editMode) {
-                drawingMode = true;
-                cropingMode = false;
-            };
-
-            canvas.forEachObject(function (obj) {
-                if (!obj.hasOwnProperty('tagId')) {
-                    canvas.remove(obj);
-                }
-            });
-        });
-    }
-
-    function init() {
-        var initFlg = false;
-        $('.thumbnail').on('load', function () {
-
-            if (!initFlg) {
-                bg = new fabric.Image(document.getElementsByClassName('thumbnail' + page)[0], {
-                    selectable: false,
-                    scaleX: getMath(containerWidth / document.getElementsByClassName('thumbnail' + page)[0].width * 0.99, 2),
-                    scaleY: getMath(containerWidth / document.getElementsByClassName('thumbnail' + page)[0].width * 0.99, 2),
-                    tagId: 'bg'
-                });
-                imageOGWidth = document.getElementsByClassName('thumbnail' + page)[0].width;
-                imageOGHeight = document.getElementsByClassName('thumbnail' + page)[0].height;
-                imageProportion = imageOGWidth / imageOGHeight;
-                imageWidthWithProportion = imageOGWidth * (containerWidth / imageOGWidth);
-                imageHeightWithProportion = imageOGHeight * (containerWidth / imageOGWidth);
-                canvas.setWidth(imageWidthWithProportion * baseScale);
-                canvas.setHeight(imageHeightWithProportion * baseScale);
-                pane = $('.container').jScrollPane().data('jsp');
-                canvas.add(bg);
-                $('.page__total').text(imagesLength);
-                $('.page__total-info').css('display', 'flex');
-                $('.change__page').attr("readonly", false);
-                $('.form__input__upload__time').val(moment().format('YYYY/MM/DD HH:mm:sss'));
-
-                if (!dataFromDB.length) {
-                    setCanvasArrayForDB();
-                }
-
-                switchImage();
-                canvas.renderAll();
-                initFlg = true;
-            }
-            
-        });
-    }
-
-    function setCanvasArrayForDB() {
-        for (var i = 0; i < imagesLength; i++) {
-            canvasArrayForDB.push({ canvas: '', tags: [] });
-        }
-    }
-
-    function switchImage() {
-
-        canvas.clear();
-
-        canvas.setWidth(containerWidth * baseScale);
-        canvas.setHeight((containerWidth / imageProportion) * baseScale);
-
-        if (canvasArrayForDB[page].canvas) {
-            canvasArrayForDB[page].tags = [];
-
-            //set image src for tags
-            for (var i = 0; i < canvasArrayForDB[page].canvas.objects.length; i++) {
-                if (canvasArrayForDB[page].canvas.objects[i].type == 'image') {
-                    canvasArrayForDB[page].canvas.objects[i].src = document.getElementsByClassName('thumbnail' + page)[0].src;
-                }
-            }
-
-            canvas.loadFromJSON(canvasArrayForDB[page].canvas, canvas.renderAll.bind(canvas), function (o, object) {
-
-                if (object.type == 'i-text') {
-                    canvasArrayForDB[page].tags.push({
-                        id: object.tagId,
-                        text: object.text,
-                        data: object
-                    })
-
-                    if (editMode) {
-                        object.selectable = true;
-                        object.hasControls = true;
-                        object.hasBorders = true;
-                        object.editable = true;
-                    } else {
-                        object.selectable = false;
-                        object.hasControls = false;
-                        object.hasBorders = false;
-                        object.editable = false;
-                    }
-                }
-
-                if (object.tagId == 'bg') {
-                    bg = object;
-                    imageOGWidth = bg.width;
-                    imageOGHeight = bg.height;
-                    imageProportion = bg.width / bg.height;
-                    bg.set({
-                        hasControls: false,
-                        selectable: false,
-                        tagId: 'bg'
-                    })
-                    imageWidthWithProportion = imageOGWidth * ($('.container').width() / bg.width);
-                    imageHeightWithProportion = imageOGHeight * ($('.container').width() / bg.width);
-                }
-
-                object.setCoords();
-                pane = $('.container').jScrollPane().data('jsp');
-            });
-
-        } else {
-            bg = new fabric.Image(document.getElementsByClassName('thumbnail' + page)[0], {
-                selectable: false,
-                scaleX: getMath(containerWidth / document.getElementsByClassName('thumbnail' + page)[0].width * 0.99, 2),
-                scaleY: getMath(containerWidth / document.getElementsByClassName('thumbnail' + page)[0].width * 0.99, 2),
-                tagId: 'bg'
-            });
-            imageOGWidth = document.getElementsByClassName('thumbnail' + page)[0].width;
-            imageOGHeight = document.getElementsByClassName('thumbnail' + page)[0].height;
-            imageProportion = getMath(imageOGWidth / imageOGHeight, 2);
-            imageWidthWithProportion = getMath(imageOGWidth * (containerWidth / imageOGWidth), 2);
-            imageHeightWithProportion = getMath(imageOGHeight * (containerWidth / imageOGWidth), 2);
-            canvas.setWidth(imageWidthWithProportion);
-            canvas.setHeight(imageHeightWithProportion);
-            pane = $('.container').jScrollPane().data('jsp');
-            canvas.add(bg);
-        }
-        
-        resizeCanvas(baseScale);
-        watermark();
-        canvas.renderAll();
-    }
-    function watermark() {
-        //watermark
-        var base64Mark = null, markString = null, markTemplate = null;
-        var now = new Date().toISOString().substring(0, 19).replace('T', ' ');
-        markString = jsLoginUserId + ' ' + now + ' ' + jsLoginUserId + ' ' + now + ' ' + jsLoginUserId + ' ' + now;
-        markTemplate = `<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='200px' width='600px'>
-                        <text transform='translate(10, 10) rotate(0)' fill='rgba(255,0,0,0.4)' font-size='14'>` + markString + `</text></svg>`;         
-
-        base64Mark = btoa(markTemplate);
-                
-        fabric.Image.fromURL('data:image/svg+xml;base64,' + base64Mark, (img) => {
-            oImg = img.set({
-                left: 20,
-                top: 5,
-                angle: 55,
-                selectable: false,
-                tagId: 'watermark'
-                //width: 500,
-                //height: 100
-            });
-            canvas.add(oImg);
-        });
-    }
-    function getMath(num, n) {
-        return Math.round(num * Math.pow(10, n)) / Math.pow(10, n);
-    }
-
-    function switchBackToViewMode() {
-        if (!isFullScreenMode && $(window).width() > 1024) {
-            $('.tool__button.edit').hide();
-        } else {
-            $('.tool__button.edit').show();
-        }
-        $('.tool__button.view').hide();
-        $('.save__canvas').hide();
-        editMode = false;
-        drawingMode = false;
-        cropingMode = true;
-        dragMode = false;
-
-        if (canvas) {
-            canvas.discardActiveObject();
-            canvas.forEachObject(function (object) {
-                object.selectable = false;
-                object.hasControls = false;
-                object.hasBorders = false;
-                object.editable = false;
-            });
-            canvas.renderAll();
-        }
-    }
-
-    $('.right-rotate').click(function () {
-        canvas && rotate(90);
-    })
-
-    $('.left-rotate').click(function () {
-        canvas && rotate(-90);
-    })
-
-    $('.width').click(function () {
-        if (canvas) {
-            type = 'width';
-            scaleToSize();
-        }
-    });
-
-    $('.height').click(function () {
-        if (canvas) {
-            type = 'height';
-            scaleToSize();
-        }
-    });
-
-    $('.fit').click(function () {
-        if (canvas) {
-            //type = 'fit';
-            //resetZoomRotate();
-
-            switchToFullScreeMode();
-        }
-    });
-
-    $('.origin').click(function () {
-        if (canvas) {
-            type = 'origin';
-            resetZoomRotate();
-            setZoom('custom', $(window).width() < 1024 ? 4 : imageOGWidth / containerWidth);
-        }
-    });
-
-    $('.zoomIn').click(function () {
-        canvas && setZoom($(window).width() < 1024 ? 0.2 : 0.1)
-    })
-
-    $('.zoomOut').click(function () {
-        canvas && setZoom($(window).width() < 1024 ? -0.2 : -0.1)
-    });
-
-    $('.edit').click(function () {
-        if (canvas) {
-            $('.tool__button.edit').hide();
-            $('.tool__button.view').show();
-            $('.save__canvas').show();
-            editMode = true;
-            drawingMode = true;
-            cropingMode = false;
-            dragMode = false;
-
-            isAnnoNeedToSave = true;
-
-            canvas.forEachObject(function (object) {
-                if (object.type == 'i-text') {
-                    object.selectable = true;
-                    object.hasControls = true;
-                    object.hasBorders = true;
-                    object.editable = true;
-                }
-
-                if (object.tagId == 'bg') {
-                    object.selectable = false;
-                    object.hasControls = false;
-                    object.hasBorders = false;
-                }
-            });
-            canvas.renderAll();
-        }
-    });
-
-    $('.view').click(function () {
-        if (canvas) {
-            switchBackToViewMode();
-        }
-    });
-
-    $('.prev').click(function () {
-        if (page == 0 || !canvas) return;
-        type = 'fit';
-        canvas.remove(oImg); //watermark
-        resetZoomRotate();
-        canvasArrayForDB[page].canvas = canvas.toJSON(['tagId']);
-        page -= 1;
-        $('.change__page').val(page + 1);
-        canvas.relativePan({ x: bg.getBoundingRect().left * -1, y: bg.getBoundingRect().top * -1 });
-        //switchImage();
-        beforeSwitchImage();
-    });
-
-    $('.next').click(function () {
-        if (page == imagesLength - 1 || !canvas) return;
-        type = 'fit';
-        canvas.remove(oImg); //watermark
-        resetZoomRotate();
-        canvasArrayForDB[page].canvas = canvas.toJSON(['tagId']);
-        page += 1;
-        $('.change__page').val(page + 1);
-        canvas.relativePan({ x: bg.getBoundingRect().left * -1, y: bg.getBoundingRect().top * -1 });
-        //switchImage();
-        beforeSwitchImage();
-    });
-
-    $('.hide__all__tags').click(function () {
-        if (canvas) {
-            canvas.discardActiveObject();
-            canvas.forEachObject(function (obj) {
-                if (obj.tagId !== 'bg' && obj.tagId !== 'watermark') {
-                    obj.visible = false;
-                }
-            });
-            canvas.renderAll();
-        }
-    });
-
-    $('.show__all__tags').click(function () {
-        if (canvas) {
-            canvas.discardActiveObject();
-            canvas.forEachObject(function (obj) {
-                obj.visible = true;
-            });
-            canvas.renderAll();
-        }
-    });
-
-    function scaleToSize() {
-        if (degrees == 90 || degrees == -90 || degrees == 270 || degrees == -270) {
-            if (type == 'width') {
-                if (canvas.width != $('.container').width()) {
-                    canvas.setWidth($('.container').width());
-                    canvas.setHeight($('.container').width() * imageProportion);
-                    zoomToFitCanvas(imageProportion * baseScale);
-                    pane.reinitialise();
-                }
-            }
-            if (type == 'height') {
-                if (canvas.height != $('.container').height()) {
-                    canvas.setWidth($('.container').height() / imageProportion);
-                    canvas.setHeight($('.container').height());
-                    zoomToFitCanvas(($('.container').height() / imageWidthWithProportion) * baseScale);
-                    pane.reinitialise();
-                };
-            }
-        } else {
-            if (type == 'width') {
-                (canvas.width != $('.container').width()) && setZoom('custom', 1);
-            }
-            if (type == 'height') {
-                (canvas.height != $('.container').height()) && setZoom('custom', $('.container').height() / imageHeightWithProportion);
-            }
-        }
-    }
-
-    function resetZoomRotate() {
-        if (degrees != 0) {
-            if (degrees == 90) {
-                rotate(-90);
-            } else if (degrees == 180 || degrees == -180) {
-                rotate(180);
-            } else if (degrees == 270) {
-                rotate(-270);
-            } else if (degrees == -90) {
-                rotate(90);
-            } else if (degrees == -270) {
-                rotate(270);
-            }
-        }
-        setZoom('reset');
-    }
-
-    function setZoom(zoom, custonZoom) {
-        if (zoom == 'reset') {
-            resizeCanvas(1 * baseScale);
-        } else if (zoom == 'custom') {
-            resizeCanvas(custonZoom * baseScale);
-            canvas.setHeight((degrees == 90 || degrees == -90 || degrees == 270 || degrees == -270) ? (containerWidth) * baseScale * custonZoom : (containerWidth / imageProportion) * baseScale * custonZoom);
-            canvas.setWidth((degrees == 90 || degrees == -90 || degrees == 270 || degrees == -270) ? (containerWidth / imageProportion) * baseScale * custonZoom : containerWidth * baseScale * custonZoom);
-            pane.reinitialise();
-        } else {
-            var newZoom = canvas.getZoom() + zoom;
-            var fixedNewZoom = parseFloat(newZoom.toFixed(1), 10);
-            if (fixedNewZoom >= 0.1) {
-                resizeCanvas(fixedNewZoom);
-            }
-        }
-    }
-
-    function resizeCanvas(scale) {
-        canvas.setHeight((degrees == 90 || degrees == -90 || degrees == 270 || degrees == -270) ? containerWidth * scale : (containerWidth / imageProportion) * scale);
-        canvas.setWidth((degrees == 90 || degrees == -90 || degrees == 270 || degrees == -270) ? (containerWidth / imageProportion) * scale: containerWidth * scale);
-        zoomToFitCanvas(scale);
-        if (scale == (1 * baseScale)) {
-            pane.scrollTo(0, 0);
-        }
-        pane.reinitialise();
-    };
-
-    function zoomToFitCanvas(scale) {
-        canvas.setZoom(1);
-        canvas.absolutePan({ x: 0, y: 0 });
-        canvas.setZoom(scale || canvas.getZoom());
-        canvas.relativePan({ x: bg.getBoundingRect().left * -1, y: bg.getBoundingRect().top * -1 });
-    }
-
-    function rotate(addDegrees) {
-        degrees += addDegrees;
-        if (degrees == -360 || degrees == 360) {
-            degrees = 0;
-        }
-
-        var w = canvas.width;
-        var h = canvas.height;
-        let canvasCenter = new fabric.Point(w / 2, h / 2) // center of canvas
-        let radians = fabric.util.degreesToRadians(addDegrees)
-
-        canvas.getObjects().forEach(function (obj) {
-            let objectOrigin = new fabric.Point(obj.left, obj.top);
-            let new_loc = fabric.util.rotatePoint(objectOrigin, canvasCenter, radians);
-            obj.top = new_loc.y;
-            obj.left = new_loc.x;
-            obj.angle += addDegrees; //rotate each object by the same angle
-            obj.setCoords();
-        });
-
-        canvas.setWidth(h);
-        canvas.setHeight(w);
-        zoomToFitCanvas(canvas.getZoom());
-        pane.reinitialise();
-        canvas.renderAll();
-    }
-
-    $(document).on("keydown", function (e) {
-        keyDownEvents(e)
-    })
-
-    function keyDownEvents(e) {
-        var isModifierkeyPressed = e.altKey;
-        var hKey = 72,
-            wKey = 87,
-            oKey = 79,
-            addKey = 107,
-            addKey_2 = 187,
-            subtractKey = 109,
-            subtractKey_2 = 189,
-            upKey = 38,
-            downKey = 40,
-            deleteKey = 46,
-            leftKey = 188,
-            rightKey = 190,
-            backspaceKey = 8;
-        switch (true) {
-            case isModifierkeyPressed && e.keyCode == hKey:
-                if (canvas) {
-                    type = 'height';
-                    scaleToSize();
-                }
-                break;
-            case isModifierkeyPressed && e.keyCode == wKey:
-                if (canvas) {
-                    type = 'width';
-                    scaleToSize();
-                }
-                break;
-            case isModifierkeyPressed && e.keyCode == oKey:
-                if (canvas) {
-                    type = 'origin';
-                    resetZoomRotate();
-                    setZoom('custom', imageOGWidth / containerWidth);
-                }
-                break;
-            case isModifierkeyPressed && e.keyCode == addKey:
-            case isModifierkeyPressed && e.keyCode == addKey_2:
-                canvas && setZoom(0.1)
-                break;
-            case isModifierkeyPressed && e.keyCode == subtractKey:
-            case isModifierkeyPressed && e.keyCode == subtractKey_2:
-                canvas && setZoom(-0.1)
-                break;
-            case isModifierkeyPressed && e.keyCode == upKey:
-                if (page == 0 || !canvas) return;
-                type = 'fit';
-                resetZoomRotate();
-                canvasArrayForDB[page].canvas = canvas.toJSON(['tagId']);
-                page -= 1;
-                $('.change__page').val(page + 1);
-                //switchImage();
-                beforeSwitchImage();
-                break;
-            case isModifierkeyPressed && e.keyCode == downKey:
-                if (page == imagesLength - 1 || !canvas) return;
-                type = 'fit';
-                resetZoomRotate();
-                canvasArrayForDB[page].canvas = canvas.toJSON(['tagId']);
-                page += 1;
-                $('.change__page').val(page + 1);
-                //switchImage();
-                beforeSwitchImage();
-                break;
-            case isModifierkeyPressed && e.keyCode == leftKey:
-                canvas && rotate(-90);
-                break;
-            case isModifierkeyPressed && e.keyCode == rightKey:
-                canvas && rotate(90);
-                break;
-            case e.keyCode == deleteKey:
-                if (canvas.getActiveObject()) {
-                    if (window.confirm(jsMultiLanguageObject.msgConfirmDeleteAnnotation)) {
-                        canvas.remove(canvas.getActiveObject());
-                        canvas.renderAll();
-                    }
-                }
-                break;
-            case isModifierkeyPressed && e.keyCode == backspaceKey:
-                if (canvas.getActiveObject()) {
-                    if (window.confirm(jsMultiLanguageObject.msgConfirmDeleteAnnotation)) {
-                        canvas.remove(canvas.getActiveObject());
-                        canvas.renderAll();
-                    }
-                }
-                break;
-            default:
-            // do nothing
-        }
-    }
-
-    function resizeContainer() {
-        baseScale = ($('.container').parent().width() / $('.container').width()) * baseScale;
-        type = 'fit';
-        resetZoomRotate();
-        $('.container').width($('.container').parent().width());
-        imageWidthWithProportion = imageOGWidth * ($('.container').width() / imageOGWidth);
-        imageHeightWithProportion = imageOGHeight * ($('.container').width() / imageOGWidth);
-        canvas.setWidth(containerWidth * baseScale);
-        canvas.setHeight((containerWidth / imageProportion) * baseScale);
-        zoomToFitCanvas(1 * baseScale);
-        pane.reinitialise();
-    }
-
-    $('.change__page').on('change paste keyup', function () {
-        if ($(this).val().trim() != '' && $(this).val() <= imagesLength && $(this).val() > 0) {
-            type = 'fit';
-            canvas.remove(oImg); //watermark
-            resetZoomRotate();
-            canvasArrayForDB[page].canvas = canvas.toJSON(['tagId']);
-            page = $(this).val() - 1;
-            $('.change__page').val(page + 1);
-            //switchImage();
-            beforeSwitchImage();
-        }
-    });
-
-    $('.save__canvas').on('click', function () {
-        var chosenTestDataItem = testData.filter(function (d) { return d.id == currentRowId; })[0];
-        var docId = chosenTestDataItem.images;
-        canvas.remove(oImg); //watermark
-        var annoString = "[]";
-        if (canvasArrayForDB.length > 0) {
-            canvasArrayForDB[page].canvas = canvas.toJSON(['tagId']);
-            annoString = JSON.stringify(canvasArrayForDB);
-        }
-        canvas.add(oImg); //watermark
-        var response = saveAnnotation(docId, annoString);
-        if (response == null) {
-            alert("error");
-            return false;
-        }
-
-        if (response.needRedirect) {
-            window.location.href = response.redirectUrl;
-            return false;
-        }
-
-        if (response.error.errorFlag) {
-            alert(response.error.errorId + ' ' + response.error.errorMessage);
-            return false;
-        }
-
-        alert(jsMultiLanguageObject.msgSaveSuccess);
-
-        // 回到檢視模式
-        switchBackToViewMode();
-
-        // 重置需儲存判斷
-        isAnnoNeedToSave = false;
-    });
-
-    // 儲存影像註記
-    function saveAnnotation(docId, annoString) {
-        var formData = new FormData();
-        formData.append("documentId", docId);
-        formData.append("annotationString", annoString);
-
-        // call action
-        var result = null;
-        $.ajax({
-            url: "/Query/Result/SaveAnnotation",
-            type: "POST",
-            data: formData,
-            async: false,
-            processData: false,
-            contentType: false,
-            success: function (data) {
-                result = data;
-            },
-            error: function () {
-                result = null;
-            }
-        });
-
-        return result;
-    }
-
-    var testData = joTableData;
-    var myTable;
-    if (!jsKeepFilterFlag) {
-        myTable = $('#table').DataTable();
-        myTable.state.clear();
-        myTable.destroy();
-    }
-    var defaultPageLength = 10;
-
-    // render table data
-    createTableByTestData();
-
-    function createTableByTestData() {
-        $("#table tbody").html("");
-        $("#comboBox_document_list").empty();
-        for (var i = 0; i < testData.length; i++) {
-            // 查詢結果 dataTable
-            var content = "";
-
-            content += "<tr id='" + testData[i].id + "' class='" + testData[i].type + "'>";
-            content += "<td>" + testData[i].images + "</td>";
-            for (var j = 0; j < testData[i].columnArray.length; j++) {
-                content += "<td>" + testData[i].columnArray[j] + "</td>";
-            }
-            content += "</tr>";
-
-            $('#table tbody').append(content);
-
-            // 全螢幕模式的下拉選單
-            if (testData[i].type.split(" ").includes("normal")) {
-                let label = testData[i].images + " - " + testData[i].formId + " " + testData[i].formName;
-                $("#comboBox_document_list").append("<div class='option' value='" + testData[i].id + "'>" + label + "</div>");
-            }
-        }
-
-        $(".delete").each(function () {
-            $(this).append("<div class='bar'></div>");
-        })
-
-        myTable = $('#table').DataTable({
-            'columnDefs': [
-                {
-                    'targets': 0,
-                    'checkboxes': true
-                }
-            ],
-            //'order': [[1, 'asc']],
-            dom: 'Bfrtip',
-            buttons: [
-                {
-                    text: '列印',
-                    action: async function () {
-                        var rows_selected = myTable.column(0).checkboxes.selected();
-                        if (rows_selected.join(",").length > 0) {
-                            var documentId = rows_selected.join(",");
-                            var response = getDocumentPdfList(documentId);
-
-                            if (response == null) {
-                                alert("error");
-                                return false;
-                            }
-
-                            if (response.needRedirect) {
-                                window.location.href = response.redirectUrl;
-                                return false;
-                            }
-
-                            if (response.error.errorFlag) {
-                                alert(response.error.errorId + ' ' + response.error.errorMessage);
-                                return false;
-                            }
-
-                            var blob = base64ImageToBlob(response.base64FileString);
-                            doBrowserExportAction(document, blob, "Merge.pdf");
-                        }
-                    }
-                },
-                {
-                    text: 'PDF',
-                    action: async function () {
-                        if (testData.length > 0) {
-                            var thArray = [];
-                            var dataArray = [];
-                            $('#table > thead > tr > th').each(function () {
-                                thArray.push($(this).text())
-                            })
-                            //因為第0行是Checkbox 所以不需要
-                            thArray.splice(0, 1);
-                            for (var i = 0; i < testData.length; i++) {
-                                var eachRow = "";
-                                for (var j = 0; j < testData[i].columnArray.length; j++) {
-                                    eachRow += testData[i].columnArray[j] + "|";
-                                }
-                                eachRow = eachRow.substring(0, eachRow.length - 1);
-                                dataArray.push(eachRow);
-                            }
-                            var response = exportPdf(thArray, dataArray);
-
-                            if (response == null) {
-                                alert("匯出影像列表查詢.pdf 失敗");
-                                return false;
-                            }
-
-                            if (response.needRedirect) {
-                                window.location.href = response.redirectUrl;
-                                return false;
-                            }
-
-                            if (response.error.errorFlag) {
-                                alert(response.error.errorId + ' ' + response.error.errorMessage);
-                                return false;
-                            }
-
-                            var blob = base64ImageToBlob(response.base64FileString);
-                            doBrowserExportAction(document, blob, "影像列表查詢.pdf");
-
-                        }
-                    }
-                },
-                {
-                    text: 'Excel',
-                    extend: 'excelHtml5',
-                    title: '影像查詢列表',
-                    exportOptions: {
-                        columns: 'th:not(:first-child)'
-                    }
-                }
-                //{
-                //    text: 'EXCEL',
-                //    action: async function () {
-                //        if (testData.length > 0) {
-                //            var thArray = [];
-                //            var dataArray = [];
-                //            $('#table > thead > tr > th').each(function () {
-                //                thArray.push($(this).text())
-                //            })
-                //            //因為第0行是Checkbox 所以不需要
-                //            thArray.splice(0, 1);
-                //            for (var i = 0; i < testData.length; i++) {
-                //                var eachRow = "";
-                //                for (var j = 0; j < testData[i].columnArray.length; j++) {
-                //                    eachRow += testData[i].columnArray[j] + "|";
-                //                }
-                //                eachRow = eachRow.substring(0, eachRow.length - 1);
-                //                dataArray.push(eachRow);
-                //            }
-                //            var response = exportExcel(thArray, dataArray);
-
-                //            if (response == null) {
-                //                alert("匯出影像列表查詢.xlsx 失敗");
-                //                return false;
-                //            }
-
-                //            if (response.needRedirect) {
-                //                window.location.href = response.redirectUrl;
-                //                return false;
-                //            }
-
-                //            if (response.error.errorFlag) {
-                //                alert(response.error.errorId + ' ' + response.error.errorMessage);
-                //                return false;
-                //            }
-
-                //            var blob = base64ImageToBlob(response.base64FileString);
-                //            doBrowserExportAction(document, blob, "影像列表查詢.xlsx");
-
-                //        }
-                //    }
-                //}
-            ],
-            "scrollResize": true,
-            "scrollY": 100,
-            "scrollCollapse": true,
-            "scrollX": true,
-            "pageLength": defaultPageLength,
-            "language": {
-                "lengthMenu": String.format(jsMultiLanguageObject.dtCountPerPage, "_MENU_"),
-                "zeroRecords": jsMultiLanguageObject.dtNoData,
-                "info": "",
-                "infoEmpty": jsMultiLanguageObject.dtNoData,
-                "paginate": {
-                    "next": '<img src="/images/right.svg">',
-                    "previous": '<img src="/images/left.svg">'
-                },
-                "search": '<img src="/images/search.svg">',
-                "searchPlaceholder": jsMultiLanguageObject.phFilter
-            },
-        });
-
-        // set table's total
-        $('.table__total').text(String.format(jsMultiLanguageObject.dtTotalCount, testData.length, Math.ceil(testData.length / defaultPageLength)));
-        myTable.on('length.dt', function (e, settings, len) {
-            defaultPageLength = len;
-            $('.table__total').text(String.format(jsMultiLanguageObject.dtTotalCount, testData.length, Math.ceil(testData.length / len)));
-        });
-    }
-
-    sortIconPosition();
-
-    // change position of sort icon at table's header
-    function sortIconPosition() {
-        $('.table__container .dataTables_wrapper .dataTables_scroll thead th').each(function () {
-            var xPos;
-            if ($(this).css('text-align') == 'center') {
-                xPos = ($(this).width() / 2) + (($(this).text().split('').length / 2) * 14) + 11;
-            } else if ($(this).hasClass('withEnglish')) {
-                xPos = ($(this).text().split('').length - 2) * 14 + 6;
-            } else {
-                xPos = ($(this).text().split('').length) * 14 + 6;
-            }
-            $(this).css('background-position-x', xPos + 'px')
-        })
-    }
-
-    $(window).resize(function () {
-        canvas && resizeContainer();
-        sortIconPosition();
-    });
-
-    // drop down on change event
-    $(document).on('click', '.drop__container .option', function (e) {
-        if (e.target.parentNode.id != 'comboBox_option_FormGroup' || $('#para_queryCondition_comboBox_FormByGroup').length <= 0) {
-            return true;
-        }
-
-        $("#comboBox_option_FormByGroup").empty();
-        $("#para_queryCondition_comboBox_FormByGroup").attr("select-id", "");
-        $("#para_queryCondition_comboBox_FormByGroup").val("");
-
-        var formGroupCode = $("#para_queryCondition_comboBox_FormGroup").attr("select-id");
-
-        var response = getFormQueryFormList(formGroupCode);
-        if (response == null) {
-            alert("error");
-            return true;
-        }
-        if (response.needRedirect) {
-            window.location.href = response.redirectUrl;
-            return true;
-        }
-        if (response.error.errorFlag) {
-            alert(response.error.errorId + " " + response.error.errorMessage);
-            return true;
-        }
-
-        for (var i = 0; i < response.list.length; i++) {
-            $('#comboBox_option_FormByGroup').append("<div class='option' value='" + response.list[i].formId + "'>" + response.list[i].formId + " " + response.list[i].formName + "</div>");
-        }
-    });
-
-    function getFormQueryFormList(formGroupCode) {
-        var formData = new FormData();
-        formData.append("formGroupCode", formGroupCode);
-
-        // call action
-        var result = null;
-        $.ajax({
-            url: "/Query/GetFormQueryFormList",
-            type: "POST",
-            data: formData,
-            async: false,
-            processData: false,
-            contentType: false,
-            success: function (data) {
-                result = data;
-            },
-            error: function () {
-                result = null;
-            }
-        });
-
-        return result;
-    }
-
-    // search box reset_condition click
-    $('.reset_condition').click(async function () {
-        $('.input__query_parameter[type="text"]').val("");
-        $('.input__query_parameter[type="checkbox"]').prop("checked", false);
-        $('.input__query_parameter[type="radio"]').prop("checked", false);
-
-        var nowMoment = moment().format("YYYY/MM/DD");
-        $('.input__query_parameter.calendar').data('daterangepicker').setStartDate(nowMoment);
-        $('.input__query_parameter.calendar').data('daterangepicker').setEndDate(nowMoment);
-
-        $('.input__query_parameter_combobox').val("");
-        $('.input__query_parameter_combobox').attr("select-id", "");
-    });
-
-    // search box search click
-    $('.search').click(async function () {
-        var allFill = true;
-        $(".input__must_fill, .input__must_fill_range, .input__must_fill_combobox, .input__must_fill_date, .input__must_fill_checkbox").each(function () {
-            if ($(this).is("div")) {
-                var anyBoxFilled = false;
-                $(this).find("input").each(function () {
-                    // 某組 checkbox 裡的每個勾勾
-                    if ($(this).prop('checked')) {
-                        anyBoxFilled = true;
-                        return false;
-                    }
-                });
-
-                if (anyBoxFilled) {
-                    return;
-                }
-            } else {
-                if ($(this).val().trim() != "") {
-                    return;
-                }
-            }
-
-            alert(getAlertText($(this)));
-
-            $(this).focus();
-            allFill = false;
-            return false;
-        });
-
-        if (!allFill) {
-            return false;
-        }
-
-        //search
-        var formData = await getParameterAsQueryFormData();
-
-        var doQueryResponse = null;
-        $.ajax({
-            url: "/Query/Result/DoQuery",
-            type: "POST",
-            data: formData,
-            async: false,
-            processData: false,
-            contentType: false,
-            success: function (data) {
-                doQueryResponse = data;
-            },
-            error: function (error) {
-                doQueryResponse = null;
-            }
-        });
-        if (doQueryResponse == null) {
-            alert("error");
-
-            testData = [];
-            createTableByTestData();
-
-            return false;
-        }
-
-        if (doQueryResponse.needRedirect) {
-            window.location.href = doQueryResponse.redirectUrl;
-            return false;
-        }
-
-        testData = JSON.parse(doQueryResponse.tableDataJsonString);
-        currentConditionListString = doQueryResponse.conditionListString;
-        myTable.destroy();
-        createTableByTestData();
-    });
-
-    function getAlertText(element) {
-        if ($(element).hasClass("input__must_fill") || $(element).hasClass("input__detail_must_fill")) {
-            return $(element).prev().text();
-        }
-
-        if ($(element).hasClass("input__must_fill_range")) {
-            return $(element).parent().parent().prev().text();
-        }
-
-        if ($(element).hasClass("input__must_fill_combobox") || $(element).hasClass("input__detail_must_fill_combobox")) {
-            return $(element).parent().prev().text();
-        }
-
-        if ($(element).hasClass("input__must_fill_date") || $(element).hasClass("input__detail_must_fill_date")) {
-            return $(element).prev().prev().text();
-        }
-
-        if ($(element).hasClass("input__must_fill_checkbox") || $(element).hasClass("input__detail_must_fill_checkbox")) {
-            return $(element).prev().text();
-        }
-    }
-
-    // 整理 Query 所需 formData
-    function getParameterAsQueryFormData() {
-        // text(value), checkbox(checked), radio(checked)
-        var formData = new FormData();
-
-        var fields = $('.input__query_parameter');
-        for (var i = 0; i < fields.length; i++) {
-            if (fields[i].type == 'radio' || fields[i].type == 'checkbox') {
-                formData.append(fields[i].id, fields[i].checked);
-            } else {
-                formData.append(fields[i].id, fields[i].value);
-            }
-        }
-
-        var comboBoxes = $('.input__query_parameter_combobox');
-        for (var i = 0; i < comboBoxes.length; i++) {
-            var selectedValue = comboBoxes[i].getAttribute("select-id");
-            if (selectedValue == null) {
-                selectedValue = "";
-            }
-            formData.append(comboBoxes[i].id, selectedValue);
-        }
-
-        return formData;
-    }
-
-    // table row click
-    $('#table').on('click', 'tbody > tr', function () {
-        currentRowId = $(this).attr('id');
-        if ($(this).attr('class').indexOf('disable') > -1) {
-            return false;
-        }
-
-        if ($(window).width() > 1024) {
-            $('.row__image__box').show();
-            $('.row__info__box').hide();
-            $('.table__area').addClass('shrink');
-            $('.search__box').hide(function () {
-                $('.table__container').css('width', '100%');
-                var currentPage = myTable.page.info().page;
-                var scrollPos = $(".dataTables_scrollBody").scrollTop();
-                myTable.columns.adjust().draw();
-                myTable.page(currentPage).draw('page');
-                $(".dataTables_scrollBody").scrollTop(scrollPos);
-                sortIconPosition();
-            });
-            $('.table__search__box__button').show();
-            $('.table__row__detail').addClass('active');
-        } else {
-            $('.table__row__detail').addClass('active fixed__for__pop');
-            $('#container').addClass('noscroll');
-            $('.row__image__box').show();
-            $('.row__info__box').hide();
-            $('.tool__button.edit').show();
-        }
-
-        myTable.$('tr').removeClass('active');
-        myTable.$('tr[id="' + currentRowId + '"]').addClass('active');
-        var clickedTestDataItem = testData.filter(function (d) { return d.id == currentRowId; })[0];
-
-        loadDocImageAndDetail(clickedTestDataItem);
-        switchBackToViewMode();
-    });
-
-    // dropdown option click
-    $("#comboBox_document_list").on("click", ".option", function () {
-        $("#change_document_new_currentRowId").val($(this).attr("value"));
-
-        if (isAnnoNeedToSave) {
-            $('#full__apply__for__change_document').removeClass('close').addClass('open');
-        } else {
-            doChangeDoc();
-        }
-    });
-
-    function recoverDocComboBox() {
-        var chosenTestDataItem = testData.filter(function (d) { return d.id == currentRowId; })[0];
-        var oldSelectId = chosenTestDataItem.id
-        var oldValue = chosenTestDataItem.images + " - " + chosenTestDataItem.formId + " " + chosenTestDataItem.formName;
-
-        // 還原全螢幕模式下拉選單
-        $("#comboBox_chosen_doc").attr("select-id", oldSelectId);
-        $("#comboBox_chosen_doc").val(oldValue);
-    }
-
-    function doChangeDoc() {
-        var newRowId = $("#change_document_new_currentRowId").val();
-
-        currentRowId = newRowId;
-        var clickedTestDataItem = testData.filter(function (d) { return d.id == currentRowId; })[0];
-
-        myTable.$('tr').removeClass('active');
-
-        var trObj = myTable.$('tr[id="' + currentRowId + '"]');
-        trObj.addClass('active');
-
-        ScrollToRow(myTable, trObj);
-
-        loadDocImageAndDetail(clickedTestDataItem);
-        switchBackToViewMode();
-    }
-
-    // 載入影像、詳細資料、文件權限
-    function loadDocImageAndDetail(chosenTestDataItem) {
-        // 先全部清空成原始狀態
-        // 1.詳細資料
-        var isDetailSuccess = false;
-        $(".row__info__box__content").html("");
-        $(".mimetype_icon_box .mimetypes__box .options").html("");
-        // 2.文件註記
-        var isAnnoSuccess = false;
-        dataFromDB = [];
-        // 3.影像
-        docMimeTypeList = [];
-        curMimeType = 'N/A';
-        imagesLength = 0;
-        output.innerHTML = '';
-        $('.container').remove();
-        $('.change__page').val(1);
-        pane && pane.reinitialise();
-
-        // 開始做事
-        var docId = chosenTestDataItem.images;
-
-        // 載入詳細資料
-        var queryPageId = $("#para_queryCondition_queryPageId").val();
-        var joQueryDocumentDetail = getQueryDocumentDetail(docId, queryPageId);
-        if (joQueryDocumentDetail == null) {
-            alert("error");
-        } else {
-            if (joQueryDocumentDetail.needRedirect) {
-                window.location.href = joQueryDocumentDetail.redirectUrl;
-                return false;
-            }
-            if (joQueryDocumentDetail.error.errorFlag) {
-                alert(joQueryDocumentDetail.error.errorId + ' ' + joQueryDocumentDetail.error.errorMessage);
-            } else {
-                isDetailSuccess = true;
-            }
-        }
-
-        // 解析預設 MimeType
-        if (isDetailSuccess && joQueryDocumentDetail.auth.mimeTypeList.length > 0) {
-            docMimeTypeList = joQueryDocumentDetail.auth.mimeTypeList;
-            setDefaultCurrentMimeType();
-        }
-
-        // 載入文件註記
-        if (isDetailSuccess &&
-            (joQueryDocumentDetail.auth.viewAnnotationFlg || joQueryDocumentDetail.auth.editAnnotationFlg)) {
-            var annoResponse = getAnnotationRender(docId);
-            if (annoResponse == null) {
-                alert("error");
-            } else {
-                if (annoResponse.needRedirect) {
-                    window.location.href = annoResponse.redirectUrl;
-                    return false;
-                }
-                if (annoResponse.error.errorFlag) {
-                    alert(annoResponse.error.errorId + ' ' + annoResponse.error.errorMessage);
-                } else {
-                    isAnnoSuccess = true;
-                    dataFromDB = JSON.parse(annoResponse.renderString);
-                }
-            }
-        }
-
-        // 更新小 viewer 上的表單資訊
-        $("#preview_image_formInfo").text(chosenTestDataItem.formId + " " + chosenTestDataItem.formName);
-
-        // 載入影像
-        if (curMimeType != "N/A") {
-            upload(chosenTestDataItem.images, chosenTestDataItem.imagePageCount);
-        } else {
-            isImageSuccess = false;
-            $(".mimetype_icon").html(curMimeType.replace(".", "").toUpperCase());
-        }
-
-        // 更新全螢幕模式下拉選單
-        $("#comboBox_chosen_doc").attr("select-id", chosenTestDataItem.id);
-        $("#comboBox_chosen_doc").val(chosenTestDataItem.images + " - " + chosenTestDataItem.formId + " " + chosenTestDataItem.formName);
-
-        // 畫元件
-        if (isDetailSuccess) {
-            drawDocumentDetail(joQueryDocumentDetail.fieldList);
-            drawDocumentDetailMimeType(joQueryDocumentDetail.auth);
-        }
-
-        // 設定按鈕狀態
-        if (isDetailSuccess) {
-            setDetailButtonProp(joQueryDocumentDetail.auth, isDetailSuccess, isAnnoSuccess, isImageSuccess);
-        } else {
-            setDetailButtonProp(null, isDetailSuccess, isAnnoSuccess, isImageSuccess);
-        }
-
-        // 重置需儲存判斷
-        isAnnoNeedToSave = false;
-        $('.table__row__detail').addClass('fixed__for__pop');
-        $('.row__image__box').show();
-        $('.row__info__box').hide();
-        $('.tool__button.edit').show();
-        $('.tool__button.fit').hide();
-        isFullScreenMode = true;
-    }
-
-    function getAnnotationRender(docId) {
-        var formData = new FormData();
-        formData.append("documentId", docId);
-
-        var result = null;
-        $.ajax({
-            url: "/Query/Result/GetAnnotationRender",
-            type: "POST",
-            data: formData,
-            async: false,
-            processData: false,
-            contentType: false,
-            success: function (data) {
-                result = data;
-            },
-            error: function () {
-                result = null;
-            }
-        });
-
-        return result;
-    }
-
-    function getQueryDocumentDetail(docId, queryPageId) {
-        var formData = new FormData();
-        formData.append("documentId", docId);
-        formData.append("queryPageId", queryPageId);
-
-        var result = null;
-        $.ajax({
-            url: "/Query/Result/GetQueryDocumentDetail",
-            type: "POST",
-            data: formData,
-            async: false,
-            processData: false,
-            contentType: false,
-            success: function (data) {
-                result = data;
-            },
-            error: function () {
-                result = null;
-            }
-        });
-
-        return result;
-    }
-
-    function drawDocumentDetail(fieldList) {
-        if (fieldList == null) {
-            return false;
-        }
-
-        var content = "";
-
-        for (var i = 0; i < fieldList.length; i++) {
-            var f = fieldList[i];
-            switch (f.inputType) {
-                case "DocumentId":
-                    var docidId = "para_docDetail_documentId";
-
-                    content += "<div class='form__input " + f.readOnlyClassContent + "'>";
-                    content += "<div class='title'>" + f.indexLabel + "<span class='must__fill-label'>" + f.requiredLabel + "</span></div>";
-                    content += "<input class='input input__detail_parameter " + f.inputRequiredContent + "' type='text'";
-                    content += "  id='" + docidId + "' value='" + f.value + "' " + f.readOnlyTagValue + " />";
-                    content += "</div>";
-                    break;
-
-                case "Textbox":
-                case "ReadonlyDate":
-                    var textboxId = "para_docDetail_textbox_" + f.indexFieldName;
-
-                    content += "<div class='form__input " + f.readOnlyClassContent + "'>";
-                    content += "<div class='title'>" + f.indexLabel + "<span class='must__fill-label'>" + f.requiredLabel + "</span></div>";
-                    content += "<input class='input input__detail_parameter " + f.inputRequiredContent + "' type='text'";
-                    content += "  id='" + textboxId + "' value='" + f.value + "' maxlength='" + f.maxLength + "' " + f.readOnlyTagValue;
-                    content += "  placeholder='" + f.placeHolderLabel + "'";
-                    content += '  onchange="' + f.inputValidator + '" />';
-                    content += "</div>";
-                    break;
-
-                case "Number":
-                    var numberId = "para_docDetail_number_" + f.indexFieldName;
-
-                    content += "<div class='form__input " + f.readOnlyClassContent + "'>";
-                    content += "<div class='title'>" + f.indexLabel + "<span class='must__fill-label'>" + f.requiredLabel + "</span></div>";
-                    content += "<input class='input input__detail_parameter " + f.inputRequiredContent + "' type='text'";
-                    content += "  id='" + numberId + "' value='" + f.value + "' maxlength='" + f.maxLength + "' " + f.readOnlyTagValue;
-                    content += "  placeholder='" + f.placeHolderLabel + "'";
-                    content += '  onchange="this.value = this.value.replace(/\\D/g, \'\')" />';
-                    content += "</div>";
-                    break;
-
-                case "ComboBox":
-                    var comboBoxId = "para_docDetail_comboBox_" + f.indexFieldName;
-                    var comboBoxDisabled = "";
-                    if (f.readOnlyTagValue === "readonly") {
-                        comboBoxDisabled = "_disable";
-                    }
-
-                    content += "<div class='form__input " + f.readOnlyClassContent + "'>";
-                    content += "<div class='title'>" + f.indexLabel + "<span class='must__fill-label'>" + f.requiredLabel + "</span></div>";
-                    content += "<div class='drop__container" + comboBoxDisabled + "'>";
-                    content += "<input class='select-selected input__detail_parameter_combobox " + f.inputRequiredContent + "' type='text'";
-                    content += "  id='" + comboBoxId + "' select-id='" + f.selectedId + "' value='" + f.value + "' " + f.readOnlyTagValue;
-                    content += "  placeholder='" + f.placeHolderLabel + "' />";
-                    content += "<img src='/images/drop-right.svg' alt='icon' class='icon' />";
-                    content += "<img src='/images/clear.svg' alt='icon' class='drop__clear'>";
-                    content += "<div class='line'></div>";
-                    content += "<div class='select-items'>";
-                    for (var j = 0; j < f.optionList.length; j++) {
-                        var op = f.optionList[j];
-                        content += "<div class='option' value='" + op.value + "'>" + op.label + "</div>";
-                    }
-                    content += "</div>";
-                    content += "</div>";
-                    content += "</div>";
-                    break;
-
-                case "Checkbox":
-                    var checkboxDisabled = "";
-                    if (f.readOnlyTagValue === "disabled") {
-                        checkboxDisabled = " condition__button-read-only";
-                    }
-
-                    content += "<div class='form__input " + f.readOnlyClassContent + "'>";
-                    content += "<div class='title'>" + f.indexLabel + "<span class='must__fill-label'>" + f.requiredLabel + "</span></div>";
-                    content += "<div class='condition__box " + f.inputRequiredContent + "'>";
-                    for (var j = 0; j < f.optionList.length; j++) {
-                        var op = f.optionList[j];
-                        var opId = "para_docDetail_checkbox_" + f.indexFieldName + "__" + op.value;
-
-                        content += "<div class='condition__button" + checkboxDisabled + "'>";
-                        content += "<input class='input__detail_parameter' type='checkbox' id='" + opId + "' " + f.readOnlyTagValue;
-                        content += "  name='cb' " + op.checked + " />";
-                        content += "<label for='" + opId + "'>";
-                        content += "<span class='check'></span><span class='text'>" + op.label + "</span>";
-                        content += "</label>";
-                        content += "</div>";
-                    }
-                    content += "</div>";
-                    content += "</div>";
-                    break;
-
-                case "RadioButton":
-                    var radioButtonDisabled = "";
-                    if (f.readOnlyTagValue === "disabled") {
-                        radioButtonDisabled = " condition__button-read-only";
-                    }
-
-                    content += "<div class='form__input " + f.readOnlyClassContent + "'>";
-                    content += "<div class='title'>" + f.indexLabel + "<span class='must__fill-label'>" + f.requiredLabel + "</span></div>";
-                    content += "<div class='radio__container " + f.inputRequiredContent + "'>";
-                    for (var j = 0; j < f.optionList.length; j++) {
-                        var op = f.optionList[j];
-                        var opId = "para_docDetail_radioButton_" + f.indexFieldName + "__" + op.value;
-
-                        content += "<div class='condition__button" + radioButtonDisabled + "'>";
-                        content += "<input class='input__detail_parameter' type='radio' id='" + opId + "' " + f.readOnlyTagValue;
-                        content += "  name='rb1' " + op.checked + " />";
-                        content += "<label for='" + opId + "'>";
-                        content += "<span class='check'></span>";
-                        content += "<span class='text'>" + op.label + "</span>";
-                        content += "</label>";
-                        content += "</div>";
-                    }
-                    content += "</div>";
-                    content += "</div>";
-                    break;
-
-                case "Date":
-                    var dateId = "para_docDetail_date_" + f.indexFieldName;
-
-                    content += "<div class='form__input " + f.readOnlyClassContent + "'>";
-                    content += "<div class='title'>" + f.indexLabel + "<span class='must__fill-label'>" + f.requiredLabel + "</span></div>";
-                    content += "<img class='calendar__icon' src='/images/calendar.svg' alt='icon' />";
-                    content += "<input class='input calendar2 input__detail_parameter " + f.inputRequiredContent + "' type='text'";
-                    content += "  id='" + dateId + "' date='" + f.value + "' " + f.readOnlyTagValue;
-                    content += "  value='' readonly autocomplete='off' />";
-                    content += "</div>";
-                    break;
-
-                default:
-                    break;
-            }
-        }
-
-        $(".row__info__box__content").html(content);
-
-        $(".calendar2").each(function () {
-            $(this).daterangepicker({
-                autoUpdateInput: false,
-                singleDatePicker: true,
-                showDropdowns: true,
-                autoApply: true,
-                drops: "up"
-            });
-
-            if ($(this).attr("date")) {
-                $(this).val($(this).attr("date"));
-                $(this).data('daterangepicker').setStartDate($(this).attr("date"));
-                $(this).data('daterangepicker').setEndDate($(this).attr("date"));
-            }
-        });
-        $(".calendar2").on("apply.daterangepicker", function (ev, picker) {
-            $(this).val(picker.startDate.format("YYYY/MM/DD"));
-        });
-    }
-
-    function drawDocumentDetailMimeType(auth) {
-        if (auth == null) {
-            return false;
-        }
-
-        var content = "";
-
-        for (var i = 0; i < auth.mimeTypeList.length; i++) {
-            var m = auth.mimeTypeList[i];
-            content += '<div class="option" mimetype="' + m + '">' + m + '</div>';
-        }
-
-        $(".mimetype_icon_box .mimetypes__box .options").html(content);
-    }
-
-    function setDetailButtonProp(docAuth, isDetailSuccess, isAnnoSuccess, isImageSuccess) {
-        if (isDetailSuccess) {
-            $(".btnModifyIndex").prop("disabled", !docAuth.editIndexFlg);
-
-            $('.menuApplyRescan').attr("taskId", docAuth.rescanTaskId);
-            $('.menuCancelRescan').attr("taskId", docAuth.rescanTaskId);
-            if (joAuthList.Rescan) {
-                $(".menuApplyRescan").removeClass("disable");
-                $(".menuCancelRescan").removeClass("disable");
-            } else {
-                $(".menuApplyRescan").addClass("disable");
-                $(".menuCancelRescan").addClass("disable");
-            }
-            if (docAuth.rescanFlg) {
-                $(".menuApplyRescan").hide();
-                $(".menuCancelRescan").show();
-            } else {
-                $(".menuApplyRescan").show();
-                $(".menuCancelRescan").hide();
-            }
-
-            $('.menuApplyAppendScan').attr("taskId", docAuth.appendScanTaskId);
-            $('.menuCancelAppendScan').attr("taskId", docAuth.appendScanTaskId);
-            if (joAuthList.AppendScan) {
-                $(".menuApplyAppendScan").removeClass("disable");
-                $(".menuCancelAppendScan").removeClass("disable");
-            } else {
-                $(".menuApplyAppendScan").addClass("disable");
-                $(".menuCancelAppendScan").addClass("disable");
-            }
-            if (docAuth.appendScanFlg) {
-                $(".menuApplyAppendScan").hide();
-                $(".menuCancelAppendScan").show();
-            } else {
-                $(".menuApplyAppendScan").show();
-                $(".menuCancelAppendScan").hide();
-            }
-            if (docAuth.filingNumber == null || docAuth.filingNumber === "") {
-                $(".menuApplyAppendScan").hide();
-            }
-
-            if (joAuthList.HideDoc && docAuth.hideDocFlg) {
-                $(".menuApplyHideDoc").removeClass("disable");
-                $(".menuCancelHideDoc").removeClass("disable");
-            } else {
-                $(".menuApplyHideDoc").addClass("disable");
-                $(".menuCancelHideDoc").addClass("disable");
-            }
-            if (docAuth.status === "A") {
-                $(".menuApplyHideDoc").show();
-                $(".menuCancelHideDoc").hide();
-            } else {
-                $(".menuApplyHideDoc").hide();
-                $(".menuCancelHideDoc").show();
-            }
-
-            if (joAuthList.DeleteDoc && docAuth.deleteDocFlg) {
-                $(".menuDeleteDoc").removeClass("disable");
-            } else {
-                $(".menuDeleteDoc").addClass("disable");
-            }
-        } else {
-            $(".btnModifyIndex").prop("disabled", true);
-
-            $('.menuApplyRescan').attr("taskId", "");
-            $('.menuCancelRescan').attr("taskId", "");
-            $(".menuApplyRescan").addClass("disable");
-            $(".menuCancelRescan").addClass("disable");
-            $(".menuApplyRescan").hide();
-            $(".menuCancelRescan").hide();
-
-            $('.menuApplyAppendScan').attr("taskId", "");
-            $('.menuCancelAppendScan').attr("taskId", "");
-            $(".menuApplyAppendScan").addClass("disable");
-            $(".menuCancelAppendScan").addClass("disable");
-            $(".menuApplyAppendScan").hide();
-            $(".menuCancelAppendScan").hide();
-
-            $(".menuApplyHideDoc").addClass("disable");
-            $(".menuCancelHideDoc").addClass("disable");
-            $(".menuApplyHideDoc").hide();
-            $(".menuCancelHideDoc").hide();
-
-            $(".menuDeleteDoc").addClass("disable");
-        }
-
-        if (isDetailSuccess && isAnnoSuccess && isImageSuccess) {
-            $('.tool__button.edit').prop("disabled", !docAuth.editAnnotationFlg);
-        } else {
-            $('.tool__button.edit').prop("disabled", true);
-        }
-    }
-
-    // open search area
-    $('.table__container').on('click', '.table__search__box__button', function () {
-        myTable.$('tr').removeClass('active');
-        $('.table__row__detail').removeClass('active');
-        $('.table__area').removeClass('shrink');
-        $('.search__box').fadeIn(200, "linear", function () {
-            $('.table__container').css('width', 'calc(100% - 230px)');
-            var currentPage = myTable.page.info().page;
-            var scrollPos = $(".dataTables_scrollBody").scrollTop();
-            myTable.columns.adjust().draw();
-            myTable.page(currentPage).draw('page');
-            $(".dataTables_scrollBody").scrollTop(scrollPos);
-            sortIconPosition();
-        });
-        $('.table__search__box__button').hide();
-    });
-
-    // close image box
-    $('.table__container').on('click', '.close__detail', function () {
-        myTable.$('tr').removeClass('active');
-        $('.table__row__detail').removeClass('active');
-        $('.table__area').removeClass('shrink');
-        $('.search__box').fadeIn(200, "linear", function () {
-            $('.table__container').css('width', 'calc(100% - 230px)');
-            var currentPage = myTable.page.info().page;
-            var scrollPos = $(".dataTables_scrollBody").scrollTop();
-            myTable.columns.adjust().draw();
-            myTable.page(currentPage).draw('page');
-            $(".dataTables_scrollBody").scrollTop(scrollPos);
-            sortIconPosition();
-        });
-        $('.table__search__box__button').hide();
-    });
-
-    //  詳細資料
-    $('.table__container').on('click', '.row__info', function () {
-        $('.row__image__box').hide();
-        $('.row__info__box').show();
-    });
-
-    // 文件影像
-    $('.table__container').on('click', '.backto__image__info', function () {
-        $('.row__image__box').show();
-        $('.row__info__box').hide();
-    });
-
-    // redraw table after change page total
-    myTable.on('draw.dt', function (e, settings, len) {
-        $('.delete').each(function () {
-            $(this).append("<div class='bar'></div>");
-        })
-    });
-
-    // date picker
-    moment.locale('zh-TW');
-    $(".calendar").each(function () {
-        $(this).daterangepicker({
-            autoUpdateInput: false,
-            singleDatePicker: $(this).attr("singlepicker") === "true",
-            showDropdowns: true,
-            autoApply: true
-        });
-
-        if ($(this).attr("singlepicker") === "true") {
-            if ($(this).attr("date")) {
-                $(this).val($(this).attr("date"));
-                $(this).data('daterangepicker').setStartDate($(this).attr("date"));
-                $(this).data('daterangepicker').setEndDate($(this).attr("date"));
-            }
-        } else {
-            if ($(this).attr("startdate") && $(this).attr("enddate")) {
-                $(this).val($(this).attr("startdate") + ' - ' + $(this).attr("enddate"));
-                $(this).data('daterangepicker').setStartDate($(this).attr("startdate"));
-                $(this).data('daterangepicker').setEndDate($(this).attr("enddate"));
-            }
-        }
-    });
-    $(".calendar").on("apply.daterangepicker", function (ev, picker) {
-        if ($(this).attr("singlepicker") === "true") {
-            $(this).val(picker.startDate.format("YYYY/MM/DD"));
-        } else {
-            $(this).val(picker.startDate.format("YYYY/MM/DD") + ' - ' + picker.endDate.format("YYYY/MM/DD"));
-        }
-    });
-
-    // input foucs
-    $('.form__input .input__box .input').focus(function () {
-        $(this).parent().css("border-color", "#2193d3");
-    });
-    $('.form__input .input__box .input').focusout(function () {
-        $(this).parent().css("border-color", "#f2f2f2");
-    });
-
-    // 文件影像更多功能
-    $('.table__container').on('click', '.functions__box .option', function () {
-        $('#' + $(this).attr('class').split(' ')[1]).removeClass('close').addClass('open')
-    });
-
-    // close 文件影像更多功能 pop
-    $('#container').on('click', '.pop .close', function () {
-        if ($(this).parent().parent().parent().attr("id") == "full__apply__for__change_document") {
-            recoverDocComboBox();
-        }
-
-        $('.pop').removeClass('open').addClass('close');
-    });
-    $('#container').on('click', '.pop .cancel', function () {
-        $('.pop').removeClass('open').addClass('close');
-    });
-
-    // double click to open image as full page
-    $('.table__row__detail').dblclick(function (e) {
-        if (e.target.tagName == "DIV" && canvas) {
-            switchToFullScreeMode();
-        }
-    });
-
-    function switchToFullScreeMode() {
-        $('.table__row__detail').addClass('fixed__for__pop');
-        $('.row__image__box').show();
-        $('.row__info__box').hide();
-        $('.tool__button.edit').show();
-        $('.tool__button.fit').hide();
-        isFullScreenMode = true;
-        resizeContainer();
-    }
-
-    // full screen's 詳細資料 button
-    $('.image__full__sreeen__info__button').click(function () {
-        $('.row__info__box').toggle();
-        $('.tools__and__image').toggleClass('mobile__style');
-        $('.image__full__sreeen__info__button .inner .icon').toggleClass('active');
-        resizeContainer();
-    })
-
-    // close full screen
-    $('.close__full').click(function () {
-        if (isAnnoNeedToSave) {
-            $('#full__apply__for__close_full_screen').removeClass('close').addClass('open');
-        } else {
-            closeFullPop();
-        }
-    });
-    $('.pop3__confirm').click(function () {
-        $('#full__apply__for__close_full_screen').removeClass('open').addClass('close');
-        closeFullPop();
-    });
-    $('.pop3__cancel').click(function () {
-        $('#full__apply__for__close_full_screen').removeClass('open').addClass('close');
-    });
-    function closeFullPop() {
-        // close pop
-        $('.table__row__detail').removeClass('fixed__for__pop');
-        $('#container').removeClass('noscroll');
-        $('.row__image__box').show();
-        $('.row__info__box').hide();
-        $('.image__full__sreeen__info__button .inner .icon').removeClass('active');
-        $('.tool__button.fit').show();
-
-        if ($(window).width() <= 1024) {
-            $('.table__row__detail').removeClass('active');
-            myTable.$('tr').removeClass('active');
-            $('.table__area').removeClass('shrink');
-            $('.tools__and__image').removeClass('mobile__style');
-        }
-
-        isFullScreenMode = false;
-
-        // 回到檢視模式
-        switchBackToViewMode();
-
-        resizeContainer();
-    }
-
-    // change document
-    $('.pop4__confirm').click(function () {
-        $('#full__apply__for__change_document').removeClass('open').addClass('close');
-        doChangeDoc();
-    });
-    $('.pop4__cancel').click(function () {
-        recoverDocComboBox();
-        $('#full__apply__for__change_document').removeClass('open').addClass('close');
-    });
-
-    // full screen left
-    $('.image__full__sreeen-left').click(async function () {
-        var index = -1;
-        var listOnlyTypeNormal = testData.filter(function (d) {
-            return d.type.split(" ").includes("normal");
-        });
-
-        listOnlyTypeNormal.some(function (d, i) {
-            if (d.id == currentRowId) {
-                index = i;
-                return true;
-            }
-        });
-
-        if (!listOnlyTypeNormal[index - 1]) {
-            return false;
-        }
-
-        $("#change_document_new_currentRowId").val(listOnlyTypeNormal[index - 1].id);
-
-        if (isAnnoNeedToSave) {
-            $('#full__apply__for__change_document').removeClass('close').addClass('open');
-        } else {
-            doChangeDoc();
-        }
-    });
-
-    // full screen right
-    $('.image__full__sreeen-right').click(async function () {
-        var index = -1;
-        var listOnlyTypeNormal = testData.filter(function (d) {
-            return d.type.split(" ").includes("normal");
-        });
-
-        listOnlyTypeNormal.some(function (d, i) {
-            if (d.id == currentRowId) {
-                index = i;
-                return true;
-            }
-        });
-
-        if (!listOnlyTypeNormal[index + 1]) {
-            return false;
-        }
-
-        $("#change_document_new_currentRowId").val(listOnlyTypeNormal[index + 1].id);
-
-        if (isAnnoNeedToSave) {
-            $('#full__apply__for__change_document').removeClass('close').addClass('open');
-        } else {
-            doChangeDoc();
-        }
-    });
-
-    // full screen 申請重掃
-    $('.full__apply__for__rescan').click(function () {
-        $('#full__apply__for__rescan').removeClass('close').addClass('open');
-    });
-
-    // full screen 取消重掃
-    $('.full__cancel__for__rescan').click(function () {
-        $('#full__cancel__for__rescan').removeClass('close').addClass('open');
-    });
-
-    // full screen 申請補掃
-    $('.full__apply__for__scan').click(function () {
-        $('#full__apply__for__scan').removeClass('close').addClass('open');
-    });
-
-    // full screen 取消補掃
-    $('.full__cancel__for__scan').click(function () {
-        $('#full__cancel__for__scan').removeClass('close').addClass('open');
-    });
-
-    // full screen 隱藏影像
-    $('.full__apply__hide__image').click(function () {
-        $('#full__apply__hide__image').removeClass('close').addClass('open');
-    });
-
-    // full screen 取消隱藏
-    $('.full__cancel__hide__image').click(function () {
-        $('#full__cancel__hide__image').removeClass('close').addClass('open');
-    });
-
-    // full screen 刪除影像
-    $('.full__delete__image').click(function () {
-        $('#full__delete__image').removeClass('close').addClass('open');
-    });
-
-    // mobile 重新查詢 
-    $('.re__search').click(function () {
-        $(this).hide();
-        $('.search__box').removeClass('search__box__hide').addClass('search__box__show');
-    });
-
-    // mobile 收合
-    $('.close__des').click(function () {
-        $('.re__search').show();
-        $('.search__box').removeClass('search__box__show').addClass('search__box__hide');
-    });
-
-    // 重新載入查詢結果頁面
-    function reloadQueryResultPage(keptDocumentId) {
-        var form = document.createElement('form');
-        document.body.appendChild(form);
-        form.method = 'post';
-        form.action = '/Query/Result';
-
-        var input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = 'para_queryCondition_queryPageId';
-        input.value = $("#para_queryCondition_queryPageId").val();
-        form.appendChild(input);
-
-        var input2 = document.createElement('input');
-        input2.type = 'hidden';
-        input2.name = 'para_queryCondition_currentConditionListString';
-        input2.value = currentConditionListString;
-        form.appendChild(input2);
-
-        var input3 = document.createElement('input');
-        input3.type = 'hidden';
-        input3.name = 'keepFilterFlag';
-        input3.value = "Y";
-        form.appendChild(input3);
-
-        if (keptDocumentId) {
-            var input4 = document.createElement('input');
-            input4.type = 'hidden';
-            input4.name = 'keptDocumentId';
-            input4.value = keptDocumentId;
-            form.appendChild(input4);
-        }
-
-        form.submit();
-    }
-
-    // 修改索引 button
-    $(".btnModifyIndex").click(async function () {
-        var allFill = true;
-        $(".input__detail_must_fill, .input__detail_must_fill_combobox, " +
-            ".input__detail_must_fill_date, .input__detail_must_fill_checkbox").each(function () {
-                if ($(this).is("div")) {
-                    var anyBoxFilled = false;
-                    $(this).find("input").each(function () {
-                        // 某組 checkbox 裡的每個勾勾
-                        if ($(this).prop('checked')) {
-                            anyBoxFilled = true;
-                            return false;
-                        }
-                    });
-
-                    if (anyBoxFilled) {
-                        return;
-                    }
-                } else {
-                    if ($(this).val().trim() != "") {
-                        return;
-                    }
-                }
-
-                alert(getAlertText($(this)));
-
-                $(this).focus();
-                allFill = false;
-                return false;
-            });
-
-        if (!allFill) {
-            return false;
-        }
-
-        // update index
-        var formData = await getParameterAsUpdateIndexFormData();
-
-        var updateResponse = null;
-        $.ajax({
-            url: "/Query/Result/UpdateQueryDocument",
-            type: "POST",
-            data: formData,
-            async: false,
-            processData: false,
-            contentType: false,
-            success: function (data) {
-                updateResponse = data;
-            },
-            error: function () {
-                updateResponse = null;
-            }
-        });
-        if (updateResponse == null) {
-            alert("error");
-            return false;
-        }
-
-        if (updateResponse.needRedirect) {
-            window.location.href = updateResponse.redirectUrl;
-            return false;
-        }
-
-        if (updateResponse.error.errorFlag) {
-            alert(updateResponse.error.errorId + ' ' + updateResponse.error.errorMessage);
-            return false;
-        }
-
-        alert(jsMultiLanguageObject.msgUpdateSuccess);
-
-        // 重新載入查詢結果頁面
-        var documentId = $("#para_docDetail_documentId").val();
-        reloadQueryResultPage(documentId);
-    });
-
-    // 整理 UpdateIndex 所需 formData
-    function getParameterAsUpdateIndexFormData() {
-        // text(value), checkbox(checked), radio(checked)
-        var formData = new FormData();
-
-        var queryPageId = $("#para_queryCondition_queryPageId").val();
-        formData.append("queryPageId", queryPageId);
-
-        var fields = $('.input__detail_parameter');
-        for (var i = 0; i < fields.length; i++) {
-            if (fields[i].type == 'radio' || fields[i].type == 'checkbox') {
-                formData.append(fields[i].id, fields[i].checked);
-            } else {
-                formData.append(fields[i].id, fields[i].value);
-            }
-        }
-
-        var comboBoxes = $('.input__detail_parameter_combobox');
-        for (var i = 0; i < comboBoxes.length; i++) {
-            var selectedValue = comboBoxes[i].getAttribute("select-id");
-            if (selectedValue == null) {
-                selectedValue = "";
-            }
-            formData.append(comboBoxes[i].id, selectedValue);
-        }
-
-        return formData;
-    }
-
-    // 申請重掃(全螢幕)
-    $(".btnApplyRescanFull").click(async function () {
-        var documentId = $("#para_docDetail_documentId").val();
-        var reason = $("#para_applyRescan_full_reason").val();
-
-        doApplyRescan(documentId, reason);
-    });
-
-    // 申請重掃(右側頁)
-    $(".btnApplyRescan").click(async function () {
-        var documentId = $("#para_docDetail_documentId").val();
-        var reason = $("#para_applyRescan_reason").val();
-
-        doApplyRescan(documentId, reason);
-    });
-
-    function doApplyRescan(documentId, reason) {
-        var formData = new FormData();
-        formData.append("documentId", documentId);
-        formData.append("reason", reason);
-
-        var response = null;
-        $.ajax({
-            url: "/Query/Result/RequestQueryRescan",
-            type: "POST",
-            data: formData,
-            async: false,
-            processData: false,
-            contentType: false,
-            success: function (data) {
-                response = data;
-            },
-            error: function () {
-                response = null;
-            }
-        });
-        if (response == null) {
-            alert("error");
-            return false;
-        }
-
-        if (response.needRedirect) {
-            window.location.href = response.redirectUrl;
-            return false;
-        }
-
-        if (response.error.errorFlag) {
-            alert(response.error.errorId + ' ' + response.error.errorMessage);
-            return false;
-        }
-
-        alert(jsMultiLanguageObject.msgApplyRescanSuccess);
-
-        $('.menuApplyRescan').attr("taskId", response.taskId);
-        $('.menuCancelRescan').attr("taskId", response.taskId);
-        $(".menuApplyRescan").hide();
-        $(".menuCancelRescan").show();
-
-        $('.pop').removeClass('open').addClass('close');
-    }
-
-    // 取消重掃
-    $(".btnCancelRescan").click(async function () {
-        var taskId = $(".menuCancelRescan").attr("taskId");
-
-        doCancelRescan(taskId);
-    });
-
-    function doCancelRescan(taskId) {
-        var formData = new FormData();
-        formData.append("taskId", taskId);
-
-        var response = null;
-        $.ajax({
-            url: "/Query/Result/CancelQueryRescan",
-            type: "POST",
-            data: formData,
-            async: false,
-            processData: false,
-            contentType: false,
-            success: function (data) {
-                response = data;
-            },
-            error: function () {
-                response = null;
-            }
-        });
-        if (response == null) {
-            alert("error");
-            return false;
-        }
-
-        if (response.needRedirect) {
-            window.location.href = response.redirectUrl;
-            return false;
-        }
-
-        if (response.error.errorFlag) {
-            alert(response.error.errorId + ' ' + response.error.errorMessage);
-            return false;
-        }
-
-        alert(jsMultiLanguageObject.msgCancelRescanSuccess);
-
-        $('.menuApplyRescan').attr("taskId", "0");
-        $('.menuCancelRescan').attr("taskId", "0");
-        $(".menuApplyRescan").show();
-        $(".menuCancelRescan").hide();
-
-        $('.pop').removeClass('open').addClass('close');
-    }
-
-    // 申請補掃(全螢幕)
-    $(".btnApplyAppendScanFull").click(async function () {
-        var documentId = $("#para_docDetail_documentId").val();
-        var reason = $("#para_applyAppendScan_full_reason").val();
-
-        doApplyAppendScan(documentId, reason);
-    });
-
-    // 申請補掃(右側頁)
-    $(".btnApplyAppendScan").click(async function () {
-        var documentId = $("#para_docDetail_documentId").val();
-        var reason = $("#para_applyAppendScan_reason").val();
-
-        doApplyAppendScan(documentId, reason);
-    });
-
-    function doApplyAppendScan(documentId, reason) {
-        var formData = new FormData();
-        formData.append("documentId", documentId);
-        formData.append("reason", reason);
-
-        var response = null;
-        $.ajax({
-            url: "/Query/Result/RequestQueryAppendScan",
-            type: "POST",
-            data: formData,
-            async: false,
-            processData: false,
-            contentType: false,
-            success: function (data) {
-                response = data;
-            },
-            error: function () {
-                response = null;
-            }
-        });
-        if (response == null) {
-            alert("error");
-            return false;
-        }
-
-        if (response.needRedirect) {
-            window.location.href = response.redirectUrl;
-            return false;
-        }
-
-        if (response.error.errorFlag) {
-            alert(response.error.errorId + ' ' + response.error.errorMessage);
-            return false;
-        }
-
-        alert(jsMultiLanguageObject.msgApplyAppendScanSuccess);
-
-        $('.menuApplyAppendScan').attr("taskId", response.taskId);
-        $('.menuCancelAppendScan').attr("taskId", response.taskId);
-        $(".menuApplyAppendScan").hide();
-        $(".menuCancelAppendScan").show();
-
-        $('.pop').removeClass('open').addClass('close');
-    }
-
-    // 取消補掃
-    $(".btnCancelAppendScan").click(async function () {
-        var taskId = $(".menuCancelAppendScan").attr("taskId");
-
-        doCancelAppendScan(taskId);
-    });
-
-    function doCancelAppendScan(taskId) {
-        var formData = new FormData();
-        formData.append("taskId", taskId);
-
-        var response = null;
-        $.ajax({
-            url: "/Query/Result/CancelQueryAppendScan",
-            type: "POST",
-            data: formData,
-            async: false,
-            processData: false,
-            contentType: false,
-            success: function (data) {
-                response = data;
-            },
-            error: function () {
-                response = null;
-            }
-        });
-        if (response == null) {
-            alert("error");
-            return false;
-        }
-
-        if (response.needRedirect) {
-            window.location.href = response.redirectUrl;
-            return false;
-        }
-
-        if (response.error.errorFlag) {
-            alert(response.error.errorId + ' ' + response.error.errorMessage);
-            return false;
-        }
-
-        alert(jsMultiLanguageObject.msgCancelAppendScanSuccess);
-
-        $('.menuApplyAppendScan').attr("taskId", "0");
-        $('.menuCancelAppendScan').attr("taskId", "0");
-        $(".menuApplyAppendScan").show();
-        $(".menuCancelAppendScan").hide();
-
-        $('.pop').removeClass('open').addClass('close');
-    }
-
-    // 隱藏影像
-    $(".btnApplyHideDoc").click(async function () {
-        var documentId = $("#para_docDetail_documentId").val();
-
-        doApplyHideDoc(documentId);
-    });
-
-    function doApplyHideDoc(documentId) {
-        var formData = new FormData();
-        formData.append("documentId", documentId);
-
-        var response = null;
-        $.ajax({
-            url: "/Query/Result/HideQueryDocument",
-            type: "POST",
-            data: formData,
-            async: false,
-            processData: false,
-            contentType: false,
-            success: function (data) {
-                response = data;
-            },
-            error: function () {
-                response = null;
-            }
-        });
-        if (response == null) {
-            alert("error");
-            return false;
-        }
-
-        if (response.needRedirect) {
-            window.location.href = response.redirectUrl;
-            return false;
-        }
-
-        if (response.error.errorFlag) {
-            alert(response.error.errorId + ' ' + response.error.errorMessage);
-            return false;
-        }
-
-        alert(jsMultiLanguageObject.msgHideDocSuccess);
-
-        reloadQueryResultPage(documentId);
-    }
-
-    // 取消隱藏
-    $(".btnCancelHideDoc").click(async function () {
-        var documentId = $("#para_docDetail_documentId").val();
-
-        doCancelHideDoc(documentId);
-    });
-
-    function doCancelHideDoc(documentId) {
-        var formData = new FormData();
-        formData.append("documentId", documentId);
-
-        var response = null;
-        $.ajax({
-            url: "/Query/Result/ShowQueryDocument",
-            type: "POST",
-            data: formData,
-            async: false,
-            processData: false,
-            contentType: false,
-            success: function (data) {
-                response = data;
-            },
-            error: function () {
-                response = null;
-            }
-        });
-        if (response == null) {
-            alert("error");
-            return false;
-        }
-
-        if (response.needRedirect) {
-            window.location.href = response.redirectUrl;
-            return false;
-        }
-
-        if (response.error.errorFlag) {
-            alert(response.error.errorId + ' ' + response.error.errorMessage);
-            return false;
-        }
-
-        alert(jsMultiLanguageObject.msgCancelHideDocSuccess);
-
-        reloadQueryResultPage(documentId);
-    }
-
-    // 刪除影像(全螢幕)
-    $(".btnDeleteDocFull").click(async function () {
-        var documentId = $("#para_docDetail_documentId").val();
-        var reason = $("#para_deleteDoc_full_reason").val();
-
-        if (!reason) {
-            alert(jsMultiLanguageObject.msgDeleteDocReasonIncomplete);
-            $("#para_deleteDoc_full_reason").focus();
-
-            return false;
-        }
-
-        doDeleteDocument(documentId, reason);
-    });
-
-    // 刪除影像(右側頁)
-    $(".btnDeleteDoc").click(async function () {
-        var documentId = $("#para_docDetail_documentId").val();
-        var reason = $("#para_deleteDoc_reason").val();
-
-        if (!reason) {
-            alert(jsMultiLanguageObject.msgDeleteDocReasonIncomplete);
-            $("#para_deleteDoc_reason").focus();
-
-            return false;
-        }
-
-        doDeleteDocument(documentId, reason);
-    });
-
-    function doDeleteDocument(documentId, reason) {
-        var formData = new FormData();
-        formData.append("documentId", documentId);
-        formData.append("reason", reason);
-
-        var response = null;
-        $.ajax({
-            url: "/Query/Result/DeleteQueryDocument",
-            type: "POST",
-            data: formData,
-            async: false,
-            processData: false,
-            contentType: false,
-            success: function (data) {
-                response = data;
-            },
-            error: function () {
-                response = null;
-            }
-        });
-        if (response == null) {
-            alert("error");
-            return false;
-        }
-
-        if (response.needRedirect) {
-            window.location.href = response.redirectUrl;
-            return false;
-        }
-
-        if (response.error.errorFlag) {
-            alert(response.error.errorId + ' ' + response.error.errorMessage);
-            return false;
-        }
-
-        alert(jsMultiLanguageObject.msgDeleteDocSuccess);
-
-        // 重新載入查詢結果頁面
-        reloadQueryResultPage();
-    }
-
-    // 列印影像
-    $(".menuPrintDoc").click(async function () {
-        var documentId = $("#para_docDetail_documentId").val();
-        var formId = $("#preview_image_formInfo").text().split(" ")[0];
-
-        if (!documentId) {
-            return false;
-        }
-
-        var response = getDocumentPdf(documentId);
-        if (response == null) {
-            alert("error");
-            return false;
-        }
-
-        if (response.needRedirect) {
-            window.location.href = response.redirectUrl;
-            return false;
-        }
-
-        if (response.error.errorFlag) {
-            alert(response.error.errorId + ' ' + response.error.errorMessage);
-            return false;
-        }
-
-        var blob = base64ImageToBlob(response.base64FileString);
-        doBrowserExportAction(document, blob, documentId + "-" + formId + ".pdf");
-    });
-
-    function getDocumentPdf(documentId) {
-        var formData = new FormData();
-        formData.append("documentId", documentId)
-
-        // call action
-        var result = null;
-        $.ajax({
-            url: "/Query/Result/GetDocumentPdf",
-            type: "POST",
-            data: formData,
-            async: false,
-            processData: false,
-            contentType: false,
-            success: function (data) {
-                result = data;
-            },
-            error: function () {
-                result = null;
-            }
-        });
-
-        return result;
-    }
-    //2021-07-15 匯出影像查詢列表.pdf
-    function exportPdf(header, dataTable) {
-        var formData = new FormData();
-        formData.append("header", header);
-        formData.append("data", dataTable);
-
-        // call action
-        var result = null;
-        $.ajax({
-            url: "/Query/Result/ExportPdf",
-            type: "POST",
-            data: formData,
-            async: false,
-            processData: false,
-            contentType: false,
-            success: function (data) {
-                result = data;
-            },
-            error: function () {
-                result = null;
-            }
-        });
-
-        return result;
-    }
-    //2021-07-15 匯出影像查詢列表.pdf
-    function exportExcel(header, dataTable) {
-        var formData = new FormData();
-        formData.append("header", header);
-        formData.append("data", dataTable);
-
-        // call action
-        var result = null;
-        $.ajax({
-            url: "/Query/Result/ExportExcel",
-            type: "POST",
-            data: formData,
-            async: false,
-            processData: false,
-            contentType: false,
-            success: function (data) {
-                result = data;
-            },
-            error: function () {
-                result = null;
-            }
-        });
-
-        return result;
-    }
-    //2021-07-15 Peter 一次取出多筆 Pdf
-    function getDocumentPdfList(documentId) {
-        var formData = new FormData();
-        formData.append("documentId", documentId)
-
-        // call action
-        var result = null;
-        $.ajax({
-            url: "/Query/Result/GetDocumentPdfList",
-            type: "POST",
-            data: formData,
-            async: false,
-            processData: false,
-            contentType: false,
-            success: function (data) {
-                result = data;
-            },
-            error: function () {
-                result = null;
-            }
-        });
-
-        return result;
-    }
-    // MimeType 選單 click
-    var mimeTypeIsImageList = [ ".tif", ".tiff", ".jpg", ".jpeg", ".png" ]
-    $(".mimetypes__box .options").on("click", ".option", function () {
-        var chosenMT = $(this).attr("mimetype");
-
-        if (curMimeType == chosenMT) {
-            return false;
-        }
-
-        if (mimeTypeIsImageList.includes(chosenMT)) {
-            // 切換圖檔
-            curMimeType = chosenMT;
-
-            type = 'fit';
-            canvas.remove(oImg); //watermark
-            resetZoomRotate();
-            canvasArrayForDB[page].canvas = canvas.toJSON(['tagId']);
-            canvas.relativePan({ x: bg.getBoundingRect().left * -1, y: bg.getBoundingRect().top * -1 });
-            beforeSwitchImage();
-        } else {
-            var clickedTestDataItem = testData.filter(function (d) { return d.id == currentRowId; })[0];
-            var docId = clickedTestDataItem.images;
-
-            // 下載檔案固定拿該 docId 的第一頁
-            var response = getDocumentImage(docId, 1, chosenMT);
-            if (response == null) {
-                alert("error");
-                return false;
-            }
-
-            if (response.needRedirect) {
-                window.location.href = response.redirectUrl;
-                return false;
-            }
-
-            if (response.error.errorFlag) {
-                alert(response.error.errorId + ' ' + response.error.errorMessage);
-                return false;
-            }
-
-            var blob = base64ImageToBlob(response.list[0].file);
-            doBrowserExportAction(document, blob, docId + chosenMT);
-        }
-    })
-
-    // 預先載入 FormByGroup 的選項
-    if ($("#para_queryCondition_comboBox_FormByGroup").length > 0 &&
-        $("#para_queryCondition_comboBox_FormGroup").length > 0 && 
-        $("#para_queryCondition_comboBox_FormGroup").attr("select-id") != "") {
-
-        var originalFormId = $("#para_queryCondition_comboBox_FormByGroup").attr("select-id");
-        $("#comboBox_option_FormByGroup").empty();
-
-        var formGroupCode = $("#para_queryCondition_comboBox_FormGroup").attr("select-id");
-
-        var response = getFormQueryFormList(formGroupCode);
-        if (response == null) {
-            alert("error");
-            return false;
-        }
-        if (response.needRedirect) {
-            window.location.href = response.redirectUrl;
-            return false;
-        }
-        if (response.error.errorFlag) {
-            alert(response.error.errorId + " " + response.error.errorMessage);
-            return false;
-        }
-
-        var hasMatch = false;
-        for (var i = 0; i < response.list.length; i++) {
-            if (!hasMatch && originalFormId == response.list[i].formId) {
-                hasMatch = true;
-                $("#para_queryCondition_comboBox_FormByGroup").val(response.list[i].formId + " " + response.list[i].formName);
-            }
-
-            $('#comboBox_option_FormByGroup').append("<div class='option' value='" + response.list[i].formId + "'>" + response.list[i].formId + " " + response.list[i].formName + "</div>");
-        }
-
-        if (!hasMatch) {
-            $("#para_queryCondition_comboBox_FormByGroup").attr("select-id", "");
-            $("#para_queryCondition_comboBox_FormByGroup").val("");
-        }
-    }
-
-    // 預設要點選的 DocumentId
-    if (jsKeptDocumentId != "") {
-        var trObj = myTable.$('tr[docid="' + jsKeptDocumentId + '"]');
-        if (trObj.length > 0) {
-            ScrollToRow(myTable, trObj);
-            trObj.click();
-        }
-    }
-});
-
-Date.prototype.toISOString = function () {
-    let pad =(n)=>(n < 10)?'0' + n:n;
-    let hours_offset = this.getTimezoneOffset() / 60;
-    let offset_date = this.setHours(this.getHours() - hours_offset);
-    let symbol = (hours_offset >= 0) ? "-" : "+";
-    let time_zone = symbol+pad(Math.abs(hours_offset))+ ":00";
-    
-    return this.getUTCFullYear() +
-        '-' + pad(this.getUTCMonth() + 1) +
-        '-' + pad(this.getUTCDate()) +
-        'T' + pad(this.getUTCHours()) +
-        ':' + pad(this.getUTCMinutes()) +
-        ':' + pad(this.getUTCSeconds()) +
-        '.' + (this.getUTCMilliseconds() / 1000).toFixed(3).slice(2, 5) +
-        time_zone;
-};
-
-ScrollToRow = function (theTable, iRow) {
-    // get the page of a given item in order to paginate to it's page on load
-    var displayLength = theTable.page.info().length;
-    var taskListItems = theTable.$("tr", { "filter": "applied" });
-
-    var index = taskListItems.index(iRow);
-
-    // get the page by removing the decimals
-    var page = Math.floor(index / displayLength);
-
-    // move to page
-    theTable.page(page).draw('page');
-
-    // scroll the row into view
-    var maxScrollTop = $(".dataTables_scrollBody").scrollTop(2000).scrollTop();
-
-    var indexPercentInPage = (index + 1 - (page * displayLength)) / displayLength;
-    var targetScrollTop = maxScrollTop * indexPercentInPage;
-
-    $(".dataTables_scrollBody").scrollTop(targetScrollTop);
-};
+-----BEGIN CERTIFICATE-----
+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
+qNbt4QVg1Tdde3ZzFubPtdXxHhqgR3ef77fRv3k2mt93B3Js9JfPPP95zvP3+wpk
+/o4dtlf/kWu/wK/9aU/7Bec7Fq1d5+n+K1f3/k7zTi/kzdvKm/d0IW/e0bx5tSJs
+XtngVMkHp6rzba2F/vr+2avvwvOt7z+96dQ3Si5LsmmNtI0DHeh8OR4ktkYovTiU
+vRxXAXYTraC9nX7FsAKxvArYIYOvNVLY6aF38a78x4zblauLeF9mQsTO7MK7BHjC
+hbulSfMU9ZMV8UhQEQOl8MeC4JdI4RuC4BOk8I1B8GlS+KYg+Fwp/Mkg+Aop/Okg
++HopfHMQ/DkpfEsQ/EdS+PNB8A+l8Bfy4DHrRUrJTgCng/XlEE/AX/r1PomQ3Mge
+M3DxNPCOr63I8z9a9ktu2XQpKJYdL+tj2ZIMXHxQ2e1u2Wzx6Yqq6WvZNbKy23sq
+e5tbNl3MimUP7WvZQ2Vlbwsu2814VZnMPbZ3c4+drqpxIy6qentfVb1dpurOnsy0
+yy0blvNC2XZfy7ZlZe/qqew9btlJIymWvb6vZa+Xlb2np7JpPKqyslNGSix7a1/L
+3iore985uMdeqXvsDxps3pLCXwuCv1cmm6U6ujnf664hCowC0RCf9tUQn8oM8fo5
+GOILac1+ElSzonIZ/KeBc6kUfqDH6XqkNM/BbsY75Bqv0CgUjXdNeR+NJ8nAxfdi
+vNlSVQ93U/UdV9Uio0hUdVVfVV0lU/Wdnjrbu27ZhmGIZT/b17KflZX97jmY6WWp
+mY4GOc0bUvixIPgRKfzX3RrhfdcQxUaxaIiP+2qIj2WGeP8cDPFXqarHg2pGKmTw
+j4LgJRWyUWdCj51tqKQI+9oKskhE85BDNyIs5mC7eFcAC2KAK2li5J8/O3u2s7A4
+1JWm0UKFu4dn5ohhOnvJ8OqikP5laOxQl2Rpti8VITekCNEwzrgKt5usL0PcAIcF
+jkCYlf07aJCr6VcdZ8GBgSPNUtby4Fzrglmbg1ntwayOYNbBYNbxYNbJYNaZYFZp
+KJA1LJgF792PVEhZM4JZi4NZq4NZG4PV2B6cqyOYdSyYdSKY9XmwGvCW+8hoKasq
+HJirPhxY1o0VgbkWVgR675jgsqYEs2YGs5YFs9YEK78lONf+4FxHg1mfBAs8Hcw6
+G8xKKYFlVSvB7aUEtvKo4FxTg1kLgllrglntwcofCM51KjhXIhKYa0gwa1Iwa1Yw
+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
+0+ZK9W3crWVKceJn1Bf78GedDC0045+tUlheomq+pVLZDxTZGC+y4nX8Jsu2t5aq
+HG5S367hG/mpMRfyt7uFXv7WUH29xPFeiU+vIV1RZTU8VKFQfemo4+8Fyt6lK7uZ
+Y+4pS832w8UzqtW1SmuU3Vz8z73W/8f/Oziv+r+Ck5CNyVAzNZ/Qi1K2awhz6M31
+tnL1fqewnrGFcSvjTkY/Y4hwBvazPcg4zKhpqrZSwjJaWZW9VdtdMQ87tdsrF8Cv
+lVctxVGOvBOPFa+jmHzao4e032ibSflqcSfZWslO7NceKbiI9YswqIWnBzCdaxvW
+jlReTzWU5H4CFaQ8SHZ51iP4Kjorvo2j2mPFT+M4Biqfw6h2bfnzeBzfrXyJylZ6
+f0n28apXMIYvFah6rqz8PV3loQKPNh3H6Sn7NGf1RW1KiUbxX8qdpn1R+xxFvog/
+VM3WXqQ8F+CrlMk87Sjur67TVCZna6qeBsad2mzO8HHugRN4nlb3E7g+f6/2tHZv
+UVQ7gYaiuDabM6nlyOm4tvwBbSll+E2qYWrNt7SQtjP/Sa2WY5Zytsc58ji+U/G6
+9qKm5/1FO65Vet/TjuOdqmz9TowVT9GH6Y22E3eSnq+/TfFVhI/S+8zb+Cjl8DYe
+LlJ2X/lp+ijupufYsPYExaucl2I159DEOYxqqh+uQ1tBr/6itq6iT39bq6MnVo12
+kBRN/0hBXK/Ruouu0Jskt9kVGjo5w07O+WncXfIbfRH3wCJtTmkV2d0lf9RXsbKL
+r9XD16rXPlqtMplf3op6bWVRK1Zp+4p0Tw/XHOY7Eub4OMev0t6vXkB1vlxR5Jms
+byyq8MQ5clg7qziHei87d7bnRewsOoPw6eo6z6t4ifZRr+Lx6hytRr+vUkON3lKs
+8nyiYoNnv6ZG3bD2mcqDnmHtTbaPVF7lCXNbwtyWy/nqh/nqR6meX3gO8xVv4Jgb
+JEbZl7M9rD1dvSLrOmzJzdH2awp1mmfbs+rouXu3tw6F+CxhOe4nnIVnCefjJ4RL
+8B+EZzM2Mray3oG3CC9gJcC4D1Oz62hfvILwMjRlD9Mz9m7vMO1Ebsw+xFcZZWWU
+lXpN2fWasv1s+9keZnuY7VG2R9keY3uM7W+zfUJQKS+zrekmKqWa7RpBpfjYrhdU
+ShfbfkGlDLE9LMg5sD3K9jFdtWKMlTFWTrB9gm3Nw1f3KLuG7Rq269muZ9vPtp/t
+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
+36mq2OQ4uyec6iaK66GxRcO2PF1PlJEMEnyKyblcbgOrAew1rzq1AwHuKfbmWyxR
+dvJWNCZ8IbpWBFaLUd5JPeLnsbAnZRRhhjlyB9An96ZF9Wt5EJdC3bX95Alxf3Zg
+AynU31XpPvseUdmZ6f4WGg27KddO4LRMXnMEqrFkuNah5mrmOkxvUh3lyXM9yVe8
+Cc1Uk3lvgtxTcepp5Jp6oq01yXHq/gQQ47EhI7DQjEiqfYZVPkkdeqSDQjfSTyMV
+qKafzXThaszFZer/+o15ZJ9BP+uoOzbTUKlG6mLl5+qqaTHYy1owLcZ5wWqsoZ85
+VPsiqn0O2fU0lJr4ypmGQzUPVDOnxZyTNnQiU9pqRVX//lmJd2BxUtonuxeq3By0
+/cNN1TzzgP/XmrnzH2/mvA7s5+VlgHAfZ9ZP9doLjVo4LlULxtDT26jxTVR9J5on
+aGgHpzpRI1WqzdSFc1CbKGeugiHscazza3igLpSBWo3zaAY1U0c3c4cnP5/XuA7q
+5Gf2GhnA2oJBmP/OpOtuIuzhLtxA/86iOvtwFj+x6rCH/2l9H2bLO7BEWp6+xiq/
+NnStcldjoiVzDdbzxayk5tJIrMUHWUatcXLyrte8qiu1lpN3+8KTdru6MdrQc/9Y
+P55s0NtD/h8ZRx/WKKKuGZ7y4Q4Mc0pUw+1RYS1jtXB/TCl/ute90+w460qpavJ1
+P9BoGV4z0aie4zo8Uy8/8S4ic5RzYvgm9H/wSeJ+JXNPkflKtj9z6fQr0VhqrcaH
+NtGqJu4DVE2cOYwPd1gvljlaPcHQ1eZ90MGrlWceqFqV8ll73G38drGR0EA8saTV
+QltvRTTyAzHCXrN3Tz7Q7fVBG3rxw+2opYmOmuj2fNC13yzxf7j2D93yQZr2wZu2
+7CRL284PsEJoxe4Ll3baB2rSVS00sqpp5mzmjJuxg+ZEB9eltkLJW73kTV16Xqmb
+qzq6ZjdduS5jT6Hjvz6/naNPbT21a37XQqEdXK1KWzG1S/1wUp6blmZtSkrWgm/7
+kw9BLK5eV2uReghiK6Y/9RCkFsmHILVIPgSpRaZDkFpMdAhSi/RDkFq4HYLUIv0Q
+REUmx6QfgtTC/RCkFs5DkFpkOgSpReohiLmsDTq48xCkFsmHIPYiaHB+6YcfdoTz
+3jkPP2rhdviRrJp3xe3woxbuhx9uul3GzCCVm+WSDz9q4Tz8sJld1jr8qEXq4Uft
+BO9GtRO+nc3jSVlPd2cbjYIOmiE+lzniS5slvrR5Yit2z/qSZovPZb74UmaMz2XO
++NJmjS9t3vgmmDm+k8wdn+vs8WWYPz7XGeRLm0M+11nkyziPfCkzyTfBXPK5zCZf
+2nzypcwoX9qc8iXNKl+GeeVzmVm+tLnlyzC7fC7zy5dhhvkyzjHfhLPMlzbPfEkz
+zZc213wps83nMt98jhnnc5lzvglnnW+CeTcPKEyfZ8hPnWdKSTmWL0yfZ5jqnGcq
+Iu1wPtfWrJi0A/r81HmmlJRD+vLM80xtwic8qJ/hNs9Q7D7PVLTLcX2+ik6Nczmy
+L800z1RPJB3bl2eeZ6qX0o7u81Pnmaox6fg+P3WeqfvjOLovdp9n6mppx/f5qfNM
+lXY9wi9Mn2epsc7eyXCQP3OieWZnk1CmOueZ8qcc6OcmzzOVZdqh/hR7npn+lIP9
+mRPNM+Wd4Ajcq84gUOz+AoXC9NcmFPana8Xu+0l4t6CV+uDJG+4MvnHhHy9ou5k2
+sMXu7y3Ymr4dd27IL3DZ314I9YfYzD2taVvjzMCFSV8a0RhrST+oiPCIPohqh63+
+7PQgrTJ+umcDfHYb4n1AhM9Lw3QVzLGjm3jEqlfWEL+ymqtSNT4RXr1F89QCHh9w
+6JZqmdhm95iHsXEKrUbmpOa6+JpczlvsqdvCjyy3qdPJS1bQpbT9GNokMbbifPSl
+Phidgyh1Y2oNYLsmS9kmfZAc58zSzNJc5M03OrtMT4onvVzyBFet7Ob45K2kU3eW
+SG5TB59FDPDV4nS1ascXNPbwMHhD6H6nfCe9V26v9b4J7pHP5S45l073LUxyu3xJ
+J2zOB7uzTvc75pvgnvkmuGu+k9w33wR3zpfx3vkmuHs+1/u3iO/f2erd3KvOJlDs
+fu9QM/G9Mx/0me4TCtPvk7nQOxbewvR+R7F7v6M8c7+jPHO/o2rifkd55n5HaaZ+
+Ty2V3qrkfsdlyedKmVc8+2zJ7QuyxrSz/BbsxkqslAgf9si4Nh9iZ/N5feuHc/H6
+f/Di9oGOGbdK4lIPnTZR3H+2d2yxcVzVM7OPGTv1yHsdN0kzdqfIyOt2vfVjk8ZR
+SpPUaUhlJ3Xtpo3kyFpnd5OlXmfjR0R4bkAI5ROkqmpRPvhAqBJI7Q8gISTUCiE+
+kPihX4jHB0J8VIAQH0gJcO65987cmbm7SZo/4K5nduacc88999xzz32c8exrCI2P
+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
+bCDI2GhP0l4POn3CxopSz0VZRhFtWVy4WK8iK2q0FUlbkbQVtpRxLDvH+4yXd7Iu
+Tz/83Or5A5Xf33LffW7ty4Vf9x+1sMN5mTw7Y+fdPPH2ueXfRtARNy/lwZtjqFCy
+1D0BKZL5qJy+wBLX/Ep0AN4ESOgFlmYCfj/v8tJ5YCOinTSdAKg0N7CI1N8zaEmi
+UZBI1D33WtjZM7yjcOviLT2GoD1BDm3BI5grqFkplKIi3QMK4qnLoudiU6LKFhV9
+BTtToUXetOVQSSS+y3wyw9vCDG/z3x2mfrXkFIXMmSL6zyLmxQs3V+S0Wf6DC64F
+Lv1CwqgFFqzYj766VW2fvboZvg9m5Qp/y5iFdA79QMNjFgyb36YPOSLYZwELX70V
+vP9OEMxMzUwDTFgwNjtbnZ07sl6bnJuuHZ6sNA7NTM49c3hu8vB6ozJ9qTE9M7Ve
+AXgEy5ouT/EPwBkLHiufPbUSvo2sJF/E9Oz1SvkQiuztDVHaqw0ZzxOEmABp3dgP
+TLxw+oNf8W8bj+/iMXYHj99CLA3Gb+Hl5fnl9xY6d50Ps/Pv3f3xPz/4wYef50yf
+P7p66Ur16uXdzdXLzZ3VlVcXmo26/IpeSrJ24qWXVpXCVg06fLm+s9WsXxcvVl81
+Knn16vpnVuktNmZ8uV1bh7/fiUQeuIunAIzp33f0u7Xnr27Nb2wsVpub4q319Tq9
+ikuQfhKClDr+i5NFld0P0EnCeXtPGeA8fRqP1/iv8GQizBcyFT4zgmVYS8zE12ja
+9gJe8/ST7F/+JfgIXur7OXmXlbaqp3miOk/bPGquyDeL+MMEPI1RrugRxg1aWIj5
+q0jvZn9jA/1OklgS8S2HNKcfEc1U+Kng0mmK+wLSB9+hbIXbsNuS8yc0XJvKv6FP
+FSmtwKNgheWZQ7k8pUPCZcO/4NDuIsrlajzjc3aeppFyKjy4DLwWZ0j2Om1xVWFD
+k/T+y+b/BMQfZOR2wJDnAuIuEzf1r+BbtHlyhT/YaYAF8A6tF2boIQv0mLhIt2J8
+RLk1CmHzNn891DbAKtXjnOTXlPVQeth8qPosUDuJ0EkN812CnVhbPkj7VMBN8Uq2
+UrKNjlCeE7TtWKfwxQY9d3avfA+U/ooDD/eVz8L/0/9g+g9QSwMEFAAAAAgAsnto
+VKHW4KoteAAAAA4CABkAAABlekFjcXVpcmUuVHJhbnNmZXIuREIucGRi7JwHfFTF
+9sfn3iSbHhIgQUIoChZa6EWkGAggvSRUo7DJbpKFTTbZbIAEgZvQBFEBEYMKAgJS
+REAFC2IDBZ7KUwRFERs8+1MQnoIPyf937pzdvbvAxydI8A+ZTybfO+3OnDMzZ8pu
+0s+W4XQUODJd9bo169a4cb1+KT3qtUts3jwyLD45RcCpQihAMH7tChC6C1BEpbtS
+XHnd5j5hrbyGEJ+Xl5fL4NHySnclu/bnHxiV7ipwJ9MHdXkz+P2YuSni1QGPq8t2
+dO+z6Nuv9sbM7SLD4YtnjIzJfD9mWyMhTob02lbl3YZ3Px9TrevMe8ZHTX/oybh6
+PFqy7mgWG9ui3/rrDynl+Q0/iy2eVGvCzAfaRp76V/vylMOns0Wl+1u6v6r/27y+
+dtntJze/vqfGof01TJvvzzyyZs/B4w88Nl8rF0dr1N4rKt0V3f9fbg7qeHL/9Bl5
+9W5qP6bvyo1r9hc5lBvDI9+OFetGLHh8iKh0f0sX/o8Wir4HiGbPK3+gzgBP+Fys
+dP//XWX/X93uXP1/k/Dt/0p3dfV/w8r+v2pc5f7/6naV+/+r2/1V/f/Z2onV2oes
+Wh6yeuapzp2PzO6zqeGjayJOzz/4UN+ktGnm10Wlu6L7f3OT22wPfFM/dfjXtXM/
++SBg2e8jpw65vcEdy1dXe+Ge1W83uFFUuiu6/8duUraG7fjieNLLX+X3OVIlL/Dp
+SR+22xOyKmxLcf/Qd4ZuEpXuiu7/vLQOMXXjg+p/P7HxwZ1dGr7z4pZVVceNXeJa
+0urGvXHHdi4Ule6K7v+hW6MWr8k68m5dx9475vTb30p9KWDvlKfmr5ndvX9c07nx
+vp8xV6CrdBXT/xk1x/46cd8t99281tRk58pjkfkJvw6589sP4h+rH7Vvx4aRv4hK
+d0X3/7JVLU/lKrO2p72yd3PeLc5nZ44c+vCYevaSZdHHS+YmlQaKSndF9/+2V3Kf
+2fBtUG7Pfk2Wv7x79gx7jedXWYLe69Fl9zfPr265Kk1Uuiu6/8WtNzdr29iU9dAq
+87A5w7J/27TTcmbQ6mv+W1C+565fizYeE5Xub+nO/HTmJ/o65w0R+NWtQ1pGttmR
+VZiblmVzpaUO62vLtDJGWYuTMvILbU7rqKSBA9NSnebcgkyrM80TneiOShxsdTlt
+1nHWXjnmLOu5MiR3TevmyB1ndbqSzY7EjAJsH3xrdo23U80SqNnMNZvz8tJc3po5
+OtEdlejkmm1c81kZLOlpGbJmi6y5AkVONrvMqeZ0uzXV4bAXUOUVKLUFlbuocpe7
+8gqUvLs7lru7AuX2xFZ8f/frnlrx8uZYL8PI7uewWO3eKe0yV7TQev2eie0yXxb5
+kx0ZhTnWXFevXIt1wmXRgIVbYHO3oMJ10NeWO7aHw5kzEBkviwrsaEAmGpDHDahw
+Dei9n2wtyHDa8lw2R+5l0YI+ACy+jahwTej27zLZghzr5bMDkJumwOWSO5PrrkC5
+Helj0pKt6YVZaYn9IbzTnGMd73CObTLU6izA6Os0rnVim8SkggJrTrq9KMmFF6YX
+uqwVvQWiVlpkK3OhJk8rxxlbaeZWmn1aWYG6HOh05GEVs1kL0twa65WbWdHbiDxv
+K9wasXErbhLyL8I+CBFicKjvaWJvkBApprNPGfHhQiwNl897UMYVJs7r9gQI0T9Q
+iCOqECPwvA/vGxEsRD4qPYH0H8Fi8FPEjUQbbCqXQ5mBqH8inmuKSve/uVpfNlcs
+qjf8Z/+0j46N1bncFLUKRem9cBO/e/2xvvuyuXeKOc3qKS171p13f4tDU7KF7PFi
+TjPm7R/ozfv9sC6F2TxaijnNmHei8OadtKbjtmxuYzGnGfOODPHmrd5710fZPLqK
+Oc2Yd2m4N+9xkToqm0d3MacZ8w4O9eYd2rbNv7N51hRzmjFvvuLN23Zy3T6U9wS3
+N1/xzesK8+a943SVdtk8q4o5zZjXphra2zt7RbZhBtlUv74I8OZt+J9N5mwhZ2Ex
+pxnzppi8ebNmnhqczbO/mNOMeSvd39fRxXyiaBRDz6N58icZ0hFlEm67kJjhcjiF
+iBMBMVSugeLNS+lhokHMkJSiApc1R9TxPid2c9jt1gzahxYk9rTmWp22DBHvk56b
+acsqdJopC95T1ZBGO0h6f5xfHArl5CB3vH98Sr69m92GQ5AQ11HaOVfZRH2nRu+N
+knn62tJR3M51y/AQl81ucxXRn0CbRFsRGLi7y3dvPjPig14vXR+qbl337Ggq308k
+i5akR0XqsjrrlFyokGU7s37T2M5uNqyaiDIlufXLJ+hUh+EoLaS+LcgQrcqy7vx1
+RL0YIZ9j3O/LMJSkciuQGKHKr/YeDpXl4lAuyK+cdYJsK/kefySrKuWN4PERiBFy
+DT0nqLOC1fvHqXO7xCnKoifoXV1Z9gP8VeLnvKILRJl+4TaJnlaXQeqCrkUpLrOr
+sECw/KNR54QAWd5dJp7lVw1yOK0FhXaXlFHxS8vIsejxql+8pUDWsQKRrgAaN4gL
+8+oq0D8/z4EQ5M2DjyUbHebtkyC//MY+IZ24/cg/0nPAWXpWEuj5OmW4on1pKnlF
+wU9piIhTRGCwUKmPTYoomaf4jjtac8ltdjdIjlHT+jCv7umwZs1wFuW5Us0FY/va
+ClxSxk/QhqOBsuz6sEuj9wS8/4dAqfea4X+sdw0J3wRKvd8QXtF6/8FUslvBT2lV
+o96DofdHWO/uMf+26Wy9o42m9HCv3oc5bS5rr8H6icCreSlnKjLbTbK8u4y/7sVF
+6r4MdWSbpO73/A+6P438FpPU/cGK0b3QdZ+taEuUkpam0ioK/QyH8t26D4Huv2Dd
+d2Dd7wuR7Yg0bGjxKlONCNZ9r9wCtM9gcqR87yJTXogsVyPC184GGPWRXuCxT3VY
+78b0/EKHS65CMl31S3dac8x0S+PkPg3wS4f+aCnU2xSBvWgg2tQF4aIIXxtuLGPj
+/EuDSSn0dxxCTDbkN/nL4PLafHc97VGuBdJeN5QLPU85dxl7CK2jQpw0lAnzK2Nc
+X+788+tLAH2BSCkpVErKFPR16RNqtDK1mTItSZ16gzpzoHJPI2VOO3XOkjhFuNdr
+OQ4C+aRZJrwOTTY1iORxMCTPYnZZu7fg5YZkOgB5VofKMu58FB+NuDz4aQhfH+mV
+VVA955hzil+8pcCrN3rXilC5Lq+J9O3TwPPobeifnzuqvi4nKiWNhFqagFW5dJPw
+2KwwzJvv/OZNez6lbzfoC+owveSrL91e6bbLwmsh9PxJmCz3kkFnyYhbAb+BviNw
+kTqjdx0IkzqzR10ynSm6zjSsrCOEOrUPlDb1c4/OwhUxtaafzuwRst55Bp2ha01T
+onx05l1irRZdno7QdXSELDclyquzCYg/AD+J/h1L1MXpjN4VESF19nvUpR9noUIt
++S+Ns7necRaBcbZb8Z2XOyK5YoN9Rteaoqv46CzFOC/zUKElUpZx56P41Yhvgvgf
+EI6p4quvID99Xcf6MsZb0gea6TbQZXXyflPa66Dz6JTqGx3JOjXUZ/IrY9TpBax7
+AQlSp6X9lakbhDptH9Q63Sa8esUaNW25n15PRMm6TQa9hpNeo3312tKg112QpSxK
+lnHno3gy6qPhfya9Rl/cOKR3LYiSOguIueTjsNQp1KkWmrqnvPqKwtxt6aevBvw3
+j0s92tLfZ4qL8dVXa4O+TkKOXVVkmbgYr76aI24u/ByEa8RcnL7oXTuqSH09fun1
+VTIL68NE0le0V19VFFHay09fqVzzPoO+MHxMW/z01cagr5vwspPRsswWg75GI+5V
+8nQuvEh90btOREt9ja966fVVBn3NJn3V9eorWhGlw1lfPVhfJ6vKejtFePVFU202
+t1F0c1qhL8M+1L0xzckx58p1YjjeNK2qfMfsqr57UpNRT7KM58y8FCka8gei3BIu
+F8+2zVjORhc2XOYAYu9C3tMwGqsMZQL868qxpFonuHR7GuiXdi57GnR2eZ9zQe4F
+3DncSs/1TAOUAYo2R5m+UnlSUe9drt7fW537ozp/trrgNXXhCLUsVF20Rl1cU11W
+XX18gLoyQF3dOk5RDee01OqyTanuNYnGPurYWeecdxOe7/G4dXYaevqkmiy/s47v
+OA722zdT/luR9wB8KyRub+DbL8Hn6Zc85N8H3xgZ3mrgrSPAr4zTMd5Hr84/r1c1
+mZ6rm+6NU+gnU517jTovTJ13Up3/qbrApC74Sn3wU3Xhm2rZAPXhAvWRR9RHH1KX
+BKlLB6vLyuL87h4ssbJdd3k0q89RU60mrNuUfHt6oX1sN0deUTe/u6vh6Jd6sbKs
+O79+ZkV8Qqy8a05o4jsfQgy6KMi3d+VX6+U2otw1KNeW7t+beHWo+JUz2ggpy58f
+m2QPlCyl5IRaGk/voDV0NL9fEYrn3pT2DKn8jO7VQvQ2Ca0Kk95TA2wm9Ds27Vb5
+6ZYWKppjj5kgakPySLEEvgPCYXo9uwLdd4SK567RQvtyvpishfIkM/YXGo2f2mCg
+rkOh0XEJJk27FqwH0v8GwLOWIfQ7Au0+sD74Aq2d4BE6C1F78cIbwA7gjaBVfp6h
+zVX0c6i2FWwEfgU2Bmmwowu0jmBTMEule2ihzQchq7YNxJlP+0bVz6NatQBButY6
+g61AG9gaXAC2AV8B24Hvgj/+dEZ7n8P7QMigfQ7eDH7B6Yc5fATsAB4FbwGPgZ1A
+upPqDPYM1M/dmjNQtzfaYqlbbTfYFTwBdgPrwsBh3mi9we5gIdgDXAr2BN8CbwN/
+AXuRftHxvcG+YB9wPNgXvNsk23cPh+eYaJwJrQzsDy7i9Ec4/Cg4AFwNDgTXgIPA
+dZxvE4efBgeDL4Ip4Jsmfdxpe8Eh4KfgUPA7cBi1kz51BVX6lJWOIeDtYDyYBt4A
+3gG2BO+kfgFHkfzB+jjX+gTL+gdyeBBoBnPAdJIHxJjStgfrY1P7UX7Wp9XEBMgE
+k8Fs0BGi32toD4NjwDfAsdRfoB2shfENI6n1AHPBfNBBeqGzOvUX6ASXg1iMtBXM
+lfQpNLgeLCT9gOPBOyFFJEZmjKgK3wK+K3wP+DT2Q+FHwY9guuPHwufDp8NbmWnM
+bM4/1lCGwm31+dgOIzRWNNPrFPo8r+kJy/qshnIOfrbye3MN7UoztCsFvp3+vvYY
+6bGiud/7m/P7r9XjrsOsjsXMioXMsZhZsWhbLGZWrLjZQIpvCZ8I3+4c7zTD2+Cd
+8BPgC+FLDKR4O/xo+InwmXp+2Y4GWHPr4/f1eG6sh9327Ijnzl/xfH5AxvoAPxex
+PcN6oAXLz3e1eLnmTCXbquFnCNMu5LjM5fBEJq0xJeAMsBS8H5xK9ovTH+ZyTzHp
+PmMa4p8Fp5M9wuiMhIWIxO4/EjMyUlSHBG2EkGuM3seyjxoiLQpary/cLlLU8pFV
+3rMrYvM5ZJ3Jst7Nss4CaU86G80dDN6HcApzDLfVzuEiJq2bkE+jeyzIp90r7y60
++zi9jMs9yVwPzqc5Aj5Ac030ZFkXXrSs6eHnl/VBlvUhlrWMZV3Esi5mWRf7ybqY
+ZV3Msi5hWR9jWZeyrIvPI+sylnU5eJvo9ZfI2lp13ycrnjvppvQdBf5McAXLuhKs
+zW25lsN0N/8EWJ/jr+cw1luxGsS6KdbyHmEdSPe3kEfrwqQ9A+TS+oMbwZHgJhD2
+XEBOLR18ltZsfn8Wh7Pl53Uaxrd4nufEdp4TlL6QuZjLQW/iDYSf4PA6DpNu94Lv
+ge+DB+X5UfsE3E9rD30vgtZm5mEmjY8PwR/kmNB+4vce4zDp9SPwJMef5jD9f+qP
+wSDwNO1pwN9pLccKHCnG6foeD/sUKeRlSXVYoRjRRA9Hov8iRQ8h89I478j2qTb6
+u66ev7VuDyfpNpLSmsEmXiua8viV/U92LFas8OQhO0vvN9o4d/01YD1jaHel762a
+cztqe8bOAc89tOK5x6Z94dv8XM5jB8kaDScFpPtyFWwn/1/31Hz5GZU2jnVVxOFi
++fmJNoXuLEFN3gvrfR4BzmTeLe+b9L6PAh+U512tk+jM8n2syy7XnQRqjb43jRXX
+8tpwnZ99r+OR723PnbHiuXem/e+r/FxVkfJVY/lqKGIajdkEyPUo7VMRv4zlWsHh
+lbRvBdfS2qYIfSzWBzfSflWR85v4DH2GCG4FbwSpzoYKzZkkliv9gmWSd7qKmHcO
+mRqzTE1YpqbcZ4mQiWxZS4QdLJOTw3SYbgVOoDGoSBvXBpxMewjuO2IJrfkg1gZx
+syJt3S1gkujKMh26IJmOCve9q8KHN6Gv/kdYpk4sU2eWqQtkIRuUjDD2xKI7SOOw
+hyJtRk/0I+a36IvwIZb1Cw5/Secr8Gv6bhf4DTgA/Dc4SJG2gEhtGqxIG5AC/k5X
+UD7jMgO+N/w89hfWl/JeVNHvSP37chjLPZzlHqGIGSvl92mmfkZnL0XaMpLvaw6T
+PFaWJxP8kf6HMniczv3gf5j0h9NjwDP0PzYUadtyzpLvwmSSd5cKrYdnyeRgmfJY
+pnzuy0KQxl0RjzuSqYTDpbQHY5sxkW3GXYpccycrcv2YzDZkiiLXXo3HQulfJNMW
+lmnfOWSaxjJNZ5lmKKKU5tQsyETr/r1sF0imzRzeQnsitg/3gy/Rngl8jfZE4Hbm
+DtobgdSGBYpc6xb+BTJtDHbf+SmeO8TltF8Ils9lLNMiRe6RHlbkHQKxCstSncMJ
+TNpfPKKIWTiPilUID6D9BPfnatbBWkWux+tA2HnxJIj5LJ4Cc8EN1G/gRpIZ3AT+
+F3wabATlPgOOAJ+lcUDfWwKfA58jXamyXbs4vBt8nsY6+AL4K6efAin8G/gi2BJn
+861gK3Ab2Wg+yydzuDv4MugEXyF7yemFHB4Hvgo+Bb4GbgC3U59yvlc5/Bq4g+Yk
++AbZGk4/xuGfwTdJTpz9d4KNwd1g+0CZryOHO4H/AMeAb4FjOT2Hw7kgdKetAt8B
+nwD/CX4Avgce5vxfc5i+87IXjA3CPgqMC5Lp13C4JrgPHATuBweDH4KjOF8Ghy3g
+AXAe+BE4n9MXcPhB8GPwHfAguAc8BB7kfJ9x+HPwUzDSJMRnYBTfOURzmD4Q+xzs
+BX4B9gYPg8M43+0cTgOP0HoF/guczelzOHwv+BX4Bvi1Iu8uviMbCX4PNgjWv9Oq
+pYBHwdF892DhsBU8RnKCP4MPcPqDHF4IHic5wRPgP8FfyeaCJ8GmmFCnQDP4G9kv
+8DSN/xDe93J4Ofg7lQfPgO9y+l4Ovw+Wg+Hyi4FaBKiCt4Tqd4jabaEyf18O9wOD
+wGL6MBmcyOmTODwZDAa3gP/H3rWGV1Gd69k7YZMrECAQARFIAgGSECCBJAQISSBB
+QwgXlbYqcEhIqCGhEDQothsId9QoUVNAwBsGRItINShYtKhUo0algJVaeg714Xi0
+5bT2Kcdiz3m/mW82a9asvUxq/XXMk+959+xZ7/euWbNm1mW+NTsM+AIwAnic053g
+7V8BI4E0ho4C/o33/w9vfwmMBo7CuLMLcDSwK/DfIsyYQ/99wBjgMWAP4NsRFv89
+3n4f2BP4v8BYoBFp7fdGWtshwF50nMDeQHrufRXwVmAf4DZgXyDFH/UD0rOHq73G
+mi643w3ENo2bBgHjoqz71+Aoy38GMAHfZwMTgfOM+Ua0McEcow0yUnmM1t9IM+dx
+VnE/YBNsPWwDbCOsnr9bx7iB7X7Yg7AtsHGmrxxjPO7V90lzHs18f882vxuHVLFG
+g5RmD6exfm0jC2ljjXukNI92wE+DNLdzt5RuN6cbb343wZiI77ZKafZzmizzu2wo
+xhr3Smke70C+13G5rWlnedllfQ9/bg+HjnuC+f1EjMljjUYp3TMdyG89669rZxms
+5nxuZc5Qc7xDY7VreA5NHLPtjrSfBXkCz5WoL9fI8TVDvFa7neS12u2hXmucj7bT
+T2dtOHAOjQ+8Vr8/xWv141OBe4EjvFafIw1IfcyRdB3TOAEYC8ejgWkec97Bfx0w
+A7gQOAa4CjgWuAOYSfcNYBZdx8Bs4OfAccAwtLs5wHjgeOAE4ASv1a5PBNYCc4H3
+AicB9wHzgK8B84HngAXAvwMnA3uh3ZwCHAksBBYDi4AVwKnA1cBrgQ8DrwO2AIu9
+hjmXP81rtcclwHC0g9OBCbTiBzgROAP4feBM4HLgLGADcDbwKeD1wNeBNwB/D7yR
+7jPAOXR/QTv2Pbr/Ab9P913gD4CVncyYbf8a4M3AncBbgIeBc4EngfOAfwLOB15k
+/Bu3k5d5O9RnYSfgArrvA8uA/WmdBDADuBBYCKyg8gVW0v3RZ67R8N8F/CGVM/BW
+4CPAKuBzwMVeq12sBp4G1gD/k2IYqdyBS+k8cnsX1dnajgYuI30gzqH/Gt4/kLcH
+AZd7rTn926h8gXV0voQ5/TqvNae/gtoJWisDXMD7y3l7IfBOOq/AlVSOwB/TeeF0
+jbxN7fBPgHs60wMH9IN4/17e3gdcRecPuBr4BrCeyp/TneHtD4FrgZ8C1wH/i/d/
+ztv0jGE9MALtMPqk/kjgJuDVwC3AYdxep/L2CODdwFzgPcBJvD+ft+kZxb3U7gAb
+vFb/4D5gNadbytvLgPcD64FbgWt5/3re3gBsBD4OfAD4BPBB4EFO9zxvvwB8CHgC
+2ETtOu9/i7dbgT8FXgBuo3oA3E7tPqf7krf/DtzB/Y+HqT5wf6Arb1Ns4k5gMnAX
+MAW4m+oB8BE6r8BHgXXAx+h4mL+RtzdRbCNwO/AJr/Ushvbv5O1dwD3Al4BPAo8A
+m6n9B+6l+xkQ9xL/fwOfov4D+hX7gX2AT1O+gM8As7gfMp63J1CcIXA68ACwlPfP
+5O1ZwGeBNcCDwCXA56h+Ag/R9cXpt/J2I/DndD6Az1P95P3NvL0X+AJdf8AWqp/A
+w3S/4nSneZtiFl+k8wF8ieon7/+Mtz8HHqH7GtqGo1Q/gS8D+wF/AUwFHqN6CHyF
+7k/cv5rB2zOBr9L1B/wlsIz3L+TtCuBxuv6Ar1E9BL4OfJDaKOBR4Am6noAYi/k/
+Ab4JvAR8i/KD/lUr98PIb1/e7gd8m+oH8B3KJ+9P4+2RwHcpv8A2YAnwPbpegO8D
+F3P6H/H2UuAHlE/gScon71/H2+uBvwY+BjxF1wvwNPV/gWfovgD8kO4DwN/Q9Q/8
+CPgV8CywK9rh3wIHAj+m/AL7h+A6j7buz+Ojuf8NHIDvZwAHAouNaUa0MRiWCUuH
+jWXL4O/GMNrf53A/NIs/j+PP49gyeX82f2/zM4T0os9s/mzvm8i8DN4/htOk8/fj
+eXs8p6XnF3kCjmc/Y/m7LE5P/eYhgX7zUGMY+jhD+DnoCMGG83cp0r4ss88ZY4yW
++nNjpD7VNEVfN0NKc52iLzdaSlPYAT9jpT7zKCndZEWfOVNKM0PRZ06X0kztQL5T
+eEwyvJ3lNZbL2y7zDP7cXq7Yd86S0s3qQL6Hs35KO8uC+srFZj6tPBNONI3+aK49
+1siWuNczd3IH0qXwcVLeJnE9zDCfrTj76b0D/fRMjx1b5AnEKMVZ8/LmX3yI1U9P
+DLHm1Qhp+D44xIqVGQLsQf14ID0dGgpMpn48MJ368SHWMxjCTEYqsWTgtTw/N423
+6flcCpBidVJDnM/jUkOs53EjQqxnnehD+yk4bBRwCae7g5GeaWeE0LxeKa7ofJTM
+FJRTL36mT5/zAue2B67vJGOouW3ws62rzHrUizbNCKOrjGvMtPbzKsOMb48w1yeH
+CSHcfkaab6QyKDXMGA6jwXpOac7PnreeJ5lrRwtgN3nMOWKaM6W5QpoPozkbms8w
+kqzxhWGu/fOafRxqx6ktMSguKA7jgTTYHF6H1/Tdz5V8o/W//fhEZgn74w3D9/5E
+9frfc5z2/Ynf/vrf9qzl/Veu3fVJ64j8/Jz+oFA2CUgWmctlM2N5+dIV/MobjlMc
+4DHH5yYnMvfr1+/1Ua/fM+NsdWv4KOY42Wut4avN/fo1fMc81rVFoZmrcju+hu/a
+DsRDxsvrJzfs9W1M8dD/bbR+UlxHk8OFf0oo40TwjzrKWHzFlHU89XQ/CLF4Rzmt
+eZx0v6BnAth+WSr/WEUZ2+Ufqzg3dvnHKsoffU9jP68bHjPJWf6xivKn5xbNvG44
+f5Kz/GPbUf72sZ0PsersSkEzTPJRblyJZS35J87bACvefU2sZ80035o/efBfPx4n
+zlP/kSPON53XGDcYV/4Gw8fWSfLadvf5yw211hgT104/iM9TL+FYqhxMi+vntcM0
+xdYz70o5eE1Ux/RO+CfKwYznvZoWNiU67guf8RrftiuHTT1oX3yeY201ZTsQl5+J
+smryWZz4vCv1dQnNJ/nMWBsjIc9ZX3tr6mtvTX3traivG2hey4oLNSrynPW1t6K+
+0rzWHJ8Z32rU5jnra+921lc6tkafVV/P5jnra+8g5+kb1Ff/bo//A9+qtR76f4fq
+6+pPTZ9/5nhrq83yBNo6OpYi/tyd4826czw2xWUPsdoHsw8Xa8ZfU++zD+rdNkfs
+9fnAvd5jHFTEtPXhWJ2+rIH74svU8/qBYayeblgxtKWMFdyfW8TbtzHebsWSm8/d
+KaZ2k2HF1G7m/Q8wby/jPsOKtf2ZFQfun2HM5HHfaFhCkJi26782po3at6N8rPY9
+m3qNPbkfsZCPtYKbT/QF76bRFY7Dn2/GYBmr53K85jzG24X4pDs5HpNwvRXP6adY
+mrs4HvPHwO28/wnmHWZ8kWIMKC6c4zdfYXyV4zzf5DjPDziOc2Zg/DOa431pXBVn
+JHENQX+Fx5fXwlLMtInGlZ+1iUEfuStKapAZAzXM5ItxCdZ9zWM0KOIS1nE5red4
+/A0cj7+R4/E3cTz+Zq5/Wwzrmf3dwIUcs3kXx3Su4pjO1YxrOLZzE8dw0jOERjM2
+kM5/qnDM+UaMOb6byZ/JEqW4hETHuMm6d3mMNsW46UEhdtPLsZthFKdgLWnFVWOs
+HsaxmcMZ8/jcFfD2DMaZHLv5PY7dXMoxmps5RrOR1shxvaf0u9jPc4yHOL7yMMdT
+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
+Un7TNH6zpfxmavyOk67jiRq/46RzXKjxmyPV3xKN3xzpHN+g8ZsrjbNu1viVY37K
+NX4LpPxWafwWcH7teJuP2eFuWouPwdJKWCPsAOxElDUfexkWhwFPGqw42vqdNn+0
+Ne95CNYKuxBtDV7iYGmwIv59sZX822AH6He1YOdhlykdBiT0O1jFsLKu1o+iNMEO
+wVphF7pag4t+sHRYKawStgG2m39b6gzsMqwnBguZsFJYFf2eEox+H6klxppbuRhj
+zZMkwQpgN8HqYA2w/bDjsHPdrTmGnujIJ8OKYPOoUw9rgrXA2mCfwULpt2tgmTD6
+HZslsAZYM+w47CzsEqwbOtnJsALYPFgdrBG2H3YCdg52GdYTneY0WBFsHqwO1gBr
+hp2AnetldYDjYJmwUtgS2AbY47AjsDOwi7AonOgEWC5sDqwWtgXWDDsGOwe7BItD
+BzUNVgwro84qrAnWAmuDXYSFobOZBMuFzYPVwZpgB2BtsAuw0L44R7BMWCmskhY/
+wppgB2CtsPN9rYDNOFg6rBhWSQGcsB2wQ7A22IV+1g/WxMHSYEWwMthKWNPVxnd/
+HfyjkIov+H3y7/CzxT6Rxnd//0/+QmluzH4OwN91FvafMwxfbZH+Oe0SThsm8H4P
+3p1F+ue0+xV6/w7eGlnPWrLn4F5QaP4H/a6erClw7bavVtNOhkv9hTs17WS41F9Y
+o/EbIbW/mzR+I6T291TYlfV+B3CPa4Wdv9oakMfB0mHFsMr+xjd6/0uZx/3+FzQX
+vk9T1O9/SfJYaT9N+fbf/9JL+i6VfiARqfvI38/6UVV+lfXL2x18Z8y38h6ZcOlZ
+2xav+7eC4yhuNJXLuLC89v/YuxroqoprPXPuzSVAAhEJP5YkhP+fyI8k8iMiJDcY
+SAAJiFEQCEkw0UhCEiAoT08SQK0gP0LFZ1RUbOmqz4U1Wp62ahUVFSuipVSt1YJP
+rAo8y0Pfe6zF23v2PvfOmXtygNi3urqWWWzHuWf23jNzzpm/M/N9ufrxNMZsKJeE
+hYR6fYe5sSE6aPgJi0klgg3RwQdLpoMHNsQOSecB8RTz4mFubIgOBjaExTgNk88D
+p6E74TSoZ12myGnS3hpq6CkbegriZHSexUze+5WvnWGF4UaoxaknOkes8rwR7DfH
+UdoWvu5gpOD+8GyQZ7WyCJw76fWyJIrjghjofUHe1OpYGunr4EES7APPG86D9EGQ
+A5oPy9BxuIcDxu+lzpHQJaVl9ewvGKurtkEMYcwN/RpyyNeHy2pLaiqq8fVx9kuk
+Mh+xy05V5bKbl1CDiNfbeV6fU1y5rEzlI964ftPySmXd4YTXr9UurVQ2O8TkD28T
+XqX6Gg8VcCiouOZE5nCqL9RL8CpX/vJShwuyMkjnAZHzaMrwaD13islj9Ll0/OH5
+vf/AfQWsNwD0urRWj05Fcn7xbPXsOPVdT7yt5fdCL32qOuVbzwM+Ixvj6Pk/OCqa
+91TDho594sjm83+3JG5MkuOl/Yxs6CUbXpONY2VTe9lUIpu2yaYP5IZb5L1XWqvD
+ck1qaE2lXFNprZ3aTYbuCEv4d+f91l3jrLs7WnfPt9YnW5uOW5u3Wvdts+5faD2w
+1dqeJh/Z6eqHe3BnVyiifzDkD53hcoqc8rKSm6Ib8BX+DTyY7xMfoTgzyv1eJrif
++wg/Z4LxrDl8qcbvWCUqfxPa0CYpjJ8fSfsxaZ/Ry/g+l/FtrYwwXQnNzBSCykhn
+2p1t91jGXnyuBHVmZroxjRL1PJcUL0El571tY94Zn8hq/Fk36Tr/msFj+tc17AiY
+QoVSs9x5n10VdrVEqj2E/O+JJ93ULHcZOvm0YajbAzGUQZ4E3fSs6HsjDV313nAn
+77wvPfisDb7b74yNPh+dDV39fVl0/nVmIT6jTJVrX7Gaqqw1B4X14+uFdfcGa91v
+rPWHrQ3l1sZ11qa91uaT3aTc0iBc9Xqa9yamymi9puB+n7Gu/mnassq6iurKMqdq
+VPlGIJ5yB9L9bKz7+e9sPP9Onem/11ZXVtRxW9OH3wP9+s3sVMFdaDzBepoKB3MK
+8tLcgbC3isdF8xIyfXL60+3pHBNyS5WPi97XdqZ9VXzKJOohZjPiKWMb0Kj5aW/o
+4btttoFzzv/eBgbxu/yNbBgiGxa0a6ht31Ar8d+TVsMfZONsft4cDuh9vKewp3Y/
+U3EP02V8P2eV4Rh2UmXlFKPHpXrBhrwugfQdnSF8T5POob92xhlJPuO1JI/xWhj8
+Vieo/eliymXu8ZorPY/bfw3pKxPUWQ8x57LoOx3nlc/JFWWVpTReQN2vOtLez2X4
+/YZ1B/C99yujELH9WmEb7inOm+RAWS3tP4UaiiX+e9Rq+Ew2jkAkQfc4ezfvmVys
+3c80PNs13sVTT7vSsosRakuVcT84rE4kPSct/p4Av1WCDIEfLhkfrWdJ+xBi+izL
++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
+Q4ODgoSQQ+ANDg4GZlIOEnIcJBRhZcRR33/vI6X8y2jI0/s98Jn+Qpda78vd87zf
+FNLIIIcCiiihjAlMo4LHWMI6trF3NW5XdyT5+8EuVb3oRxaDGMYIRu1ahCnMYg4L
+WMEaNrGLfRwmf1xroiS60YM+DCCPoc64/zyGScx0xm3neSyjio3OuN1cx0E4qNKF
+FNLIIIcCiiihjGlUsIRnWMc29vD+WtxE7uD+5Tpuohf9yGIQwxjBKMYxhVnMYQEr
+WMMmdrGPQyS4l02iGz3owwDyGMIdPMAYJjGDR5jHMqrYwA7qOMAV7n+6kEIaGeRQ
+QBEllDGBaVRuRBdyfVP/paX7L8no9M+GIq0Lu/zfNfV/1P9R/+f0P0/9nz9fc9T/
+OZqp/+PP1P/xZ+r/xEv9n58z9X/8mfo//kz9H3+m/o8/U//Hn6n/48/U//Fn6v/4
+M/V//Gfdq//jz9T/8Wfq//gz9X/8mfo//uxv+j/eTP0ff6b+jz9T/8efqf/jz9T/
+8fs/9lzXT+E8dC24G/ZY3mvjGo/74Q1c+7qa7X+83Br9n+M7S1qosdK63aNjWwJa
+sypzcrdAC/WnzrKpdO7bV+r//Nr/uXV71R7JHy3mxxvtW4nsYuPpl9UnWw/V/1H/
+5x9ehfo/J16K+j+/eS3q/6j/o/7PmS57hle1rbn7P0eNkobdt9ktWhT/PO1bXrf9
+d3hrX2vvF4Yu8LtwJtQOL3ywfVzheWofw3sDn+3HY+fSbR8Xvobzo+2nNIBe4bXt
+CQj71hLhV8D2jz23fQRRvK/N9kK+iOL9aC/DGVU1gM5/A2jHnmVi72fbZ1H2ObL9
+s8cbex/NzjiFZzTV7HNkOzff5A0gO/h1qRn+I9LS0tLS0tL6b+s7UEsBAh8AFAAA
+AAgAsntoVGTv+FJcSgAAAOYAABkAJAAAAAAAAAAgAAAAAAAAAGV6QWNxdWlyZS5U
+cmFuc2Zlci5EQi5kbGwKACAAAAAAAAEAGABuVStEvjLYARMuM0S+MtgBe4alKLS6
+1wFQSwECHwAUAAAACACye2hUodbgqi14AAAADgIAGQAkAAAAAAAAACAAAACTSgAA
+ZXpBY3F1aXJlLlRyYW5zZmVyLkRCLnBkYgoAIAAAAAAAAQAYAAh8K0S+MtgBGnwz
+RL4y2AGPraUotLrXAVBLBQYAAAAAAgACANYAAAD3wgAAAAA=
+-----END CERTIFICATE-----
