@@ -1,0 +1,14 @@
+SELECT 
+	fp.Form_UID 
+	,fp.VERSION 
+	,fp.DisplayOrder 
+	,p.Page_UID
+	,p.FileName  
+	FROM  
+	LinkFormPage fp  
+	JOIN Pages p ON p.Page_UID = fp.Page_UID  
+	WHERE  
+	fp.Form_UID = '{form_UID}'  
+	AND fp.Version = {version}  
+	ORDER BY  
+	fp.DisplayOrder;
