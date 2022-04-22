@@ -1,19 +1,6 @@
------BEGIN CERTIFICATE-----
-UEsDBBQACAAIAG5illQAAAAAAAAAAAAAAAAMABkAp/O3c7NdqXcuc3FsdXAVAAHP
-u37J5pu05paw6Kit5a6aLnNxbCstTlVIrXJMLizNLErl5UrP5+Xi5SotSEksSVVw
-zs/NzSwJTi0qSy3i5SpOLVGAsB1TUopSi4sVbBXUM0pKCqz09Q0N9Az1jExM9Coq
-KqwsDAwM1Hm5yjNSi1KhOvwSc1NByiEmGqpDLAIAUEsHCPQ218FrAAAAfAAAAFBL
-AwQUAAgACABuYpZUAAAAAAAAAAAAAAAAEAAfALJNsKO8drmzuOquxi5zcWx1cBsA
-ATqE85HmuIXpmaTlvbHlg4/os4fmlpkuc3FshZPLbsIwEEX3SPwDn1BVKl0nEKpI
-0Kp5rJFxboNFMhP8UIGvb0LFyg5Zn2M7Y584gwVukTw7pTGf1TyfzWdFVn6uoiJZ
-FFG8TRYREVthFZOPug5U5VLQt4NDiBd8AqX0wz50lbJbrktyxonG47G6bVi3veGh
-NUvXgmxKFS7PaXKxIBP6+OQi0Q1jZZCsK49vVKOojoV//INYeYQZo6w1/47A0Exp
-K2rshDl5ZOcaq7oG93n26f7tZVp5nVSW07ssl5PKu39QBjMaRI6zA0l8gKCFZR0w
-zPBa92z8u81VTcI6jazvDoHVDx5YOjRsrJJDrvl/0Guhmutzs7h2mNBKUnZMYd2/
-6kp0Qiob4Fdj0Q4/mOsvZWh2RFkLczywCFRaiEODUE+lgf6ivjb8AVBLBwhJXPVI
-LQEAAOUDAABQSwECFAAUAAgACABuYpZU9DbXwWsAAAB8AAAADAAZAAAAAAAAAAAA
-AAAAAAAAp/O3c7NdqXcuc3FsdXAVAAHPu37J5pu05paw6Kit5a6aLnNxbFBLAQIU
-ABQACAAIAG5illRJXPVILQEAAOUDAAAQAB8AAAAAAAAAAAAAAL4AAACyTbCjvHa5
-s7jqrsYuc3FsdXAbAAE6hPOR5riF6Zmk5b2x5YOP6LOH5paZLnNxbFBLBQYAAAAA
-AgACALAAAABIAgAAAAA=
------END CERTIFICATE-----
+sc create ezAcquire.Auth binPath="D:\ezAcquire\APP\ezAcquire.Auth\ezAcquire.Auth.exe --service" start= auto
+sc create ezAcquire.Server binPath="D:\ezAcquire\APP\ezAcquire.Server\ezAcquire.Server.exe --service" start= auto
+sc create ezAcquire.ImageService binpath= "D:\ezAcquire\APP\ezAcquire.ImageService\ezAcquire.ImageService.exe --service" start= auto depend= ezAcquire.IrService
+sc create ezAcquire.Web.Admin binpath= "D:\ezAcquire\APP\ezAcquire.Web.Admin\ezAcquire.Web.Admin.exe" start= auto
+sc create ezAcquire.Web.Query binpath= "D:\ezAcquire\APP\ezAcquire.Web.Query\ezAcquire.Web.Query.exe" start= auto
+sc create ezAcquire.Erica binpath= "D:\ezAcquire\APP\ezAcquire.Erica\ezAcquire.Erica.exe" start= auto
