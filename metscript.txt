@@ -1,0 +1,94 @@
+--SQL 1
+declare @startDate datetime
+declare @endDate datetime
+
+-- 元鎂 DB
+SELECT
+
+-- Form_Attributes
+    fa.Form_UID
+   ,fa.Version
+
+---- Docs
+   ,d.Doc_UID
+   ,d.DocType
+   ,d.DocNo
+
+---- Doc_Attrubutes
+   ,da.CaseType
+   ,da.CaseNo
+   ,da.PolicyNo
+   ,da.ClaimNo
+   ,da.OwnerID
+   ,da.OwnerGroupID
+   ,da.PolicyholderID
+   ,da.InsuredID
+   ,da.ExtendDate
+   ,da.StartDate
+   ,da.EndDate
+   ,da.CloseDate
+   ,da.ReturnClass
+   ,da.ARDate
+   ,da.AccidentDate
+   ,da.LoanDate
+   ,da.PayDate
+
+---- Forms
+   ,f.FormID
+   ,f.Deleted
+
+---- Form_Attributes
+   ,fa.Pages
+   ,fa.CreateDate
+
+---- Page_Attributes
+   ,pa.Page_UID
+   ,pa.DelNote
+   ,pa.FilingType
+   ,pa.FilingNo
+   ,pa.FilingDate
+   ,pa.FilingModBy
+   ,pa.FilingModDate
+   ,pa.DelDate
+   ,pa.DelBy
+   ,pa.BatchNo
+   ,pa.ScanBy
+   ,pa.ScanDate
+   ,pa.QCBy
+   ,pa.SignPage
+
+FROM
+
+    Form_Attributes fa with(nolock)
+    JOIN Forms f ON f.Form_UID = fa.Form_UID
+    JOIN LinkDocForm df ON df.Form_UID = f.Form_UID
+    JOIN Docs d ON d.Doc_UID = df.Doc_UID
+    JOIN Doc_Attributes da ON da.Doc_UID = d.Doc_UID
+    JOIN (
+        SELECT fp.* FROM LinkFormPage fp with(nolock)
+        WHERE fp.DisplayOrder = '1000' 
+    ) p ON p.Form_UID = fa.Form_UID AND p.Version = fa.Version 
+    JOIN Page_Attributes pa ON pa.Page_UID = p.Page_UID;
+
+--SQL 2
+declare @formUid varchar(10) = '2005780230'
+declare @version tinyint = 2
+
+-- 元鎂 DB
+SELECT
+
+    fp.Form_UID
+   ,fp.VERSION
+   ,fp.DisplayOrder 
+   ,p.Page_UID
+   ,p.FileName
+
+FROM
+
+    LinkFormPage fp with(nolock)
+    JOIN Pages p ON p.Page_UID = fp.Page_UID
+
+WHERE
+
+    fp.Form_UID = @formUid
+    AND fp.Version = @version
